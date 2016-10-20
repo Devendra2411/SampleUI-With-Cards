@@ -1,0 +1,126 @@
+main:not([style-scope]):not(.style-scope){ background-color: #fff !important}
+px-card {
+	padding: 0
+}
+.u-pl--:not([style-scope]):not(.style-scope){ padding: 0!important }
+header.pageheader {
+	border-bottom: 1px solid #000;
+	padding-bottom: 10px;
+	width: 100%;
+	padding: 0 1%;
+	position: relative;
+	
+}
+/* header.pageheader.fileView{height: 59px;} */
+h1 {
+	display: inline-block;
+	font-size: 17px;
+	font-weight: normal;
+}
+.clear{clear: both;}
+.pageTitle {
+	position: relative;
+	left: 30%;
+	display: inline-block;
+	font-size: 20px;
+	color: #101010;
+}
+
+.actionsBlock {
+	position: relative;
+	right: 0;
+	display: inline-block;
+	top: 14px;
+}
+
+.fleft {
+	float: left
+}
+
+.fright {
+	float: right;
+}
+a{ text-decoration: none}
+.leftCol{width: 70%; border-right: 1px solid #ccc; height: 100%; padding-right: 10px; min-height: 700px}
+.rightCol{width: 30%; height: 100%; padding: 10px 10px; }
+.breadcrumbs{ border-bottom: 1px solid #ccc; padding: 10px 0 10px 10px; font-size: 14px; }
+button.dashboardActions {
+	background: none;
+	border: 0;
+	cursor: pointer;
+	font-size: 21px;
+	font-weight: normal;
+	width: 30px;
+}
+.search{ display: inline-block; width: 150px; position: relative;top: 15px; right: 1px;}
+.search input{ background-color: #eee; border: 1px solid #ccc;  height: 22px; width:100%}
+.search i.fa-search{ position: relative;
+    top: -19px;
+    right: 7px;
+    float: right;
+    color: #828181;}
+.viewContent{
+	padding: 0 10px;
+	width: 100%;
+}
+.view .foldersData {width: 48.7%}
+.view .foldersData:nth-child(even){margin-right: 0}
+.cardsData{ margin-top: 10px}
+/* .cardsData{border-bottom: 2px solid #ccc; padding-bottom: 0px; margin-bottom: 15px} */
+.cardsData .dataColom{width: 49.1%; float: left; margin: 0 14px 12px 0}
+.foldersData, .filesBlock{width: 32.2%; float: left; margin: 0 14px 12px 0}
+.cardsData .pxcard{ width: 100%; height: 150px; }
+.cardsData .pxcard{background-color: transparent;}
+.cardsData .dataColom:last-child,.cardsData .dataColom:nth-child(even){ margin-right: 0}
+.cardContent{color:#fff; padding: 15px; position: relative; height: 79.9%; cursor: pointer;     text-shadow: 1px 1px 1px #7b7b7b; border-bottom:5px solid transparent;
+}
+.cardItem{     display: inline-block; width: 100%;}
+.cardContent:hover, .cardContent.active{border-bottom:5px solid #525252}
+.cardContent h3{padding: 0; margin: 0; font-size: 18px;}
+.cardContent .totalFiles{position: absolute;bottom: 14px}
+.cardContent .defFolderIcon{ font-size: 40px;     position: absolute; bottom: 3px; right: 11px}
+.foldersData px-card{background-color: transparent; }
+.folderContent{ height: 70px; cursor:pointer; background-color: #f2f2f2; padding: 15px; position: relative; margin-bottom: 14px;     border: 1px solid #ccc;}
+.folderContent:hover, .folderContent.active{border-bottom: 3px solid #525252}
+.dataContent{ font-size: 17px; color:#666; display: inline-block; width: 87%;}
+.dataContent .total{ font-size: 14px; }
+.dataContent .bold{font-weight: bold; }
+.folderIcon{font-size: 32px; display: inline-block; margin-right: 5px; color:#999}
+.folderSize{font-size: 14px; position: absolute; right: 13px; bottom: 9px; color:#666;}
+.spinner{ position: fixed; left: 55%; top: 25%; z-index: 9999}
+
+
+.subTitle{     display: inline-block;
+    font-size: 12px;
+    position: relative;
+    left: 18px;
+    top: -7px;
+    clear: both;
+    float: left;}
+    
+.rightIcon{    font-size: 30px;
+    display: inline-block;
+    float: left;
+    position: relative;
+    top: 5px; cursor: pointer; padding-right: 5px;}
+    
+ .scroll-body.aha-table{ width: 99.9%; overflow: initial}
+ .striped.aha-table:nth-child(even), .tr--filter.aha-table{     background-color: #fff;}
+ .th--no-borders.th--no-borders.th--no-borders.aha-table{    border: 1px solid #b1b1bc;}
+ .aha-fileName-td{ font-weight: bold; color:#428ef1; font-size: 13px; cursor: pointer;}
+ 
+ .filesTitle{ font-size: 18px; margin: 0; padding: 0; font-weight: normal;}
+ .fileContent{ height: 70px; cursor:pointer; background-color: #fff; padding: 15px; position: relative; margin-bottom: 14px; border: 1px solid #e4e4e4}
+ 
+.titleBlock{ position: relative;} 
+.filepageTitle{ font-size: 18px; font-weight: normal; background-color: #fff; display: inline-block; z-index: 1; position: relative; padding-right: 5px}
+.hrLine{ border-bottom: 1px solid #ccc; position: relative;top:-27px; z-index: 0}
+.filesBlock:nth-child(3n){margin-right: 0}
+.comments{ left: 144px }
+.view .foldersData:nth-child(2n){ margin-right: 0}
+
+.commentContent{font-size: 15px; color:#6d6d6d; margin: 10px 0 }
+.commentContent .title{ font-size: 14px; font-weight: bold}
+.commentContent .title span{ font-size: 11px; font-weight: normal; color:#ccc}
+.commentContent .content{margin: 10px 0; }
+.commentContent button.reply{ border: 0;background-color:transparent; color:#3f9aff; padding: 0; margin: 0; cursor: pointer;}

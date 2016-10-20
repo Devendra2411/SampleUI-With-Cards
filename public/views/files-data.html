@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="/css/custom.css" />
+<dom-module id="files-data">
+<template>
+
+		<span class="folderIcon fleft"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+		<div class="dataContent fleft"><div >{{filesData.name}}</div>
+		<div class="total">Uploaded <span>{{filesData.upload_date}}</span></div></div>
+		<div class="folderSize">Size:<span>{{filesData.size}}</span></div>
+	
+	
+</template>
+</dom-module>
+<script>
+Polymer({
+    is: 'files-data',
+    behaviors: [px.card],
+    properties: {
+    	filesData:{
+           	 type:Object,
+           	 value:{},
+           	 notify:true,
+           	 reflectToAttribute: true
+             },         
+     },
+     observers: [
+                 
+               ],
+    ready:function(){
+	},
+    attached : function() {
+    },
+   
+});
+</script>

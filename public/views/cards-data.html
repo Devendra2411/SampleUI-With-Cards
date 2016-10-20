@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="/css/custom.css" />
+<dom-module id="parent-card">
+
+<px-card class="fleft pxcard" id="{{cardsData.folderID}}">
+			<div class="cardContent">
+				<h3>{{cardsData.folderName}}</h3>
+				<div>{{cardsData.folderDesc}}</div>
+				<div class="defFolderIcon fright"><i class="fa fa-file-text" aria-hidden="true"></i></div>
+				<div class="totalFiles">TOTAL FILES: {{cardsData.fileSize}}</div>
+			</div>
+			</px-card>
+
+</dom-module>
+<script>
+Polymer({
+    is: 'parent-card',
+    behaviors: [px.card],
+    properties: {
+    	cardsData:{
+           	 type:Object,
+           	 value:{},
+           	 notify:true,
+           	 reflectToAttribute: true
+             },         
+     },
+     observers: [
+                 
+               ],
+    ready:function(){
+	},
+    attached : function() {
+    },
+   
+});
+</script>

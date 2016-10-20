@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="/css/custom.css" />
+<link rel="import" href="/views/parent-card.html"/>
+<link rel="import" href="/views/sub-folder.html"/>
+<link rel="import" href="/views/files-data.html"/>
+<div class="spinner" ng-show="spinner"><px-spinner size="75"></px-spinner></div>
+<header class="pageheader"> 
+	<h1> GPS Marketing Tool <span><i class="fa fa-caret-down" aria-hidden="true"></i></span></h1>
+	<div class="pageTitle">Dashboard</div>
+	<div class="actionsBlock fright"><button class="dashboardActions"><i class="fa fa-ellipsis-v " aria-hidden="true"></i></button></div>
+	<div class="search fright"><input type="text" name="search"> <i class="fa fa-search" aria-hidden="true"></i></div>
+</header>
+
+<div class="viewContent">
+	<div class="cardsData" ng-show="cardsData">
+		 <div class="dataColom" ng-repeat="data in parentCards"> 
+			<div class="cardItem" ng-style="{'background-color':data.bgcolor}">
+				<parent-card id="parent-card" card-data="{{data}}" ng-click="getSubFolders(data.cardId)" ></parent-card>		
+			</div>		
+		</div>
+		<!-- <px-deck-selector decks='[{"name":"First Deck","url":"/cardsData"},{"name":"Second Deck","url":"/cardsData"},{"name":"Third Deck","url":"/deck3"}]'></px-deck-selector> --> 
+	</div>
+	<div class="clear"></div>
+	<!-- <div class="folders" ng-show="cardContent" >
+		<div class="foldersData" ng-repeat="data in allfoldersData">
+			<div class="folderContent">
+				<sub-folder id="parent-folder" folder-data="{{data}}" ng-click="gotoFileView()"> </sub-folder>
+			</div>
+		</div>
+	</div> 
+	<div class="clear"></div>
+	<div ng-show="filesContent">
+		<h2 class="filesTitle">Files</h2>
+		<div class="files">
+			<div class="filesBlock " ng-repeat="data in allFilesData">
+				<div class="fileContent">
+					<files-data id="files-data" files-data="{{data}}" ng-click="gotoFileView()"> </files-data>
+				</div>
+			</div>
+		</div>
+	</div>-->
+	<div class="clear"></div>
+	
+</div>

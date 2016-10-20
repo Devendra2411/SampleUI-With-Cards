@@ -1,0 +1,39 @@
+{
+  "fileList": [
+    {
+      "fileID": "818853862",
+      "fileName": "Digital.pdf",
+      "fileUpdatedBy": "John",
+      "fileUpdatedDate": "2012-12-12T10:55:30-08:00"
+    },
+    {
+      "fileID": "818853861",
+      "fileName": "Controls.pdf",
+      "fileUpdatedBy": "Ron",
+      "fileUpdatedDate": "2015-12-12T10:55:30-08:00"
+    }
+  ],
+  "folderList": [
+    {
+      "folderID": "192429928",
+      "folderName": "Collateral",
+      "fileSize": "23",
+      "commentSize": "0",
+      "folderDesc": "External-Brochures,presentations,sales info"
+    },
+    {
+      "folderID": "192429929",
+      "folderName": "Maketing Data",
+      "fileSize": "23",
+      "commentSize": "0",
+      "folderDesc": "Internal only-Reports & Analysis"
+    },
+    {
+      "folderID": "192429938",
+      "folderName": "Education & Reference Materials",
+      "fileSize": "23",
+      "commentSize": "0",
+      "folderDesc": "Internal only"
+    }
+  ]
+}

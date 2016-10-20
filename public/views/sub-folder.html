@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="/css/custom.css" />
+<dom-module id="sub-folder">
+<template>
+
+
+<px-card>
+		<span class="folderIcon fleft"><i class="fa fa-folder" aria-hidden="true"></i></span>
+		<div class="dataContent fleft"><div class="bold">{{folderData.fileName}}</div>
+		<div class="total">Total Folders: <span>{{folderData.totalFolders}}</span></div></div>
+		<div class="folderSize">Size:<span>{{folderData.size}}</span></div>
+	</px-card>
+</template>
+</dom-module>
+<script>
+Polymer({
+    is: 'sub-folder',
+    behaviors: [px.card],
+    properties: {
+    	folderData:{
+           	 type:Object,
+           	 value:{},
+           	 notify:true,
+           	 reflectToAttribute: true
+             },         
+     },
+     observers: [
+                 
+               ],
+    ready:function(){
+	},
+    attached : function() {
+    },
+   
+});
+</script>

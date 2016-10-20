@@ -1,0 +1,97 @@
+<link rel="stylesheet" href="/css/custom.css" />
+<link rel="import" href="/views/sub-folder.html"/>
+<div class="spinner" ng-show="spinner"><px-spinner size="75"></px-spinner></div>
+<header class="pageheader fileView"> 
+	<span class="rightIcon" ng-click="gotoDashBoard()"><i class="fa fa-angle-left" aria-hidden="true"></i></span> 
+	<h1> GPS Marketing Tool</h1>
+	<div class="pageTitle">Plant</div>
+	<div class="actionsBlock fright"><button class="dashboardActions"><i class="fa fa-ellipsis-v " aria-hidden="true"></i></button></div>
+	<!-- <div class="subTitle">Collateral > Plant</div> -->
+</header>
+
+<div class="viewContent view">
+<div class="leftCol fleft">
+<div class="breadcrumbs">
+	<a href="">Home</a> > Collateral
+</div>
+	<div class="titleBlock ">
+	<h2 class="filepageTitle"><i class="fa fa-folder-open" aria-hidden="true"></i> Folders</h2>
+	<div class="hrLine"></div>
+	<div class="folders">
+			<div class="foldersData" ng-repeat="data in allfoldersData" ng-click="gotoFileView()">
+				<div class="folderContent">
+					<sub-folder id="parent-folder" folder-data="{{data}}"> </sub-folder>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="titleBlock ">
+	<h2 class="filepageTitle"><i class="fa fa-file-text" aria-hidden="true"></i> Files</h2>
+	<div class="hrLine"></div>
+	</div>
+	<px-data-table id="resultTable" class="" hide-pagination-control="true" sortable searchable striped filterable table-data="{{allFilesData}}" pagesize="{{allFilesData.length}}">      		
+			              <px-data-table-column name="fileName"
+			              type="string"
+			              label="FILE NAME"
+			              sortable
+			              searchable
+			              filterable
+			              required
+			              sort-function-name="sortColumn">
+			              </px-data-table-column>
+			              <px-data-table-column name="fileUpdatedBy"
+			              type="string"
+			              label="UPLOADED BY"
+			              sortable
+			              searchable
+			              filterable
+			              required
+			              sort-function-name="sortColumn">
+			              </px-data-table-column>
+			              <px-data-table-column name="fileUpdatedDate"
+			              type="string"
+			              label="UPLOAD DATE"
+			              sortable
+			              searchable
+			              filterable
+			              required
+			              sort-function-name="sortColumn">
+			              </px-data-table-column>
+			               <px-data-table-column name="size"
+			              type="html"
+			              label="SIZE"
+			              sortable
+			              searchable
+			              filterable
+			              required
+			              sort-function-name="sortColumn">
+			              <px-data-table-column name="version"
+			              type="html"
+			              label="VERSION"
+			              sortable
+			              searchable
+			              filterable
+			              required
+			              sort-function-name="sortColumn">
+			              </px-data-table-column>
+			              <px-data-table-column name="actions"
+			              type="html"
+			              label="Actions"
+			              sortable
+			              searchable
+			              filterable
+			              required
+			              sort-function-name="sortColumn">
+			              </px-data-table-column>
+						</px-data-table>
+</div>
+<div class="rightCol fleft">
+<div class="commentsData"><i class="fa fa-comment" aria-hidden="true"></i> Comments</div>
+<div class="commentContent">
+	<div class="title">Test User <span>5:00 PM</span></div>
+	<div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore </div>
+	<button class="reply">Reply</button>
+</div>
+</div>
+</div>
