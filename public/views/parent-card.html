@@ -2,13 +2,13 @@
 <dom-module id="parent-card">
 <template>
 
-<px-card class="fleft pxcard" id="{{cardData.folderID}}">
+<px-card class="fleft pxcard" >
 			<div class="cardContent">
 				<h3>{{cardData.folderName}}</h3>
 				<div>{{cardData.folderDesc}}</div>
 				<div class="defFolderIcon fright"><i class="fa fa-file-text" aria-hidden="true"></i></div>
-				<div class="totalFiles"><i class="fa fa-file-text" aria-hidden="true"></i> Total Files: <span>{{cardData.fileSize}}</span></div>
-				<div class="totalFiles comments"><i class="fa fa-comment" aria-hidden="true"></i> Comments: <span>{{cardData.commentSize}}</span></div>
+				<div class="totalFiles"><i class="fa fa-file-text" aria-hidden="true"></i> Total Files: <span>{{cardData.totalCount}}</span></div>
+				<div class="totalFiles comments"><i class="fa fa-comment" aria-hidden="true"></i> Comments: <span>0</span></div>
 			</div>
 			</px-card> 
 </template>

@@ -41,7 +41,7 @@ h1 {
 	float: right;
 }
 a{ text-decoration: none}
-.leftCol{width: 70%; border-right: 1px solid #ccc; height: 100%; padding-right: 10px; min-height: 700px}
+.leftCol{width: 70%; border-right: 1px solid #ccc; height: 100%; /* padding-right: 10px; */ min-height: 700px}
 .rightCol{width: 30%; height: 100%; padding: 10px 10px; }
 .breadcrumbs{ border-bottom: 1px solid #ccc; padding: 10px 0 10px 10px; font-size: 14px; }
 button.dashboardActions {
@@ -72,22 +72,22 @@ button.dashboardActions {
 .cardsData .pxcard{ width: 100%; height: 150px; }
 .cardsData .pxcard{background-color: transparent;}
 .cardsData .dataColom:last-child,.cardsData .dataColom:nth-child(even){ margin-right: 0}
-.cardContent{color:#fff; padding: 15px; position: relative; height: 79.9%; cursor: pointer;     text-shadow: 1px 1px 1px #7b7b7b; border-bottom:5px solid transparent;
+.cardContent{color:#fff; padding: 15px; position: relative; height: 79.9%; cursor: pointer; border-bottom:5px solid transparent;
 }
 .cardItem{     display: inline-block; width: 100%;}
 .cardContent:hover, .cardContent.active{border-bottom:5px solid #525252}
-.cardContent h3{padding: 0; margin: 0; font-size: 18px;}
+.cardContent h3{padding: 0; margin: 0; font-size: 25px;}
 .cardContent .totalFiles{position: absolute;bottom: 14px}
 .cardContent .defFolderIcon{ font-size: 40px;     position: absolute; bottom: 3px; right: 11px}
 .foldersData px-card{background-color: transparent; }
 .folderContent{ height: 70px; cursor:pointer; background-color: #f2f2f2; padding: 15px; position: relative; margin-bottom: 14px;     border: 1px solid #ccc;}
-.folderContent:hover, .folderContent.active{border-bottom: 3px solid #525252}
+.folderContent:hover, .folderContent.active{border-bottom: 1px solid #525252}
 .dataContent{ font-size: 17px; color:#666; display: inline-block; width: 87%;}
 .dataContent .total{ font-size: 14px; }
 .dataContent .bold{font-weight: bold; }
 .folderIcon{font-size: 32px; display: inline-block; margin-right: 5px; color:#999}
 .folderSize{font-size: 14px; position: absolute; right: 13px; bottom: 9px; color:#666;}
-.spinner{ position: fixed; left: 55%; top: 25%; z-index: 9999}
+.spinner{ position: fixed; left: 53%; top: 25%; z-index: 9999}
 
 
 .subTitle{     display: inline-block;
@@ -104,7 +104,7 @@ button.dashboardActions {
     position: relative;
     top: 5px; cursor: pointer; padding-right: 5px;}
     
- .scroll-body.aha-table{ width: 99.9%; overflow: initial}
+ .scroll-body.aha-table{ width: 99.9%;}
  .striped.aha-table:nth-child(even), .tr--filter.aha-table{     background-color: #fff;}
  .th--no-borders.th--no-borders.th--no-borders.aha-table{    border: 1px solid #b1b1bc;}
  .aha-fileName-td{ font-weight: bold; color:#428ef1; font-size: 13px; cursor: pointer;}
@@ -116,7 +116,7 @@ button.dashboardActions {
 .filepageTitle{ font-size: 18px; font-weight: normal; background-color: #fff; display: inline-block; z-index: 1; position: relative; padding-right: 5px}
 .hrLine{ border-bottom: 1px solid #ccc; position: relative;top:-27px; z-index: 0}
 .filesBlock:nth-child(3n){margin-right: 0}
-.comments{ left: 144px }
+.comments{ left: 180px }
 .view .foldersData:nth-child(2n){ margin-right: 0}
 
 .commentContent{font-size: 15px; color:#6d6d6d; margin: 10px 0 }
@@ -124,3 +124,8 @@ button.dashboardActions {
 .commentContent .title span{ font-size: 11px; font-weight: normal; color:#ccc}
 .commentContent .content{margin: 10px 0; }
 .commentContent button.reply{ border: 0;background-color:transparent; color:#3f9aff; padding: 0; margin: 0; cursor: pointer;}
+
+.nodata {text-align: center;
+    font-size: 35px;
+    color: rgba(193, 193, 193, 0.32);
+    font-weight: bold;}

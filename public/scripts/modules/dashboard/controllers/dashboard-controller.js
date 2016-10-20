@@ -2,13 +2,9 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     'use strict';
     // Controller definition
     controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService) {
-    	 /* $scope.getRandomColor1 =  {
-    		 "background-color": '#' + Math.floor(Math.random()*16777215).toString(16)
-    	    };*/
-    	/*$scope.getRandomColorCode =  {
-       		 "background-color": '#' + Math.floor(Math.random()*16777215).toString(16)
-       	    }*/;
-       	 $scope.parentCards=[];
+       	    $rootScope.ssoId = "502450548";
+       	    $rootScope.email = $rootScope.ssoId+"@mail.ad.ge.com"
+       	    
     	 $scope.getRandomColor = function(id){
     		 var cardsLength =  $scope.parentCards.length; 
     			for(var i=0; i<cardsLength;i++){
@@ -33,7 +29,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	    	$scope.cardsData = false;
     	    	$scope.subfolderData = false;
     	    	dashboardService.getSubFoldersFilesDetails(dataId).then(function(response) {
-    	    		
     	    		$scope.cardContent = true;
     	    		$scope.filesContent = true;
     	    		$rootScope.subFoldersFilesData = response.data;
@@ -56,16 +51,13 @@ define(['angular', '../dashboard'], function (angular, controllers) {
                     $scope.errorMsgdata = "Failed to load data";
                     $('#alert').removeClass('fade-out hidden');
                 });
-    	     /*$('#'+dataId).find('.cardContent').addClass('active').parent().siblings().children().find('.cardContent').removeClass('active')
-    		 $timeout(function(){ $scope.cardContent = false; $scope.filesContent=false},400)
-    		  $timeout(function(){ $scope.cardContent = true;$scope.filesContent=true; $scope.spinner = false; },500);*/
-    		
+    	   		
     	    	
     	 }
     	
     	 
     	 
-    	 $scope.getCardsData = function(){
+    	/* $scope.getCardsData = function(){
     		 var localUrl ='/sample-data/sample-cards.json';
     		 $http.get(localUrl).success(function(data) {
                  // you can do some processing here
@@ -74,36 +66,99 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     			 $rootScope.allFilesData = data.fileList;
     			 $scope.getRandomColor();
              });
-    		/* dashboardService.getCardDetails().then(function(response) {
-                 $scope.spinner = false;
-                 $scope.parentCards = response;
-             },function(error){
-             	$scope.spinner = false;
-             	$scope.serviceErroMsg = true;
-                 $scope.errorMsgdata = "Failed to load data";
-                 $('#alert').removeClass('fade-out hidden');
-             });*/
+    		
     	 }
     	 $scope.getCardsData();
-    	 $scope.filesData = function(){
-   		  
-   	  }
-    	 //$scope.foldersAndFilesData();
+    	*/
+    	 
+    	
+    	 
+    	 $scope.getCards = function(){
+    		 $scope.spinner = true;
+     		var data = {"folderID":"0",
+     				 "sso":$rootScope.ssoId,
+     				"email":$rootScope.email
+     				}
+     		dashboardService.getCards(data).then(function (response) {
+ 	    		if(response!=""){
+ 	    			$scope.spinner=false;
+ 	    			 $scope.cardsData = true;
+ 	    			 $scope.parentCards = response.folderList;
+ 	    			 $scope.getRandomColor();
+ 	    		}
+ 	    		else{
+ 	    			$scope.errorMsgdata = "No Cards";
+ 	    			$('#alert').removeClass('fade-out hidden');
+ 	    			$scope.serviceSuccessMsg = false;
+ 		        	$scope.serviceErroMsg = true;
+ 	    		}
+ 	    		
+ 	    	},function(error){
+ 	        	$scope.spinner = false;
+ 	        	$scope.errorMsgdata = "Failed to load data";
+ 	        	$('#alert').removeClass('fade-out hidden');
+ 	        	$scope.serviceSuccessMsg = false;
+ 	        	$scope.serviceErroMsg = true;
+ 	        })
+ 	        
+    	 }
+    	 
+    	 
+    	 $scope.getFolders = function(dataId, folderName){
+    		 $scope.spinner = true;
+    		 $rootScope.folderName = folderName;
+     		var data = {"folderID":dataId,
+     				 "sso":$rootScope.ssoId,
+     				"email":$rootScope.email
+     				}
+     		dashboardService.getFolders(data).then(function (response) {
+ 	    		if(response!=""){
+ 	    			 $scope.spinner=false;
+ 	    			
+ 	    			 $rootScope.allFoldersData = response.folderList;
+ 	    			 $rootScope.allFilesData = response.fileList;
+ 	    			 
+ 	    			 console.log(response);
+ 	    			 $state.go('view');
+ 	    			 $scope.errrorMsg== true;
+ 	    			 
+ 	    			for (var key in response) {
+ 	    				  if (response.hasOwnProperty("folderList") ==false && response.hasOwnProperty("fileList") ==false) {
+ 	    					 $scope.folderView =true;
+ 	 	    				 $scope.errrorMsg= true;
+ 	    				  }
+ 	    				}
+ 	    		}
+ 	    		else{
+ 	    			$scope.errorMsgdata = "No data";
+ 	    			$('#alert').removeClass('fade-out hidden');
+ 	    			$scope.serviceSuccessMsg = false;
+ 		        	$scope.serviceErroMsg = true;
+ 	    		}
+ 	    		
+ 	    	},function(error){
+ 	        	$scope.spinner = false;
+ 	        	$scope.errorMsgdata = "Failed to load data";
+ 	        	$('#alert').removeClass('fade-out hidden');
+ 	        	$scope.serviceSuccessMsg = false;
+ 	        	$scope.serviceErroMsg = true;
+ 	        })
+ 	        
+    	 }
     	  $scope.gotoDashBoard = function(){
     		  $state.go('dashboard');
     	  }
     	  $scope.gotoFileView = function(){
     		  $state.go('filesView');
     	  }
-    	 /* if($state.current.name =="dashboards"){
-    		  $scope.cardsData();
-    	  }*/
+    	
     	  if($state.current.name =="filesView" ||$state.current.name =="view" ){
-    		  $scope.filesData();
-    		  $scope.getCardsData();
+    		  //$scope.filesData();
+    		 // $scope.getCardsData();
+    		  
     	  }
-    	  if($state.current.name =="view" ){ 
-    		//  $scope.getCardsData();
+    	  if($state.current.name =="dashboard" ){ 
+    		  $scope.getCards();
     	  }
     }]);
 });

@@ -14,7 +14,7 @@
 	<div class="cardsData" ng-show="cardsData">
 		 <div class="dataColom" ng-repeat="data in parentCards"> 
 			<div class="cardItem" ng-style="{'background-color':data.bgcolor}">
-				<parent-card id="parent-card" card-data="{{data}}" ng-click="getSubFolders(data.cardId)" ></parent-card>		
+				<parent-card id="parent-card" card-data="{{data}}" ng-click="getFolders(data.folderID, data.folderName)" ></parent-card>		
 			</div>		
 		</div>
 		<!-- <px-deck-selector decks='[{"name":"First Deck","url":"/cardsData"},{"name":"Second Deck","url":"/cardsData"},{"name":"Third Deck","url":"/deck3"}]'></px-deck-selector> --> 

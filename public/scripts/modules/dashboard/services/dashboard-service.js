@@ -28,9 +28,38 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
               )
               return deferred.promise;
     	  }
+    	  
+    	  
+    	  var getCards =  function(data){
+    			var deferred = $q.defer();
+    			$http.post(API_URL+"/FolderItems",data)
+    				.success(function(data, status, headers) {
+    					deferred.resolve(data);
+    				})
+    				.error(function() {
+    					deferred.reject('Error fetching results ');
+    				});
+    			return deferred.promise;
+    		};
+    		
+		 var getFolders =  function(data){
+ 			var deferred = $q.defer();
+ 			$http.post(API_URL+"/FolderItems",data)
+ 				.success(function(data, status, headers) {
+ 					deferred.resolve(data);
+ 				})
+ 				.error(function() {
+ 					deferred.reject('Error fetching results ');
+ 				});
+ 			return deferred.promise;
+ 		};
+    	  
             return{
             	getCardDetails : getCardDetails,
-            	getSubFoldersFilesDetails : getSubFoldersFilesDetails
+            	getSubFoldersFilesDetails : getSubFoldersFilesDetails,
+            	
+            	getCards:getCards,
+            	getFolders:getFolders
             }
     }]);
 
