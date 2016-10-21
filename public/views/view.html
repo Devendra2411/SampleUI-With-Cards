@@ -8,7 +8,7 @@
 	<div class="actionsBlock fright"><button class="dashboardActions"><i class="fa fa-ellipsis-v " aria-hidden="true"></i></button></div>
 	<!-- <div class="subTitle">Collateral > Plant</div> -->
 </header>
- <!-- <div class="viewContent view" ng-show="errrorMsg" class="nodata">No Data</div>  -->
+ <div class="viewContent view nodata" ng-show="errrorMsg">No Data</div>  
 <div class="viewContent view" ng-hide="folderView" >
 <div class="leftCol fleft">
 <div class="breadcrumbs">
@@ -90,12 +90,23 @@
 						</px-data-table>
 	</div>
 </div>
-<div class="rightCol fleft">
+<div class="rightCol fleft" resizable r-directions="['right']">
 <div class="commentsData"><i class="fa fa-comment" aria-hidden="true"></i> Comments</div>
 <div class="commentContent">
 	<div class="title">Test User <span>5:00 PM</span></div>
 	<div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore </div>
 	<button class="reply">Reply</button>
+</div>
+
+<div class="clear"></div>
+
+<div class="msgForm">
+<h3>Post Comments</h3>
+<form>
+	<div><input type="text" ></div>
+	<div><textarea rows="10" ></textarea></div>
+	<button class="postbtn fright">Post</button>
+</form>
 </div>
 </div>
 </div>
