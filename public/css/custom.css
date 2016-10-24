@@ -91,16 +91,16 @@ button.dashboardActions {
 .cardContent .totalFiles{position: absolute;bottom: 14px}
 .cardContent .defFolderIcon{ font-size: 40px;     position: absolute; bottom: 3px; right: 11px}
 .foldersData px-card{background-color: transparent; }
-.folderContent{ height: 70px; cursor:pointer; background-color: #f2f2f2; padding: 15px; position: relative; margin-bottom: 14px;     border: 1px solid #ccc;}
+.folderContent{ height: 70px; cursor:pointer; background-color: #169bd5; padding: 15px; position: relative; margin-bottom: 14px; color:#fff;     border: 1px solid #ccc;}
 .folderContent:hover, .folderContent.active{border-bottom: 1px solid #525252}
-.dataContent{ font-size: 17px; color:#666; display: inline-block; width: 87%;}
+.dataContent{ font-size: 17px;  display: inline-block; width: 87%;}
 .dataContent { overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; width: 256px}
 .dataContent .total{ font-size: 14px; }
 .dataContent.bold{font-weight: bold; }
-.folderIcon{font-size: 32px; display: inline-block; margin-right: 5px; color:#999}
-.folderSize{font-size: 14px; position: absolute; right: 13px; bottom: 9px; color:#666;}
+.folderIcon{font-size: 32px; display: inline-block; margin-right: 5px; }
+.folderSize{font-size: 14px; position: absolute; right: 13px; bottom: 9px;}
 .spinner{ position: fixed; left: 53%; top: 25%; z-index: 9999}
 
 

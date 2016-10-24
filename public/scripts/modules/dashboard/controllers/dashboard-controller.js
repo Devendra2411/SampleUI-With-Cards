@@ -1,7 +1,7 @@
 define(['angular', '../dashboard'], function (angular, controllers) {
     'use strict';
     // Controller definition
-    controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService) {
+    controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService','$q', '$urlRouter', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService, $q, $urlRouter) {
        	    $rootScope.ssoId = "502450548";
        	    $rootScope.email = $rootScope.ssoId+"@mail.ad.ge.com"
        	    
@@ -145,6 +145,44 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        })
  	        
     	 }
+    	 
+    	
+    	             /* $scope.getStatesData = function(){          
+    	                var $state = $rootScope.$state;
+    	                var data = $rootScope.allFoldersData;
+    	              
+    	                    angular.forEach(data, function(value, key) {
+    	                      
+    	                      var getExistingState = $state.get(value.name)
+
+    	                      if(getExistingState !== null){
+    	                        return; 
+    	                      }
+    	                      
+    	                      var state = {
+    	                        "url": value.url,
+    	                        "parent": value.parent,
+    	                        "abstract": value.abstract,
+    	                        "views": {}
+    	                      };
+
+    	                      angular.forEach(value.views, function(view) {
+    	                        state.views[view.name] = {
+    	                          templateUrl: view.templateUrl,
+    	                        };
+    	                      });
+
+    	                      $stateProviderRef.state(value.name, state);
+    	                    });
+    	                    // Configures $urlRouter's listener *after* your custom listener
+
+    	                    $urlRouter.sync();
+    	                    $urlRouter.listen();
+    	                    
+    	                 
+    	              }*/
+    	 
+    	 
     	  $scope.gotoDashBoard = function(){
     		  $state.go('dashboard');
     	  }
