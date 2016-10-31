@@ -30,28 +30,30 @@ define(['angular', 'angular-ui-router'], function(angular) {
                 }
             })
             .state('dashboard', {
-                //parent: 'secure',
+                parent: 'secure',
                 url: '/dashboard',
                 templateUrl: 'views/dashboards.html',
                 controller: 'dashboard-controller'
             })
             .state('view', {
-                //parent: 'secure',
+                parent: 'secure',
                 url: '/view',
                 templateUrl: 'views/view.html',
                 controller: 'dashboard-controller'
             })
             .state('filesView', {
-                //parent: 'secure',
+                parent: 'secure',
                 url: '/files',
                 templateUrl: 'views/filesView.html',
                 controller: 'dashboard-controller'
             })
             .state('blankpage', {
+            	parent: 'secure',
                 url: '/blankpage',
                 templateUrl: 'views/blank-page.html'
             })
             .state('blanksubpage', {
+            	parent: 'secure',
                 url: '/blanksubpage',
                 templateUrl: 'views/blank-sub-page.html'
             });
