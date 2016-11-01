@@ -24,9 +24,7 @@ define(['angular', 'angular-ui-router'], function(angular) {
                         	deferred.resolve(userInfo);
                         	console.log(userInfo);
                         	$rootScope.ssoId=userInfo.user_name;
-                        	window.userActualSSO =userInfo.user_name;
                         	console.log('$rootScope.ssoId', $rootScope.ssoId);
-                        	console.log('root js userActualSSO',window.userActualSSO);
                         	$rootScope.emailId=userInfo.email;
                              //$rootScope.authorizeUser($rootScope.ssoId);
                              
