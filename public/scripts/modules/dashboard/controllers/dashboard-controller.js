@@ -76,7 +76,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
                     console.log(response);
     	    	},function(error){
                 	$scope.spinner = false;
-                	$scope.serviceErroMsg = true;
+                	$scope.errorMsgdata = true;
                     $scope.errorMsgdata = "Failed to load data";
                     $('#alert').removeClass('fade-out hidden');
                 });
@@ -105,7 +105,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    			$scope.errorMsgdata = "No Cards";
  	    			$('#alert').removeClass('fade-out hidden');
  	    			$scope.serviceSuccessMsg = false;
- 		        	$scope.serviceErroMsg = true;
+ 		        	$scope.errorMsgdata = true;
  	    		}
  	    		
  	    	},function(error){
@@ -113,7 +113,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        	$scope.errorMsgdata = "Failed to load data";
  	        	$('#alert').removeClass('fade-out hidden');
  	        	$scope.serviceSuccessMsg = false;
- 	        	$scope.serviceErroMsg = true;
+ 	        	$scope.errorMsgdata = true;
  	        })
  	        
     	 }
@@ -355,7 +355,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    			$scope.errorMsgdata = "No data";
  	    			$('#alert').removeClass('fade-out hidden');
  	    			$scope.serviceSuccessMsg = false;
- 		        	$scope.serviceErroMsg = true;
+ 		        	$scope.errorMsgdata = true;
  	    		}
  	    		
  	    	},function(error){
@@ -363,7 +363,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        	$scope.errorMsgdata = "Failed to load data";
  	        	$('#alert').removeClass('fade-out hidden');
  	        	$scope.serviceSuccessMsg = false;
- 	        	$scope.serviceErroMsg = true;
+ 	        	$scope.errorMsgdata = true;
  	        })
  	        
     	 }
@@ -381,7 +381,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        	$scope.errorMsgdata = "Failed";
  	        	$('#alert').removeClass('fade-out hidden');
  	        	$scope.serviceSuccessMsg = false;
- 	        	$scope.serviceErroMsg = true;
+ 	        	$scope.errorMsgdata = true;
  	        })
  	        
     	 }
@@ -396,7 +396,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	           	$scope.errorMsgdata = "Failed";
  	        	$('#alert').removeClass('fade-out hidden');
  	        	$scope.serviceSuccessMsg = false;
- 	        	$scope.serviceErroMsg = true;
+ 	        	$scope.errorMsgdata = true;
  	        })
  	        
     	 }
@@ -413,7 +413,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        	$scope.errorMsgdata = "Download Failed";
  	        	$('#alert').removeClass('fade-out hidden');
  	        	$scope.serviceSuccessMsg = false;
- 	        	$scope.serviceErroMsg = true;
+ 	        	$scope.errorMsgdata = true;
  	        })
     	 };
     	 
@@ -455,7 +455,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        	$scope.errorMsgdata = "Upload Failed";
  	        	$('#alert').removeClass('fade-out hidden');
  	        	$scope.serviceSuccessMsg = false;
- 	        	$scope.serviceErroMsg = true;
+ 	        	$scope.errorMsgdata = true;
  	        })
     	 };
     	 
@@ -538,7 +538,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	 	 	    		$scope.successMsgdata = "Folder Created successfully";
  	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
  	 	 	        	$scope.serviceSuccessMsg = true;
- 	 	 	        	$scope.serviceErroMsg = false;
+ 	 	 	        	$scope.errorMsgdata = false;
  	    			}
  	    			else{
  	    			$rootScope.response = response;
@@ -549,7 +549,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	 	    		$scope.successMsgdata = "Folder Created successfully";
  	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
  	 	        	$scope.serviceSuccessMsg = true;
- 	 	        	$scope.serviceErroMsg = false;
+ 	 	        	$scope.errorMsgdata = false;
  	    			}
  	    		}
  	    		
@@ -558,7 +558,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        	$scope.errorMsgdata = "Failed";
  	        	$('#alert').removeClass('fade-out hidden');
  	        	$scope.serviceSuccessMsg = false;
- 	        	$scope.serviceErroMsg = true;
+ 	        	$scope.errorMsgdata = true;
  	        })
     	 };
     	 
