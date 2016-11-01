@@ -18,7 +18,7 @@ define(['angular', 'angular-ui-router'], function(angular) {
                 template: '<ui-view/>',
                 abstract: true,
                 resolve: {
-                    authenticated: ['$q', 'PredixUserService', function ($q, predixUserService) {
+                    authenticated: ['$q', 'PredixUserService','$rootScope', function ($q, predixUserService, $rootScope) {
                         var deferred = $q.defer();
                         predixUserService.isAuthenticated().then(function(userInfo){
                         	deferred.resolve(userInfo);

@@ -529,15 +529,28 @@ define(['angular', '../dashboard'], function (angular, controllers) {
      		dashboardService.createFolder(data).then(function (response) {
      			 $scope.spinner = false;
  	    		if(response!=""){
+ 	    			if(flag=="home"){
+ 	    				$rootScope.response = response;
+ 	 	 	    		$scope.getCards();
+ 	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+ 	 	 	    		$scope.FolderNameData ="";
+ 	 	 	    		console.log('createFolder', response);
+ 	 	 	    		$scope.successMsgdata = "Folder Created successfully";
+ 	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+ 	 	 	        	$scope.serviceSuccessMsg = true;
+ 	 	 	        	$scope.serviceErroMsg = false;
+ 	    			}
+ 	    			else{
  	    			$rootScope.response = response;
  	 	    		$scope.getFolders();
  	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
  	 	    		$scope.FolderNameData ="";
  	 	    		console.log('createFolder', response);
- 	 	    		$scope.errorMsgdata = "Folder Created successfully";
- 	 	        	$('#alert').removeClass('fade-out hidden');
+ 	 	    		$scope.successMsgdata = "Folder Created successfully";
+ 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
  	 	        	$scope.serviceSuccessMsg = true;
  	 	        	$scope.serviceErroMsg = false;
+ 	    			}
  	    		}
  	    		
  	    	},function(error){
