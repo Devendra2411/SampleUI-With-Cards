@@ -426,18 +426,30 @@ define(['angular', '../dashboard'], function (angular, controllers) {
          };*/
          
          $scope.addFile= function(){
-        	 document.getElementById("uploadBtn").onchange = function () {
-        		    document.getElementById("uploadFile").value = this.value;
+        	 document.getElementById('uploadBtn').onchange = uploadOnChange;
+        	 function uploadOnChange() {
+        		    var filename = this.value;
+        		    var lastIndex = filename.lastIndexOf("\\");
+        		    if (lastIndex >= 0) {
+        		    	$rootScope.filename = filename.substring(lastIndex + 1);
+        		    }
+        		    document.getElementById('uploadFile').value = $rootScope.filename;
         		}
          }
     	 $scope.fileupload = function(){
     		$scope.spinner = true;
     		var folderDataId = sessionStorage.getItem("folderId");
-    		var data = {"name":"google.png", "parent":{"id": folderDataId},"file":"data:image/png;base64"}
+    		var data = {"name":$rootScope.filename, "parent":{"id": folderDataId},"file":"data:image/png;base64"}
     		//var formData = new FormData($('#files')[0])
      		dashboardService.fileUpload(data).then(function (response) {
      			 $scope.spinner = false;
- 	    		 $rootScope.fileuploadData = response;
+     			 if(response!=""){
+     				$rootScope.fileuploadData = response;
+     				$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+     				$rootScope.filename="";
+     			 }
+     			 
+ 	    		 
  	    	},function(error){
  	    		 $scope.spinner = false
  	        	$scope.errorMsgdata = "Upload Failed";
@@ -507,17 +519,27 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     			 folderID =sessionStorage.getItem("folderId");
     		 }
     		 var data = {
-    				 "folderID":"0",
+    				 "folderID":folderID,
     				 "sso":$rootScope.ssoId,
       				 "email":$rootScope.email,
     				 "folderList": [{
     				       "folderName": $scope.FolderNameData 
     				     }]
     				 }
-     		dashboardService.createFolder().then(function (response) {
+     		dashboardService.createFolder(data).then(function (response) {
      			 $scope.spinner = false;
- 	    		 $rootScope.response = response;
- 	    		 console.log('createFolder', response);
+ 	    		if(response!=""){
+ 	    			$rootScope.response = response;
+ 	 	    		$scope.getFolders();
+ 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+ 	 	    		$scope.FolderNameData ="";
+ 	 	    		console.log('createFolder', response);
+ 	 	    		$scope.errorMsgdata = "Folder Created successfully";
+ 	 	        	$('#alert').removeClass('fade-out hidden');
+ 	 	        	$scope.serviceSuccessMsg = true;
+ 	 	        	$scope.serviceErroMsg = false;
+ 	    		}
+ 	    		
  	    	},function(error){
  	    		 $scope.spinner = false
  	        	$scope.errorMsgdata = "Failed";
@@ -528,7 +550,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	 };
     	 
     	 $scope.getAkanaToken();
-    	 //$scope.addFile();
+    	 $scope.addFile();
     	 $scope.gotoDashBoard = function(){
     		  $state.go('dashboard');
     	  }

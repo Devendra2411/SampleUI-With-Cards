@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/css/custom.css" />
 <link rel="import" href="/views/sub-folder.html"/>
-<!-- <div id="serviceErroMsg" class="alert-message-container" ng-show="serviceErroMsg">
+<div id="serviceErroMsg" class="alert-message-container" ng-show="errorMsgdata">
 	<px-alert-message type="custom" message-title=""
 		message="{{errorMsgdata}}"
 		action="acknowledge"
@@ -8,7 +8,15 @@
 		height="25px"
 	/> </px-alert-message>
 
-</div> -->
+</div>
+
+<div id="serviceSuccessMsg" class="alert-message-container message-container" ng-show="serviceSuccessMsg">
+	<px-alert-message type="custom" message-title="" message="{{successMsgdata}}" action="acknowledge"> 
+	<img src="../../images/alert-icon-green-150x150.png" width="15px" height="25px" /> </px-alert-message>
+
+</div>
+
+
 <div class="accessActionMenu" style="display:none">
 	<ul>
 		<li><button ng-click="getFileDownload()">Download</button></li>

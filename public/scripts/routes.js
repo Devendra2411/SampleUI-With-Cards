@@ -21,7 +21,16 @@ define(['angular', 'angular-ui-router'], function(angular) {
                     authenticated: ['$q', 'PredixUserService', function ($q, predixUserService) {
                         var deferred = $q.defer();
                         predixUserService.isAuthenticated().then(function(userInfo){
-                            deferred.resolve(userInfo);
+                        	deferred.resolve(userInfo);
+                        	console.log(userInfo);
+                        	$rootScope.ssoId=userInfo.user_name;
+                        	window.userActualSSO =userInfo.user_name;
+                        	console.log('$rootScope.ssoId', $rootScope.ssoId);
+                        	console.log('root js userActualSSO',window.userActualSSO);
+                        	$rootScope.emailId=userInfo.email;
+                             //$rootScope.authorizeUser($rootScope.ssoId);
+                             
+                            
                         }, function(){
                             deferred.reject({code: 'UNAUTHORIZED'});
                         });
