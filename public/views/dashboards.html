@@ -3,12 +3,24 @@
 <link rel="import" href="/views/sub-folder.html"/>
 <link rel="import" href="/views/files-data.html"/>
 <div class="spinner" ng-show="spinner"><px-spinner size="75"></px-spinner></div>
-<header class="pageheader"> 
-	<h1> GPS Marketing Tool <span><i class="fa fa-caret-down" aria-hidden="true"></i></span></h1>
+<px-context-browser label-field="name" id-field="identifier" opened-item-name="GPS Marketing Tool" class="gps"> </px-context-browser>  
+<header class="pageheader dashboard">
+
+	<!-- <h1> GPS Marketing Tool <span><i class="fa fa-caret-down" aria-hidden="true"></i></span></h1> -->
 	<div class="pageTitle">Dashboard</div>
-	<div class="actionsBlock fright"><button class="dashboardActions"><i class="fa fa-ellipsis-v " aria-hidden="true"></i></button></div>
+	<div class="actionsBlock fright"><button class="dashboardActions actionMenu2"><i class="fa fa-ellipsis-v " aria-hidden="true"></i>
+	<ul>
+	  <li>
+	    <ul>
+	     <!--  <li ng-click="popupWindow()">Add New File</li> -->
+	       <li ng-click="folderPopup()">Add New Folder</li>
+	    </ul>
+	  </li>
+	</ul>
+	</button></div>
 	<div class="search fright"><input type="text" name="search"> <i class="fa fa-search" aria-hidden="true"></i></div>
 </header>
+
 
 <div class="viewContent">
 	<div class="cardsData" ng-show="cardsData">
@@ -39,5 +51,47 @@
 		</div>
 	</div>-->
 	<div class="clear"></div>
-	
+	<div class="saveModel">
+
+	<div id="popup" class="modal-box"> 
+	  <div class="userData">
+	    <a href="#" class="js-modal-close close">x</a>
+	    <h3> File Upload</h3>  
+	    <from id="files">
+		<input id="uploadFile" placeholder="Choose File" disabled="disabled" />
+		<div class="fileUpload btn btn-primary">
+		    <span> Browse</span>
+		    <input id="uploadBtn" type="file" class="upload" />
+		    
+		</div>	    
+	    <button name="{{parentID}}"ng-click="fileupload(name)" class="btn customBtn"> Upload </button>
+	    
+	  <!--   <input type="file" class="customInputBox" id="saveProcessName" accept="*" file-model = "uploads" ng-model="processName" /> </from>
+	    <button name="{{parentID}}"ng-click="fileupload(name)" class="btn customBtn"> Upload </button> -->
+	  </div>
+		<div class="clearfix"></div>
+	  <footer>
+	    <a href="#" class="btn custom_btn actionbuttons js-modal-close">Close</a>
+	  </footer>
+	</div>	
+</div>
+	<div class="CreateFolder">
+
+	<div id="folderPopup" class="modal-box"> 
+	  <div class="userData">
+	    <a href="#" class="js-modal-close close">x</a>
+	    <h3> Create Folder</h3>  
+	    <from id="Create_folder">
+		<input type="text" ng-model="FolderNameData" >    
+	    <button name="home" ng-click="craeteFolderToBox('home')" class="btn customBtn"> Create Folder </button>
+	    
+	  <!--   <input type="file" class="customInputBox" id="saveProcessName" accept="*" file-model = "uploads" ng-model="processName" /> </from>
+	    <button name="{{parentID}}"ng-click="fileupload(name)" class="btn customBtn"> Upload </button> -->
+	  </div>
+		<div class="clearfix"></div>
+	  <footer>
+	    <a href="#" class="btn custom_btn actionbuttons js-modal-close">Close</a>
+	  </footer>
+	</div>	
+</div>
 </div>

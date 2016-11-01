@@ -1,19 +1,47 @@
 <link rel="stylesheet" href="/css/custom.css" />
 <link rel="import" href="/views/sub-folder.html"/>
+<!-- <div id="serviceErroMsg" class="alert-message-container" ng-show="serviceErroMsg">
+	<px-alert-message type="custom" message-title=""
+		message="{{errorMsgdata}}"
+		action="acknowledge"
+	> <img src="../../images/alert-icon-red-150x150.png" width="15px"
+		height="25px"
+	/> </px-alert-message>
 
+</div> -->
+<div class="accessActionMenu" style="display:none">
+	<ul>
+		<li><button ng-click="getFileDownload()">Download</button></li>
+		<li><button ng-click="">Share</button></li>
+		<li><button ng-click=""></i>Delete</button></li>
+	</ul>
+</div>
 <div class="spinner" ng-show="spinner"><px-spinner size="75"></px-spinner></div>
+<!-- <px-context-browser label-field="name" id-field="identifier" opened-item-name="GPS Marketing Tool" class="gps"> </px-context-browser> -->  
 <header class="pageheader fileView"> 
-	<span class="rightIcon" ng-click="gotoDashBoard()"><i class="fa fa-angle-left" aria-hidden="true"></i></span> 
+	<span class="rightIcon" ng-click="gotoDashBoard()"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
 	<h1> GPS Marketing Tool</h1>
 	<div class="pageTitle">{{folderName}}</div>
-	<div class="actionsBlock fright"><button class="dashboardActions"><i class="fa fa-ellipsis-v " aria-hidden="true"></i></button></div>
+	<div class="actionsBlock fright"><button class="dashboardActions actionMenu2"><i class="fa fa-ellipsis-v " aria-hidden="true"></i>
+	<ul>
+	  <li>
+	    <ul>
+	      <li ng-click="popupWindow()">Add New File</li>
+	      <li ng-click="folderPopup()">Add New Folder</li>
+	    </ul>
+	  </li>
+	</ul>
+	
+	</button></div>
+	<div class="search fright"><input type="text" name="search"> <i class="fa fa-search" aria-hidden="true"></i></div>
+	
 	<!-- <div class="subTitle">Collateral > Plant</div> -->
 </header>
  <div class="viewContent view nodata" ng-show="errrorMsg">No Data</div>  
 <div class="viewContent view" ng-hide="folderView" >
 <div class="leftCol fleft">
 <div class="breadcrumbs">
-	<a href="" ng-click="gotoDashBoard()">Home</a> > {{folderName}}
+	<a href="" ng-click="gotoDashBoard()">Home</a> > <a href="" ng-click="getFolders(data.folderID, data.folderName)">{{folderName}}</a>
 </div>
 	<div class="titleBlock " ng-show="allFoldersData.length!=0">
 	<h2 class="filepageTitle"><i class="fa fa-folder-open" aria-hidden="true"></i> Folders</h2>
@@ -70,7 +98,7 @@
 			              filterable
 			              required
 			              sort-function-name="sortColumn">
-			              <px-data-table-column name="version"
+			              <px-data-table-column name="fileVersion"
 			              type="html"
 			              label="VERSION"
 			              sortable
@@ -109,5 +137,50 @@
 	<button class="postbtn fright">Post</button>
 </form>
 </div>
+</div>
+
+<div class="saveModel">
+
+	<div id="popup" class="modal-box"> 
+	  <div class="userData">
+	    <a href="#" class="js-modal-close close">x</a>
+	    <h3> File Upload</h3>  
+	    <from id="files">
+		<input id="uploadFile" placeholder="Choose File" disabled="disabled" />
+		<div class="fileUpload btn btn-primary">
+		    <span> Browse</span>
+		    <input id="uploadBtn" type="file" class="upload" />
+		    
+		</div>	    
+	    <button name="{{parentID}}"ng-click="fileupload(name)" class="btn customBtn"> Upload </button>
+	    
+	  <!--   <input type="file" class="customInputBox" id="saveProcessName" accept="*" file-model = "uploads" ng-model="processName" /> </from>
+	    <button name="{{parentID}}"ng-click="fileupload(name)" class="btn customBtn"> Upload </button> -->
+	  </div>
+		<div class="clearfix"></div>
+	  <footer>
+	    <a href="#" class="btn custom_btn actionbuttons js-modal-close">Close</a>
+	  </footer>
+	</div>	
+</div>
+
+<div class="CreateFolder">
+
+	<div id="folderPopup" class="modal-box"> 
+	  <div class="userData">
+	    <a href="#" class="js-modal-close close">x</a>
+	    <h3> Create Folder</h3>  
+	    <from id="Create_folder">
+		<input type="text" ng-model="FolderNameData" >    
+	    <button name="view" ng-click="craeteFolderToBox('view')" class="btn customBtn"> Create Folder </button>
+	    
+	  <!--   <input type="file" class="customInputBox" id="saveProcessName" accept="*" file-model = "uploads" ng-model="processName" /> </from>
+	    <button name="{{parentID}}"ng-click="fileupload(name)" class="btn customBtn"> Upload </button> -->
+	  </div>
+		<div class="clearfix"></div>
+	  <footer>
+	    <a href="#" class="btn custom_btn actionbuttons js-modal-close">Close</a>
+	  </footer>
+	</div>	
 </div>
 </div>

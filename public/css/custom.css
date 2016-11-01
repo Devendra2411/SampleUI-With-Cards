@@ -9,6 +9,7 @@ header.pageheader {
 	width: 100%;
 	padding: 0 1%;
 	position: relative;
+	top:-11px
 	
 }
 /* header.pageheader.fileView{height: 59px;} */
@@ -19,11 +20,12 @@ h1 {
 }
 .clear{clear: both;}
 .pageTitle {
-	position: relative;
-	left: 30%;
-	display: inline-block;
-	font-size: 20px;
-	color: #101010;
+    position: relative;
+    left: 44%;
+    display: inline-block;
+    font-size: 20px;
+    color: #101010;
+    top: -9px;
 }
 .fileView .pageTitle {
    position: relative; */
@@ -38,10 +40,10 @@ h1 {
     text-indent: -100px;
 }
 .actionsBlock {
-	position: relative;
-	right: 0;
-	display: inline-block;
-	top: 14px;
+	    position: relative;
+    right: 0;
+    display: inline-block;
+    top: -9px;
 }
 
 .fleft {
@@ -63,7 +65,11 @@ button.dashboardActions {
 	font-weight: normal;
 	width: 30px;
 }
-.search{ display: inline-block; width: 150px; position: relative;top: 15px; right: 1px;}
+.search{ display: inline-block;
+    width: 150px;
+    position: relative;
+    top: -7px;
+    right: 1px;}
 .search input{ background-color: #eee; border: 1px solid #ccc;  height: 22px; width:100%}
 .search i.fa-search{ position: relative;
     top: -19px;
@@ -151,3 +157,192 @@ button.dashboardActions {
 
 
 td.aha-table .viewing.aha-table, .td.aha-table .viewing.aha-table{white-space: normal;}
+
+
+h1.caps.px-context-browser{ font-size: 17px; text-transform: none !important}
+span.td.aha-fileVersion-td.style-scope.aha-table{ word-break: break-all;}
+#selectContext.px-context-browser{ background-color: transparent;}
+header.px-context-browser h1.px-context-browser{     top: -4px;}
+
+
+/* header.pageheader.fileView{height: 25px;} */
+header.pageheader.fileView{top:0}
+.fileView .actionsBlock{ top:12px}
+.fileView .pageTitle{left: 30%; top: 0}
+px-context-browser.gps{     padding: 0;
+    margin: 0;
+    height: 30px; width: 80%}
+.accessActionMenu button{ background: none; border: 0; cursor: pointer;      }
+.accessActionMenu{width: 129px;   z-index: 1; background-color:#f7f7fb; border: 1px solid #cdcdd0; font-family: "GE Inspira Sans", sans-serif;    padding: 1px; border-radius:2px;}
+.accessActionMenu ul{list-style-type: none; margin: 0 !important;     padding: 0px;}
+.accessActionMenu ul li { padding-bottom: 3px;   padding-top: 3px;}
+.accessActionMenu ul li:hover, .accessActionMenu ul li:hover button{ background-color: #169bd5; color:#fff}
+
+
+
+/* action Menu2 */
+
+.actionMenu2 ul {
+	text-align: left;
+	/* display: inline; */
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	margin-bottom: 0 !important;
+	margin-left: 0 !important;
+	/* display: block !important; */
+}
+.actionMenu2 ul li ul {
+text-align: left;
+    /* display: inline; */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid #ccc;
+    margin-bottom: 0 !important;
+    margin-left: 0 !important;
+    border-radius:2px;
+    z-index: 9999;
+	
+}
+.actionMenu2 ul li ul li {
+  font-family:"GE Inspira Sans", sans-serif;
+  font-weight:normal;
+  display: inline-block;
+  position: relative;
+  padding: 5px;
+  cursor: pointer;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.actionMenu2 ul li ul {
+  padding: 0;
+  position: absolute;
+  top: 19px;
+  left: -123px;
+  width: 120px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transiton: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -transition: opacity 0.2s;
+}
+.actionMenu2 ul li ul li { 
+  background: #f7f7fb; 
+  display: block; 
+  color: #000;
+  text-align: left;
+  
+}
+.actionMenu2 ul li ul li:hover{ background: #169bd5; color:#fff }
+.actionMenu2:hover ul {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  width: 140px;
+  
+}
+.fileView .search{top:14px}
+
+
+/*popup */
+.modal-box {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  width: 98%;
+  background: white;
+  border-bottom: 1px solid #aaa;
+  border-radius: 7px;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-clip: padding-box;
+}
+
+.modal-box header,
+.modal-box .modal-header {
+  padding: 1.25em 1em;
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-box header h3 { margin: 0; font-weight: normal; }
+
+.modal-box .modal-body { padding: 1em 1em; }
+
+.modal-box footer,
+.modal-box .modal-footer {
+  padding: 1em;
+  border-top: 1px solid #ddd;
+  background: rgba(0, 0, 0, 0.02);
+  text-align: right;
+}
+
+.modal-overlay {
+  opacity: 0;
+  filter: alpha(opacity=0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 900;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3) !important;
+}
+
+a.close {
+  line-height: 1;
+  font-size: 1.5em;
+  position: absolute;
+  top: 1%;
+  right: 2%;
+  text-decoration: none;
+  color: #bbb;
+}
+
+a.close:hover {
+  color: #222;
+  -webkit-transition: color 1s ease;
+  -moz-transition: color 1s ease;
+  transition: color 1s ease;
+}
+@media (min-width: 32em) {
+  .modal-box { width: 70%; }
+  
+}
+
+.userData{
+padding: 0 10px; margin-bottom: 10px}
+.customInputBox{height: 29px;
+    width: 317px;}
+    
+    .fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+#uploadFile,  #folderPopup input{height: 29px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    text-indent: 5px;}
