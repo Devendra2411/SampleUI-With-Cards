@@ -1,19 +1,14 @@
 <link rel="stylesheet" href="/css/custom.css" />
-<link rel="import" href="/views/sub-folder.html"/>
-<div id="serviceErroMsg" class="alert-message-container" ng-show="errorMsgdata">
-	<px-alert-message type="custom" message-title=""
-		message="{{errorMsgdata}}"
-		action="acknowledge"
-	> <img src="../../images/alert-icon-red-150x150.png" width="15px"
-		height="25px"
-	/> </px-alert-message>
 
+<link rel="import" href="/views/sub-folder.html"/>
+<div id="serviceErroMsg" class="alert-message-container" ng-show="serviceError">
+	<px-alert-message type="custom" message-title="" message="{{errorMsgdata}}"	action="acknowledge"> 
+	<img src="../../images/alert-icon-red-150x150.png" width="15px"	height="25px"/> </px-alert-message>
 </div>
 
-<div id="serviceSuccessMsg" class="alert-message-container message-container" ng-show="serviceSuccessMsg">
+<div id="serviceSuccessMsg" class="alert-message-container message-container" ng-show="serviceSuccess">
 	<px-alert-message type="custom" message-title="" message="{{successMsgdata}}" action="acknowledge"> 
 	<img src="../../images/alert-icon-green-150x150.png" width="15px" height="25px" /> </px-alert-message>
-
 </div>
 
 
@@ -127,12 +122,12 @@
 						</px-data-table>
 	</div>
 </div>
-<div class="rightCol fleft" resizable r-directions="['right']">
+<div class="rightCol fleft">
 <div class="commentsData"><i class="fa fa-comment" aria-hidden="true"></i> Comments</div>
-<div class="commentContent">
-	<div class="title">Test User <span>5:00 PM</span></div>
-	<div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore </div>
-	<button class="reply">Reply</button>
+<div class="commentContent" ng-repeat="item in commentsData">
+	<div class="title">{{item.commentCreated_by}} <span>{{item.commentCreated_date}}</span></div>
+	<div class="content">{{item.comment}}</div>
+	<button class="reply" ng-click="replyComment(item.commentID, item.commentType)">Reply</button>
 </div>
 
 <div class="clear"></div>
@@ -140,9 +135,9 @@
 <div class="msgForm">
 <h3>Post Comments</h3>
 <form>
-	<div><input type="text" ></div>
-	<div><textarea rows="10" ></textarea></div>
-	<button class="postbtn fright">Post</button>
+	<!-- <div><input type="text" ></div> -->
+	<div><textarea rows="10" ng-model="commentData"></textarea></div>
+	<button class="postbtn fright" ng-click="postComment()">Post</button>
 </form>
 </div>
 </div>
@@ -157,14 +152,15 @@
 		<input id="uploadFile" placeholder="Choose File" disabled="disabled" />
 		<div class="fileUpload btn btn-primary">
 		    <span> Browse</span>
-		    <input id="uploadBtn" type="file" class="upload" />
+		    <input id="uploadBtn" type="file" class="upload"  ng-model="file" name="inputFile" base-sixty-four-input required maxsize="500" accept="image/*/">
 		    
 		</div>	    
-	    <button name="{{parentID}}"ng-click="fileupload(name)" class="btn customBtn"> Upload </button>
+	    <button ng-click="fileupload(file.base64, file.filetype)" class="btn customBtn"> Upload </button>
 	    
 	  <!--   <input type="file" class="customInputBox" id="saveProcessName" accept="*" file-model = "uploads" ng-model="processName" /> </from>
 	    <button name="{{parentID}}"ng-click="fileupload(name)" class="btn customBtn"> Upload </button> -->
 	  </div>
+	  <!--  <div>{{file.base64}}...</div> -->
 		<div class="clearfix"></div>
 	  <footer>
 	    <a href="#" class="btn custom_btn actionbuttons js-modal-close">Close</a>

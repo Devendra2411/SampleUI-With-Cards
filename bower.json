@@ -25,7 +25,7 @@
     "lodash": "2.4.1",
     "polymer": "v1.0.4",
     "px": "https://github.build.ge.com/Pxc/px.git#v1.0.3",
-    "px-app-nav": "https://github.build.ge.com/PXC/px-app-nav.git#~v0.4.1",
+    "px-app-nav": "^1.9.9",
     "px-card": "https://github.build.ge.com/Pxc/px-card.git#v0.0.15",
     "px-context-browser": "https://github.build.ge.com/pxc/px-context-browser.git#~v0.4.12",
     "ng-bind-polymer": "https://github.build.ge.com/pxc/ng-bind-polymer.git#~v0.0.1",
@@ -36,10 +36,11 @@
     "px-theme": "https://github.build.ge.com/PXc/px-theme.git#~v0.3.4",
     "require-css": "0.1.1",
     "requirejs": "https://github.com/jrburke/requirejs.git#2.1.18",
-    "requirejs-plugins": "1.0.2"
+    "requirejs-plugins": "1.0.2",
+    "px-alert-message": "^0.6.0"
   },
   "resolutions": {
     "px-theme": "~v0.3.4",
-    "polymer":  "~1.0.4"
+    "polymer": "~1.0.4"
   }
 }

@@ -2,7 +2,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     'use strict';
     // Controller definition
     controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService','$q', '$urlRouter','fileUpload', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService, $q, $urlRouter, fileUpload) {
-       	    $rootScope.ssoId = "502450548";
+       	    //$rootScope.ssoId = "502450548";
        	    $rootScope.email = $rootScope.ssoId+"@mail.ad.ge.com"
        	    
     	 $scope.getRandomColor = function(id){
@@ -76,9 +76,9 @@ define(['angular', '../dashboard'], function (angular, controllers) {
                     console.log(response);
     	    	},function(error){
                 	$scope.spinner = false;
-                	$scope.errorMsgdata = true;
+                	$scope.serviceError = true;
                     $scope.errorMsgdata = "Failed to load data";
-                    $('#alert').removeClass('fade-out hidden');
+                    $('#serviceErroMsg #alert').removeClass('fade-out hidden');
                 });
     	   		
     	    	
@@ -103,17 +103,15 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    		}
  	    		else{
  	    			$scope.errorMsgdata = "No Cards";
- 	    			$('#alert').removeClass('fade-out hidden');
- 	    			$scope.serviceSuccessMsg = false;
- 		        	$scope.errorMsgdata = true;
+ 	    			$scope.serviceError = true;
+                    $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	    		}
  	    		
  	    	},function(error){
  	        	$scope.spinner = false;
  	        	$scope.errorMsgdata = "Failed to load data";
- 	        	$('#alert').removeClass('fade-out hidden');
- 	        	$scope.serviceSuccessMsg = false;
- 	        	$scope.errorMsgdata = true;
+ 	        	$scope.serviceError = true;
+                $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	        })
  	        
     	 }
@@ -334,6 +332,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    			
  	    			 $rootScope.allFoldersData = response.folderList;
  	    			 $rootScope.allFilesData = response.fileList;
+ 	    			$rootScope.	commentsData = response.commentsList;
  	    			 $rootScope.parentID =dataId;
  	    			for(var i=0; i<$rootScope.allFilesData.length; i++){
  	    				$rootScope.allFilesData[i].actions="";
@@ -353,17 +352,15 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    		}
  	    		else{
  	    			$scope.errorMsgdata = "No data";
- 	    			$('#alert').removeClass('fade-out hidden');
- 	    			$scope.serviceSuccessMsg = false;
- 		        	$scope.errorMsgdata = true;
+ 	    			$scope.serviceError = true;
+                    $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	    		}
  	    		
  	    	},function(error){
  	        	$scope.spinner = false;
  	        	$scope.errorMsgdata = "Failed to load data";
- 	        	$('#alert').removeClass('fade-out hidden');
- 	        	$scope.serviceSuccessMsg = false;
- 	        	$scope.errorMsgdata = true;
+ 	        	$scope.serviceError = true;
+                $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	        })
  	        
     	 }
@@ -379,9 +376,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    		 }
  	    	},function(error){
  	        	$scope.errorMsgdata = "Failed";
- 	        	$('#alert').removeClass('fade-out hidden');
- 	        	$scope.serviceSuccessMsg = false;
- 	        	$scope.errorMsgdata = true;
+ 	        	$scope.serviceError = true;
+                $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	        })
  	        
     	 }
@@ -394,19 +390,19 @@ define(['angular', '../dashboard'], function (angular, controllers) {
      			}
  	    	},function(error){
  	           	$scope.errorMsgdata = "Failed";
- 	        	$('#alert').removeClass('fade-out hidden');
- 	        	$scope.serviceSuccessMsg = false;
- 	        	$scope.errorMsgdata = true;
+ 	           $scope.serviceError = true;
+               $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	        })
  	        
     	 }
     	 $scope.getFileDownload = function(){
     		 $scope.spinner = true;
+    		 $scope.getAkanaToken();
     		 $('.accessActionMenu').hide();
     		 var fileID = $rootScope.fileID;
      		dashboardService.downloadFile(fileID).then(function (response) {
      			 $scope.spinner = false;
- 	    		 $rootScope.downloadFile = response;
+ 	    		 window.open(response.download_url, '_blank');
  	    		 console.log('downloadFile', response);
  	    	},function(error){
  	    		 $scope.spinner = false
@@ -417,13 +413,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        })
     	 };
     	 
-    	 /*$scope.fileupload = function(){ //angular $http 
-    		 var data = {"name":"tigers.jpeg", "parent":{"id":"11446498"},"file":"here byte content"}
-     			var file = $scope.uploads;
-     			var fd = new FormData($('#files')[0]);
-                var uploadUrl =  Box_API+'/files/content';
-                fileUpload.uploadFileToUrl(file, uploadUrl, fd);
-         };*/
          
          $scope.addFile= function(){
         	 document.getElementById('uploadBtn').onchange = uploadOnChange;
@@ -436,10 +425,10 @@ define(['angular', '../dashboard'], function (angular, controllers) {
         		    document.getElementById('uploadFile').value = $rootScope.filename;
         		}
          }
-    	 $scope.fileupload = function(){
+    	 $scope.fileupload = function(file,filetype){
     		$scope.spinner = true;
     		var folderDataId = sessionStorage.getItem("folderId");
-    		var data = {"name":$rootScope.filename, "parent":{"id": folderDataId},"file":"data:image/png;base64"}
+    		var data = {"name":$rootScope.filename, "parent":{"id": folderDataId},"file":"data:"+filetype+";"+file}
     		//var formData = new FormData($('#files')[0])
      		dashboardService.fileUpload(data).then(function (response) {
      			 $scope.spinner = false;
@@ -453,9 +442,9 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    	},function(error){
  	    		 $scope.spinner = false
  	        	$scope.errorMsgdata = "Upload Failed";
- 	        	$('#alert').removeClass('fade-out hidden');
- 	        	$scope.serviceSuccessMsg = false;
- 	        	$scope.errorMsgdata = true;
+ 	    		$scope.serviceError = true;
+ 	    		$scope.serviceSuccess = false;
+                $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	        })
     	 };
     	 
@@ -530,37 +519,64 @@ define(['angular', '../dashboard'], function (angular, controllers) {
      			 $scope.spinner = false;
  	    		if(response!=""){
  	    			if(flag=="home"){
- 	    				$rootScope.response = response;
  	 	 	    		$scope.getCards();
  	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
  	 	 	    		$scope.FolderNameData ="";
  	 	 	    		console.log('createFolder', response);
  	 	 	    		$scope.successMsgdata = "Folder Created successfully";
  	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
- 	 	 	        	$scope.serviceSuccessMsg = true;
- 	 	 	        	$scope.errorMsgdata = false;
+ 	 	 	        	$scope.serviceSuccess = true;
+ 	 	 	            $scope.serviceError = false;
  	    			}
  	    			else{
- 	    			$rootScope.response = response;
- 	 	    		$scope.getFolders();
- 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
- 	 	    		$scope.FolderNameData ="";
- 	 	    		console.log('createFolder', response);
- 	 	    		$scope.successMsgdata = "Folder Created successfully";
- 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
- 	 	        	$scope.serviceSuccessMsg = true;
- 	 	        	$scope.errorMsgdata = false;
+	 	 	    		$scope.getFolders();
+	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+	 	 	    		$scope.FolderNameData ="";
+	 	 	    		console.log('createFolder', response);
+	 	 	    		$scope.successMsgdata = "Folder Created successfully";
+	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+	 	 	        	$scope.serviceSuccess = true;
+	 	 	        	$scope.serviceError = false;
  	    			}
  	    		}
  	    		
  	    	},function(error){
  	    		 $scope.spinner = false
- 	        	$scope.errorMsgdata = "Failed";
- 	        	$('#alert').removeClass('fade-out hidden');
- 	        	$scope.serviceSuccessMsg = false;
- 	        	$scope.errorMsgdata = true;
+ 	    		 $scope.serviceError = true;
+ 	    		 $scope.errorMsgdata = "Failed";
+ 	    		 $scope.serviceSuccess = false;
+                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	        })
     	 };
+    	 
+    	 $scope.postComment = function(){
+    		 $scope.spinner = true;
+    		 var folderID =sessionStorage.getItem("folderId");
+    		 var data = {"commentsList":[{
+    				                    "folderID":folderID,
+    				                     "comment":$scope.commentData,
+    				                     "primaryCommentID":null,
+    				                     "commentCreated_by":$rootScope.ssoId,
+    				                     "commentType":"C"
+    				                  }]
+    				              }
+
+     		dashboardService.postComment(data).then(function (response) {
+     			$scope.spinner = false;
+				$rootScope.commentResponse = response;
+				$scope.getFolders();
+ 	    		$scope.commentData ="";
+ 	    		$scope.successMsgdata = "Comment posted successfully";
+ 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+ 	        	$scope.serviceSuccess = true;
+ 	            $scope.serviceError = false;
+ 	    		},function(error){
+ 	    		 $scope.spinner = false
+ 	    		 $scope.serviceError = true;
+                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+ 	        })
+    	 };
+    	 
     	 
     	 $scope.getAkanaToken();
     	 $scope.addFile();

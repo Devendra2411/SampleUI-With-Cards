@@ -3,20 +3,14 @@
 <link rel="import" href="/views/sub-folder.html"/>
 <link rel="import" href="/views/files-data.html"/>
 <div class="spinner" ng-show="spinner"><px-spinner size="75"></px-spinner></div>
-<div id="serviceErroMsg" class="alert-message-container" ng-show="errorMsgdata">
-	<px-alert-message type="custom" message-title=""
-		message="{{errorMsgdata}}"
-		action="acknowledge"
-	> <img src="../../images/alert-icon-red-150x150.png" width="15px"
-		height="25px"
-	/> </px-alert-message>
-
+<div id="serviceErroMsg" class="alert-message-container" ng-show="serviceError">
+	<px-alert-message type="custom" message-title="" message="{{errorMsgdata}}"	action="acknowledge"> 
+	<img src="../../images/alert-icon-red-150x150.png" width="15px"	height="25px"/> </px-alert-message>
 </div>
 
-<div id="serviceSuccessMsg" class="alert-message-container message-container" ng-show="serviceSuccessMsg">
+<div id="serviceSuccessMsg" class="alert-message-container message-container" ng-show="serviceSuccess">
 	<px-alert-message type="custom" message-title="" message="{{successMsgdata}}" action="acknowledge"> 
 	<img src="../../images/alert-icon-green-150x150.png" width="15px" height="25px" /> </px-alert-message>
-
 </div>
 <px-context-browser label-field="name" id-field="identifier" opened-item-name="GPS Marketing Tool" class="gps"> </px-context-browser>  
 <header class="pageheader dashboard">
