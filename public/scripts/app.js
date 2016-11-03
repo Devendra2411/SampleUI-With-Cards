@@ -32,7 +32,7 @@ define([
      * This controller is the top most level controller that allows for all
      * child controllers to access properties defined on the $rootScope.
      */
-    predixApp.controller('MainCtrl', ['$scope', '$rootScope', 'PredixUserService', function ($scope, $rootScope, predixUserService) {
+    predixApp.controller('MainCtrl', ['$scope', '$rootScope', 'PredixUserService','dashboardService','$state', function ($scope, $rootScope, predixUserService, dashboardService, $state) {
 
         //Global application object
         window.App = $rootScope.App = {
@@ -47,6 +47,28 @@ define([
             ]
         };
 
+        $rootScope.authorizeUser = function(sso){
+			window.isAuthorized="No";
+			var data = {"sso":sso}
+			if(sso!=""){
+				console.log("user sso", sso);
+				dashboardService.authorizeUser(data).then(function (response) {
+					if(response.validUser=="Yes"){
+						$rootScope.roleId =response.roleID;
+						window.isAuthorized="Yes";
+						console.log(response)
+					}
+					else{
+						window.isAuthorized="No";
+						console.log("Unauthorized user");
+						document.querySelector('px-app-nav').markSelected('/logout');
+						$state.go('logout');
+					}
+				});
+			}
+        }
+        
+        
         $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
             if (angular.isObject(error) && angular.isString(error.code)) {
                 switch (error.code) {

@@ -26,9 +26,7 @@ define(['angular', 'angular-ui-router'], function(angular) {
                         	$rootScope.ssoId=userInfo.user_name;
                         	console.log('$rootScope.ssoId', $rootScope.ssoId);
                         	$rootScope.emailId=userInfo.email;
-                             //$rootScope.authorizeUser($rootScope.ssoId);
-                             
-                            
+                             $rootScope.authorizeUser($rootScope.ssoId);
                         }, function(){
                             deferred.reject({code: 'UNAUTHORIZED'});
                         });
@@ -37,13 +35,13 @@ define(['angular', 'angular-ui-router'], function(angular) {
                 }
             })
             .state('dashboard', {
-                parent: 'secure',
+                //parent: 'secure',
                 url: '/dashboard',
                 templateUrl: 'views/dashboards.html',
                 controller: 'dashboard-controller'
             })
             .state('view', {
-                parent: 'secure',
+                //parent: 'secure',
                 url: '/view',
                 templateUrl: 'views/view.html',
                 controller: 'dashboard-controller'
@@ -63,6 +61,11 @@ define(['angular', 'angular-ui-router'], function(angular) {
             	parent: 'secure',
                 url: '/blanksubpage',
                 templateUrl: 'views/blank-sub-page.html'
+            })
+            .state('logout', {
+                parent: 'secure',
+                url: '/logout',
+                templateUrl: 'views/logout.html'
             });
 
 

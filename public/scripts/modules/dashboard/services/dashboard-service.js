@@ -323,6 +323,17 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
               )
               return deferred.promise;
     	  }
+    	  var authorizeUser = function(data){
+      		var deferred = $q.defer();
+      		  $http.post(API_URL+'/validUser', data)
+                .success(function(data, status, headers) {
+                    deferred.resolve(data);
+                })
+                .error(function() {
+                    deferred.reject('Error fetching results ');
+                });
+      		  return deferred.promise;
+      	};
     	  var getSubFoldersFilesDetails = function(data){
     		  var deferred = $q.defer();
               var serviceName="sub-folders.json";
@@ -378,7 +389,7 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   		
   		var fileUpload =  function(data){
   			var deferred = $q.defer();
-  			$http.post(Box_API+'/files/content', data, {headers: {'Authorization' : 'Bearer '+$rootScope.gtbToken}})
+  			$http.post(Upload_File, data, {headers: {'Authorization' : 'Bearer '+$rootScope.gtbToken}})
   				.success(function(data) {
   					deferred.resolve(data);
   				})
@@ -439,6 +450,7 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   		};
   		
             return{
+            	authorizeUser:authorizeUser,
             	getCardDetails : getCardDetails,
             	getSubFoldersFilesDetails : getSubFoldersFilesDetails,
             	

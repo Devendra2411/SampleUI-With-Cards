@@ -62,8 +62,10 @@ h1 {
 	float: right;
 }
 a{ text-decoration: none}
-.leftCol{width: 70%; border-right: 1px solid #ccc; height: 100%; /* padding-right: 10px; */ min-height: 700px}
-.rightCol{width: 30%; height: 100%; padding: 10px 10px; }
+.leftCol{width: 70%;  height: 100%; border-right: 1px solid #ccc;/* padding-right: 10px; */ min-height: 700px}
+.rightCol{width: 30%; height: 100%; padding: 10px 10px;border-left: 1px solid #ccc; }
+.showMore{ border: 0; background-color: transparent; cursor: pointer; color:#3f9aff}
+.center{text-align: center; width: 100%}
 .breadcrumbs{ border-bottom: 1px solid #ccc; padding: 10px 0 10px 10px; font-size: 14px; }
 button.dashboardActions {
 	background: none;
@@ -148,7 +150,7 @@ button.dashboardActions {
 .comments{ left: 180px }
 .view .foldersData:nth-child(2n){ margin-right: 0}
 
-.commentContent{font-size: 15px; color:#6d6d6d; margin: 10px 0 }
+.commentContent{font-size: 15px; color:#6d6d6d; margin: 10px 0 ;     border-bottom: 2px dotted #e6e6e6;}
 .commentContent .title{ font-size: 14px; font-weight: bold}
 .commentContent .title span{ font-size: 11px; font-weight: normal; color:#ccc}
 .commentContent .content{margin: 10px 0; }
@@ -166,7 +168,7 @@ button.dashboardActions {
 
 td.aha-table .viewing.aha-table, .td.aha-table .viewing.aha-table{white-space: normal;}
 
-
+.total{width: 150px}
 h1.caps.px-context-browser{ font-size: 17px; text-transform: none !important}
 span.td.aha-fileVersion-td.style-scope.aha-table{ word-break: break-all;}
 #selectContext.px-context-browser{ background-color: transparent;}

@@ -14,9 +14,8 @@
 
 <div class="accessActionMenu" style="display:none">
 	<ul>
-		<li><button ng-click="getFileDownload()">Download</button></li>
-		<li><button ng-click="">Share</button></li>
-		<li><button ng-click=""></i>Delete</button></li>
+		<li><button ng-click="getFileDownload()"><i class="fa fa-download" aria-hidden="true"></i> Download</button></li>
+		<li><button ng-click=""></i><i class="fa fa-times" aria-hidden="true"></i> Delete</button></li>
 	</ul>
 </div>
 <div class="spinner" ng-show="spinner"><px-spinner size="75"></px-spinner></div>
@@ -25,7 +24,7 @@
 	<span class="rightIcon" ng-click="gotoDashBoard()"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
 	<h1> GPS Marketing Tool</h1>
 	<div class="pageTitle">{{folderName}}</div>
-	<div class="actionsBlock fright"><button class="dashboardActions actionMenu2"><i class="fa fa-ellipsis-v " aria-hidden="true"></i>
+	<div class="actionsBlock fright" ng-hide="roleId==2"><button class="dashboardActions actionMenu2"><i class="fa fa-ellipsis-v " aria-hidden="true"></i>
 	<ul>
 	  <li>
 	    <ul>
@@ -36,7 +35,7 @@
 	</ul>
 	
 	</button></div>
-	<div class="search fright"><input type="text" name="search"> <i class="fa fa-search" aria-hidden="true"></i></div>
+	<!-- <div class="search fright"><input type="text" name="search"> <i class="fa fa-search" aria-hidden="true"></i></div> -->
 	
 	<!-- <div class="subTitle">Collateral > Plant</div> -->
 </header>
@@ -47,7 +46,7 @@
 	<a href="" ng-click="gotoDashBoard()">Home</a> > <a href="" ng-click="getFolders(data.folderID, data.folderName)">{{folderName}}</a>
 </div>
 	<div class="titleBlock " ng-show="allFoldersData.length!=0">
-	<h2 class="filepageTitle"><i class="fa fa-folder-open" aria-hidden="true"></i> Folders</h2>
+	<h2 class="filepageTitle"><i class="fa fa-folder-open" aria-hidden="true"></i> <a href="" ng-click="">/{{folderName}}</a></h2>
 	<div class="hrLine"></div>
 	
 	<div class="folders" >
@@ -124,12 +123,12 @@
 </div>
 <div class="rightCol fleft">
 <div class="commentsData"><i class="fa fa-comment" aria-hidden="true"></i> Comments</div>
-<div class="commentContent" ng-repeat="item in commentsData">
+<div class="commentContent" ng-repeat="item in commentsData  | orderBy: 'commentCreated_date':true | limitTo: paginationLimit()" ng-show="commentsData.length!=0"  >
 	<div class="title">{{item.commentCreated_by}} <span>{{item.commentCreated_date}}</span></div>
 	<div class="content">{{item.comment}}</div>
-	<button class="reply" ng-click="replyComment(item.commentID, item.commentType)">Reply</button>
+	<!-- <button class="reply" ng-click="replyComment(item.commentID, item.commentType)">Reply</button> -->
 </div>
-
+<div class="center"><button ng-show="hasMoreItemsToShow()" ng-click="showMoreItems()" class="showMore">   Show more... </button></div>
 <div class="clear"></div>
 
 <div class="msgForm">

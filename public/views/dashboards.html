@@ -12,12 +12,12 @@
 	<px-alert-message type="custom" message-title="" message="{{successMsgdata}}" action="acknowledge"> 
 	<img src="../../images/alert-icon-green-150x150.png" width="15px" height="25px" /> </px-alert-message>
 </div>
-<px-context-browser label-field="name" id-field="identifier" opened-item-name="GPS Marketing Tool" class="gps"> </px-context-browser>  
+<px-context-browser label-field="name" id-field="identifier" opened-item-name="GPS Marketing Portal" class="gps"> </px-context-browser>  
 <header class="pageheader dashboard">
 
 	<!-- <h1> GPS Marketing Tool <span><i class="fa fa-caret-down" aria-hidden="true"></i></span></h1> -->
 	<div class="pageTitle">Dashboard</div>
-	<div class="actionsBlock fright" ><button class="dashboardActions actionMenu2" ><i class="fa fa-ellipsis-v " aria-hidden="true"></i>
+	<div class="actionsBlock fright" ng-hide="roleId==2" ><button class="dashboardActions actionMenu2" ><i class="fa fa-ellipsis-v " aria-hidden="true"></i>
 	<ul>
 	  <li>
 	    <ul>
@@ -27,7 +27,7 @@
 	  </li>
 	</ul>
 	</button></div>
-	<div class="search fright"><input type="text" name="search"> <i class="fa fa-search" aria-hidden="true"></i></div>
+	<!-- <div class="search fright"><input type="text" name="search"> <i class="fa fa-search" aria-hidden="true"></i></div> -->
 </header>
 
 

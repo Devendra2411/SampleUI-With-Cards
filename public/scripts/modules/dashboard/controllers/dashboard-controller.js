@@ -2,7 +2,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     'use strict';
     // Controller definition
     controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService','$q', '$urlRouter','fileUpload', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService, $q, $urlRouter, fileUpload) {
-       	    //$rootScope.ssoId = "502450548";
+       	    $rootScope.ssoId = "502450548";
+    		$rootScope.roleId ="1"
        	    $rootScope.email = $rootScope.ssoId+"@mail.ad.ge.com"
        	    
     	 $scope.getRandomColor = function(id){
@@ -332,13 +333,14 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    			
  	    			 $rootScope.allFoldersData = response.folderList;
  	    			 $rootScope.allFilesData = response.fileList;
- 	    			$rootScope.	commentsData = response.commentsList;
+ 	    			$rootScope.commentsData = response.commentsList;
  	    			 $rootScope.parentID =dataId;
  	    			for(var i=0; i<$rootScope.allFilesData.length; i++){
  	    				$rootScope.allFilesData[i].actions="";
  	    				$rootScope.allFilesData[i].actions = '<button style="background: none;border: none" value="'+$rootScope.allFilesData[i].fileID+'"  class="actionBtn flex flex--center flex--middle style-scope aha-table"><i class="fa fa-bars" aria-hidden="true"></i></button>';
  	    				//var val=$('button.actionBtn').attr("value").split(',');
  	    			};
+ 	    			$scope.MoreCommentsData();
  	    			 console.log(response);
  	    			 $state.go('view');
  	    			 $scope.errrorMsg== true;
@@ -576,7 +578,24 @@ define(['angular', '../dashboard'], function (angular, controllers) {
                  $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	        })
     	 };
-    	 
+    	
+    	$scope.MoreCommentsData = function(){
+    		var CommentsData = $rootScope.commentsData // json data
+        	var pagesShown = 1;
+        	var pageSize = 3;
+        	$scope.paginationLimit = function(CommentsData) {
+        	 return pageSize * pagesShown;
+        	};
+
+        	$scope.hasMoreItemsToShow = function() {
+        	 return pagesShown < (CommentsData.length / pageSize);
+        	};
+
+        	$scope.showMoreItems = function() {
+        	 pagesShown = pagesShown + 1;       
+        	}; 
+    	}
+
     	 
     	 $scope.getAkanaToken();
     	 $scope.addFile();
