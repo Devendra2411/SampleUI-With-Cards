@@ -16,6 +16,166 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
             }
         };
     }]);
+    
+    dashboardService.service('fileUpload', ['$http','$rootScope','$state', function ($http,$rootScope,$state) {
+    	this.uploadFileToUrl = function(file, uploadUrl, fd){
+        var parentID = $rootScope.parentID;
+        fd.append('file', file);
+            $http.post(uploadUrl,fd,{
+                transformRequest: angular.identity,
+               headers: {'Authorization' : 'Bearer '+$rootScope.gtbToken}
+            })
+            .success(function(data){
+                	console.log(data);
+            })
+            .error(function(data){
+            	console.log(data);
+            	 });
+        }
+    }]);
+    dashboardService.factory('dashboardService', ['$q', '$rootScope','$http', 'remoteServiceManager','localDataStore', function($q, $rootScope,$http,remoteServiceManager,localDataStore) {
+
+    	
+    	  var authorizeUser = function(data){
+      		var deferred = $q.defer();
+      		  $http.post(API_URL+'/validUser', data)
+                .success(function(data, status, headers) {
+                    deferred.resolve(data);
+                })
+                .error(function() {
+                    deferred.reject('Error fetching results ');
+                });
+      		  return deferred.promise;
+      	};
+    	  
+    	  
+    	  var getCards =  function(data){
+    			var deferred = $q.defer();
+    			$http.post(API_URL+"/FolderItems",data)
+    				.success(function(data, status, headers) {
+    					deferred.resolve(data);
+    				})
+    				.error(function() {
+    					deferred.reject('Error fetching results ');
+    				});
+    			return deferred.promise;
+    		};
+    		
+		 var getFolders =  function(data){
+ 			var deferred = $q.defer();
+ 			$http.post(API_URL+"/FolderItems",data)
+ 				.success(function(data, status, headers) {
+ 					deferred.resolve(data);
+ 				})
+ 				.error(function() {
+ 					deferred.reject('Error fetching results ');
+ 				});
+ 			return deferred.promise;
+ 		};
+    	 
+ 		
+ 		
+ 		 var getAkanaToken =  function(){
+  			var deferred = $q.defer();
+  			$http.post(Akana_Url)
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('Akana Token not received');
+  				});
+  			return deferred.promise;
+  		};
+  		
+  		
+  		var fileUpload =  function(data){
+  			var deferred = $q.defer();
+  			$http.post(Upload_File, data, {headers: {'Authorization' : 'Bearer '+$rootScope.gtbToken}})
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('Failed');
+  				});
+  			return deferred.promise;
+  		};
+  		var downloadFile =  function(fileID){
+  			var deferred = $q.defer();
+  			$http.get(Box_API+'/files/'+fileID+'?fields=download_url', { headers: {'Authorization' : 'Bearer '+$rootScope.gtbToken}})
+  				.success(function(data) {
+  					deferred.resolve(data);
+  					//deferred.resolve(data);
+  				}).error(function(jqXHR, textStatus, errorThrown) {
+  					//window.location.href = data;
+  					console.log('download error');
+  					console.log(jqXHR, textStatus, errorThrown)
+  					//deferred.reject('Download Failed');
+  				});
+  			return deferred.promise;
+  		};
+  		
+  		
+  		var getGTBToken =  function(){
+  			var deferred = $q.defer();
+  			$http.get(Gtb_Url,{ headers: {'Authorization': 'Bearer '+$rootScope.akanaToken}})
+  				.success(function(data, status, headers) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('GTB Token not received');
+  				});
+  			return deferred.promise;
+  		};
+     	  
+  		var createFolder =  function(data){
+  			var deferred = $q.defer();
+  			$http.post(API_URL+'/createFolder', data)
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('Failed');
+  				});
+  			return deferred.promise;
+  		};
+  		var postComment =  function(data){
+  			var deferred = $q.defer();
+  			$http.delete(API_URL+'/postComments', data)
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('Failed');
+  				});
+  			return deferred.promise;
+  		};
+  		var deleteComment =  function(data){
+  			var deferred = $q.defer();
+  			$http.post(API_URL+'/deleteComment')
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('Failed');
+  				});
+  			return deferred.promise;
+  		};
+            return{
+            	authorizeUser:authorizeUser,            	
+            	getCards:getCards,
+            	getFolders:getFolders,
+            	
+            	getAkanaToken:getAkanaToken,
+            	getGTBToken:getGTBToken,
+            	
+            	downloadFile:downloadFile,
+            	fileUpload:fileUpload,
+            	createFolder:createFolder,
+            	postComment:postComment,
+            	deleteComment:deleteComment
+            }
+    }]);
+
     window._arrayBufferToBase64 = function(buffer) {
         var binary = '';
         var bytes = new Uint8Array(buffer);
@@ -293,181 +453,6 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
 
      }
    ]);
-    dashboardService.service('fileUpload', ['$http','$rootScope','$state', function ($http,$rootScope,$state) {
-        this.uploadFileToUrl = function(file, uploadUrl, fd){
-        var parentID = $rootScope.parentID;
-          fd.append('file', file);
-            $http.post(uploadUrl, fd, parentID,{
-                transformRequest: angular.identity,
-               headers: {'Authorization' : 'Bearer '+$rootScope.gtbToken}
-            })
-            .success(function(data){
-                	console.log(data);
-            })
-            .error(function(data){
-            	console.log(data);
-            	 });
-        }
-    }]);
-    dashboardService.factory('dashboardService', ['$q', '$rootScope','$http', 'remoteServiceManager','localDataStore', function($q, $rootScope,$http,remoteServiceManager,localDataStore) {
-
-    	  var getCardDetails = function(data){
-    		  var deferred = $q.defer();
-              var serviceName="sample-cards.json";
-              remoteServiceManager.sendRequest(serviceName,data).then(
-                  function(data){
-                      deferred.resolve(data)
-                  },function(err){
-                      deferred.reject(err);
-                  }
-              )
-              return deferred.promise;
-    	  }
-    	  var authorizeUser = function(data){
-      		var deferred = $q.defer();
-      		  $http.post(API_URL+'/validUser', data)
-                .success(function(data, status, headers) {
-                    deferred.resolve(data);
-                })
-                .error(function() {
-                    deferred.reject('Error fetching results ');
-                });
-      		  return deferred.promise;
-      	};
-    	  var getSubFoldersFilesDetails = function(data){
-    		  var deferred = $q.defer();
-              var serviceName="sub-folders.json";
-              remoteServiceManager.sendRequest(serviceName).then(
-                  function(data){
-                      deferred.resolve(data)
-                  },function(err){
-                      deferred.reject(err);
-                  }
-              )
-              return deferred.promise;
-    	  }
-    	  
-    	  
-    	  var getCards =  function(data){
-    			var deferred = $q.defer();
-    			$http.post(API_URL+"/FolderItems",data)
-    				.success(function(data, status, headers) {
-    					deferred.resolve(data);
-    				})
-    				.error(function() {
-    					deferred.reject('Error fetching results ');
-    				});
-    			return deferred.promise;
-    		};
-    		
-		 var getFolders =  function(data){
- 			var deferred = $q.defer();
- 			$http.post(API_URL+"/FolderItems",data)
- 				.success(function(data, status, headers) {
- 					deferred.resolve(data);
- 				})
- 				.error(function() {
- 					deferred.reject('Error fetching results ');
- 				});
- 			return deferred.promise;
- 		};
-    	 
- 		
- 		
- 		 var getAkanaToken =  function(){
-  			var deferred = $q.defer();
-  			$http.post(Akana_Url)
-  				.success(function(data) {
-  					deferred.resolve(data);
-  				})
-  				.error(function() {
-  					deferred.reject('Akana Token not received');
-  				});
-  			return deferred.promise;
-  		};
-  		
-  		
-  		var fileUpload =  function(data){
-  			var deferred = $q.defer();
-  			$http.post(Upload_File, data, {headers: {'Authorization' : 'Bearer '+$rootScope.gtbToken}})
-  				.success(function(data) {
-  					deferred.resolve(data);
-  				})
-  				.error(function() {
-  					deferred.reject('Failed');
-  				});
-  			return deferred.promise;
-  		};
-  		var downloadFile =  function(fileID){
-  			var deferred = $q.defer();
-  			$http.get(Box_API+'/files/'+fileID+'?fields=download_url', { headers: {'Authorization' : 'Bearer '+$rootScope.gtbToken}})
-  				.success(function(data) {
-  					deferred.resolve(data);
-  					//deferred.resolve(data);
-  				}).error(function(jqXHR, textStatus, errorThrown) {
-  					//window.location.href = data;
-  					console.log('download error');
-  					console.log(jqXHR, textStatus, errorThrown)
-  					//deferred.reject('Download Failed');
-  				});
-  			return deferred.promise;
-  		};
-  		
-  		
-  		var getGTBToken =  function(){
-  			var deferred = $q.defer();
-  			$http.get(Gtb_Url,{ headers: {'Authorization': 'Bearer '+$rootScope.akanaToken}})
-  				.success(function(data, status, headers) {
-  					deferred.resolve(data);
-  				})
-  				.error(function() {
-  					deferred.reject('GTB Token not received');
-  				});
-  			return deferred.promise;
-  		};
-     	  
-  		var createFolder =  function(data){
-  			var deferred = $q.defer();
-  			$http.post(API_URL+'/createFolder', data)
-  				.success(function(data) {
-  					deferred.resolve(data);
-  				})
-  				.error(function() {
-  					deferred.reject('Failed');
-  				});
-  			return deferred.promise;
-  		};
-  		var postComment =  function(data){
-  			var deferred = $q.defer();
-  			$http.post(API_URL+'/postComments', data)
-  				.success(function(data) {
-  					deferred.resolve(data);
-  				})
-  				.error(function() {
-  					deferred.reject('Failed');
-  				});
-  			return deferred.promise;
-  		};
-  		
-            return{
-            	authorizeUser:authorizeUser,
-            	getCardDetails : getCardDetails,
-            	getSubFoldersFilesDetails : getSubFoldersFilesDetails,
-            	
-            	getCards:getCards,
-            	getFolders:getFolders,
-            	
-            	getAkanaToken:getAkanaToken,
-            	getGTBToken:getGTBToken,
-            	
-            	downloadFile:downloadFile,
-            	fileUpload:fileUpload,
-            	createFolder:createFolder,
-            	postComment:postComment
-            }
-    }]);
-
-
     return dashboardService;
 
 });

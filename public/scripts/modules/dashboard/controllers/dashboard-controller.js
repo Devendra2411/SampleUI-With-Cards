@@ -2,8 +2,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     'use strict';
     // Controller definition
     controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService','$q', '$urlRouter','fileUpload', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService, $q, $urlRouter, fileUpload) {
-       	    $rootScope.ssoId = "502450548";
-    		$rootScope.roleId ="1"
+       	    //$rootScope.ssoId = "502450548";
+    		//$rootScope.roleId ="1"
        	    $rootScope.email = $rootScope.ssoId+"@mail.ad.ge.com"
        	    
     	 $scope.getRandomColor = function(id){
@@ -53,38 +53,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
                 }
             });
        	 };
-    	 $scope.getSubFolders = function(dataId){
-    	    	$scope.spinner = true;
-    	    	$scope.cardsData = false;
-    	    	$scope.subfolderData = false;
-    	    	dashboardService.getSubFoldersFilesDetails(dataId).then(function(response) {
-    	    		$scope.cardContent = true;
-    	    		$scope.filesContent = true;
-    	    		$rootScope.subFoldersFilesData = response.data;
-    	    		$rootScope.allfoldersData = [];
-    	    		$rootScope.parentID = dataId;
-    	    		//$rootScope.allFilesData = [];
-    	    		angular.forEach(response.data.entries, function(value, key) {
-    	    			if(value.type == "folder"){
-    	    				$rootScope.allfoldersData.push(value);
-    	    			}
-    	    			/*else if(value.type == "file"){
-    	    				$rootScope.allFilesData.push(value);
-    	    			}*/
-    	    		});
-                    $scope.spinner = false;
-                   $state.go('view')
-                    console.log(response);
-    	    	},function(error){
-                	$scope.spinner = false;
-                	$scope.serviceError = true;
-                    $scope.errorMsgdata = "Failed to load data";
-                    $('#serviceErroMsg #alert').removeClass('fade-out hidden');
-                });
-    	   		
-    	    	
-    	 }
-    
     	 
     	 $scope.getCards = function(){
     		 $scope.spinner = true;
@@ -99,8 +67,10 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    			 $rootScope.parentCards = response.folderList;
  	    			 $scope.getRandomColor();
  	    			$scope.getFolderData();
- 	    			 
- 	    			
+ 	    			 $rootScope.ParentfolderID ="0";
+ 	    			 $rootScope.ParentfolderName ="Dashboard"
+ 	    		     sessionStorage.setItem("ParentfolderID",  '0');
+ 	    			 sessionStorage.setItem("ParentfolderName",  'Dashboard');
  	    		}
  	    		else{
  	    			$scope.errorMsgdata = "No Cards";
@@ -162,81 +132,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
        	            }, {
        	              "name": "B",
        	              "identifier": "001-1b"
-       	            }, {
-       	              "name": "C",
-       	              "identifier": "001-1c"
-       	            }, {
-       	              "name": "D",
-       	              "identifier": "001-1d"
-       	            }, {
-       	              "name": "E",
-       	              "identifier": "001-1e"
-       	            }, {
-       	              "name": "F",
-       	              "identifier": "001-1f"
-       	            }, {
-       	              "name": "G",
-       	              "identifier": "001-1g"
-       	            }, {
-       	              "name": "H",
-       	              "identifier": "001-1h"
-       	            }, {
-       	              "name": "I",
-       	              "identifier": "001-1i"
-       	            }, {
-       	              "name": "AA",
-       	              "identifier": "001-1a"
-       	            }, {
-       	              "name": "BB",
-       	              "identifier": "001-1b"
-       	            }, {
-       	              "name": "CC",
-       	              "identifier": "001-1c"
-       	            }, {
-       	              "name": "DD",
-       	              "identifier": "001-1d"
-       	            }, {
-       	              "name": "EE",
-       	              "identifier": "001-1e"
-       	            }, {
-       	              "name": "FF",
-       	              "identifier": "001-1f"
-       	            }, {
-       	              "name": "GG",
-       	              "identifier": "001-1g"
-       	            }, {
-       	              "name": "HH",
-       	              "identifier": "001-1h"
-       	            }, {
-       	              "name": "II",
-       	              "identifier": "001-1i"
-       	            }, {
-       	              "name": "AAA",
-       	              "identifier": "001-1a"
-       	            }, {
-       	              "name": "BBB",
-       	              "identifier": "001-1b"
-       	            }, {
-       	              "name": "CCC",
-       	              "identifier": "001-1c"
-       	            }, {
-       	              "name": "DDD",
-       	              "identifier": "001-1d"
-       	            }, {
-       	              "name": "EEE",
-       	              "identifier": "001-1e"
-       	            }, {
-       	              "name": "FFF",
-       	              "identifier": "001-1f"
-       	            }, {
-       	              "name": "GGG",
-       	              "identifier": "001-1g"
-       	            }, {
-       	              "name": "HHH",
-       	              "identifier": "001-1h"
-       	            }, {
-       	              "name": "III",
-       	              "identifier": "001-1i"
        	            }],
        	            meta: {
        	              parentId: '001-1'
@@ -305,9 +200,21 @@ define(['angular', '../dashboard'], function (angular, controllers) {
        	          return deferred.promise;
        	        }
     	 }
+    	 $scope.getParentIDandName = function(){
+    		 var dataId; var folderName;
+    		 $rootScope.ParentfolderID = sessionStorage.getItem("ParentfolderID");
+    		 $scope.getFolders($rootScope.ParentfolderID, folderName);
+    	 }
     	 $scope.getFolders = function(dataId, folderName){
     		 $scope.spinner = true;
     		 $scope.folderView =true;
+    		 $rootScope.folderName = folderName;
+    		 $rootScope.folderID = dataId;
+    		 //sessionStorage.setItem("ParentfolderID", dataId);
+    		$rootScope.ParentfolderID = sessionStorage.getItem("folderId");
+			 $rootScope.ParentfolderName = sessionStorage.getItem("folderName");
+			 sessionStorage.setItem("ParentfolderID",  $rootScope.ParentfolderID);
+			 sessionStorage.setItem("ParentfolderName",  $rootScope.ParentfolderName);
     		 if(dataId ==undefined){
     			 dataId = sessionStorage.getItem("folderId");
     		 }
@@ -427,12 +334,19 @@ define(['angular', '../dashboard'], function (angular, controllers) {
         		    document.getElementById('uploadFile').value = $rootScope.filename;
         		}
          }
-    	 $scope.fileupload = function(file,filetype){
+    	 $scope.fileupload = function(){
     		$scope.spinner = true;
     		var folderDataId = sessionStorage.getItem("folderId");
-    		var data = {"name":$rootScope.filename, "parent":{"id": folderDataId},"file":"data:"+filetype+";"+file}
-    		//var formData = new FormData($('#files')[0])
-     		dashboardService.fileUpload(data).then(function (response) {
+    		//var data = {"name":$rootScope.filename, "parent":{"id": folderDataId},"file":"data:"+filetype+";"+file}
+    		var fd = new FormData($('#files')[0]);
+    		var file = $rootScope.filename;
+    		var uploadUrl =  Upload_File
+    		fileUpload.uploadFileToUrl(file, uploadUrl, fd);
+    		//var attributes={"name": $rootScope.filename, "parent":{"id":folderDataId}}
+    	
+
+    		
+     		/*dashboardService.fileUpload(multipartFormData).then(function (response) {
      			 $scope.spinner = false;
      			 if(response!=""){
      				$rootScope.fileuploadData = response;
@@ -447,7 +361,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    		$scope.serviceError = true;
  	    		$scope.serviceSuccess = false;
                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
- 	        })
+ 	        })*/
     	 };
     	 
     	 $scope.popupWindow = function(){
@@ -578,7 +492,22 @@ define(['angular', '../dashboard'], function (angular, controllers) {
                  $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	        })
     	 };
-    	
+    	 $scope.deleteComment = function(id){
+    		$scope.spinner = true;
+    		var data = { "commentID":id}
+     		dashboardService.deleteComment(data).then(function (response) {
+     			$scope.spinner = false;
+				$scope.getFolders();
+ 	    		$scope.successMsgdata = "Comment is deleted successfully";
+ 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+ 	        	$scope.serviceSuccess = true;
+ 	            $scope.serviceError = false;
+ 	    		},function(error){
+ 	    		 $scope.spinner = false
+ 	    		 $scope.serviceError = true;
+                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+ 	        })
+    	 };
     	$scope.MoreCommentsData = function(){
     		var CommentsData = $rootScope.commentsData // json data
         	var pagesShown = 1;

@@ -24,7 +24,7 @@ header.pageheader {
 h1 {
 	display: inline-block;
 	font-size: 17px;
-	font-weight: normal;
+	font-weight: bold;
 }
 .clear{clear: both;}
 .pageTitle {
@@ -39,10 +39,10 @@ h1 {
    position: relative; */
     left: 30%;
     /* display: block; */
-    font-size: 20px;
+    font-size: 16px;
     color: #101010;
     text-align: center; 
-    width: 280px;
+    width: 339px;
     /* top: -40px; */
     height: auto;
     text-indent: -100px;
@@ -62,7 +62,7 @@ h1 {
 	float: right;
 }
 a{ text-decoration: none}
-.leftCol{width: 70%;  height: 100%; border-right: 1px solid #ccc;/* padding-right: 10px; */ min-height: 700px}
+.leftCol{width: 70%;  height: 100%; border-right: 1px solid #ccc;/* padding-right: 10px; */ min-height: 456px}
 .rightCol{width: 30%; height: 100%; padding: 10px 10px;border-left: 1px solid #ccc; }
 .showMore{ border: 0; background-color: transparent; cursor: pointer; color:#3f9aff}
 .center{text-align: center; width: 100%}
@@ -94,20 +94,23 @@ button.dashboardActions {
 .view .foldersData:nth-child(even){margin-right: 0}
 .cardsData{ margin-top: 10px}
 /* .cardsData{border-bottom: 2px solid #ccc; padding-bottom: 0px; margin-bottom: 15px} */
-.cardsData .dataColom{width: 49.1%; float: left; margin: 0 14px 12px 0}
+.cardsData .dataColom{width: 32.1%; float: left; margin: 0 14px 12px 0}
 .foldersData, .filesBlock{width: 32.2%; float: left; margin: 0 14px 12px 0}
-.cardsData .pxcard{ width: 100%; height: 150px; }
+.cardsData .pxcard{ width: 100%; height: 70px; }
 .cardsData .pxcard{background-color: transparent;}
-.cardsData .dataColom:last-child,.cardsData .dataColom:nth-child(even){ margin-right: 0}
-.cardContent{color:#fff; padding: 15px; position: relative; height: 79.9%; cursor: pointer; border-bottom:5px solid transparent;
+.cardsData .dataColom:last-child,.cardsData .dataColom:nth-child(3n){ margin-right: 0}
+.cardContent{color:#fff; padding: 10px; position: relative; height: 70.9%; cursor: pointer; border-bottom:5px solid transparent;
 }
 .cardItem{     display: inline-block; width: 100%;}
 .cardContent:hover, .cardContent.active{border-bottom:5px solid #525252}
-.cardContent h3{padding: 0; margin: 0; font-size: 25px;}
-.cardContent .totalFiles{position: absolute;bottom: 14px}
-.cardContent .defFolderIcon{ font-size: 40px;     position: absolute; bottom: 3px; right: 11px}
+.cardContent h3{padding: 0; margin: 0; font-size: 17px; line-height: 15px}
+.cardContent .totalFiles{position: absolute;bottom: 2px}
+.cardContent .defFolderIcon{     font-size: 23px;
+    position: absolute;
+    bottom: 0px;
+    right: 10px;}
 .foldersData px-card{background-color: transparent; }
-.folderContent{ height: 70px; cursor:pointer; background-color: #169bd5; padding: 15px; position: relative; margin-bottom: 14px; color:#fff;     border: 1px solid #ccc;}
+.folderContent{ height: 70px; cursor:pointer; background-color: #169bd5; padding: 15px; position: relative; margin-bottom: 3px; color:#fff;     border: 1px solid #ccc;}
 .folderContent:hover, .folderContent.active{border-bottom: 1px solid #525252}
 .dataContent{ font-size: 17px;  display: inline-block; width: 87%;}
 .dataContent { overflow: hidden;
@@ -163,16 +166,17 @@ button.dashboardActions {
 .msgForm { border-top:1px solid #ccc; margin-top: 20px } 
  .msgForm input,  .msgForm textarea{ border: 1px solid #ccc; width: 100%; min-height: 25px; margin-bottom: 10px}   
 .msgForm h3{ font-size: 15px; color: #6d6d6d}
-.postbtn{ border: 0; background-color: #169bd5; color:#fff; border-radius:5px; padding:7px 10px; cursor: pointer; width: 80px }
+.postbtn{ border: 0; background-color: #63666a; color:#fff; border-radius:5px; padding:7px 10px; cursor: pointer; width: 80px }
 
 
 td.aha-table .viewing.aha-table, .td.aha-table .viewing.aha-table{white-space: normal;}
 
-.total{width: 150px}
+.total{width: 200px}
 h1.caps.px-context-browser{ font-size: 17px; text-transform: none !important}
 span.td.aha-fileVersion-td.style-scope.aha-table{ word-break: break-all;}
 #selectContext.px-context-browser{ background-color: transparent;}
 header.px-context-browser h1.px-context-browser{     top: -4px;}
+:not([style-scope]):not(.style-scope):root h1.px-context-browser.weight--normal{ font-weight: bold !important;}
 
 
 /* header.pageheader.fileView{height: 25px;} */
@@ -356,3 +360,5 @@ padding: 0 10px; margin-bottom: 10px}
     background-color: #fff;
     border: 1px solid #ccc;
     text-indent: 5px;}
+.commentsData i.fa{ color: #4caf50}    
+.commentContent .title span.deleteMsg{ cursor:  pointer;  font-size: 15px; color:red}
