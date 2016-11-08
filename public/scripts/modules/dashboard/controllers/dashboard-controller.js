@@ -504,7 +504,9 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	            $scope.serviceError = false;
  	    		},function(error){
  	    		 $scope.spinner = false
+ 	    		$scope.serviceSuccess = false;
  	    		 $scope.serviceError = true;
+ 	    		
                  $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	        })
     	 };

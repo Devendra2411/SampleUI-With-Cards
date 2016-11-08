@@ -20,8 +20,15 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
     dashboardService.service('fileUpload', ['$http','$rootScope','$state', function ($http,$rootScope,$state) {
     	this.uploadFileToUrl = function(file, uploadUrl, fd){
         var parentID = $rootScope.parentID;
+        
+        var multipartFormData = {
+        	      attributes: {"name":file, "parent":{"id":parentID}},
+        	      content: fd
+        	  };
+
+        
         fd.append('file', file);
-            $http.post(uploadUrl,fd,{
+            $http.post(uploadUrl,multipartFormData,{
                 transformRequest: angular.identity,
                headers: {'Authorization' : 'Bearer '+$rootScope.gtbToken}
             })
@@ -140,7 +147,7 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   		};
   		var postComment =  function(data){
   			var deferred = $q.defer();
-  			$http.delete(API_URL+'/postComments', data)
+  			$http.post(API_URL+'/postComments', data)
   				.success(function(data) {
   					deferred.resolve(data);
   				})
@@ -151,7 +158,7 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   		};
   		var deleteComment =  function(data){
   			var deferred = $q.defer();
-  			$http.post(API_URL+'/deleteComment')
+  			$http.post(API_URL+'/deleteComment',data)
   				.success(function(data) {
   					deferred.resolve(data);
   				})
