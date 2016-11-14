@@ -18,19 +18,20 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
     }]);
     
     dashboardService.service('fileUpload', ['$http','$rootScope','$state', function ($http,$rootScope,$state) {
-    	this.uploadFileToUrl = function(file, uploadUrl, fd){
-        var parentID = $rootScope.parentID;
-        
+    	this.uploadFileToUrl = function(file,uploadUrl, fd){
+    		 //fd.append('file', file);
+    		/* var parentID = $rootScope.parentID;
         var multipartFormData = {
         	      attributes: {"name":file, "parent":{"id":parentID}},
         	      content: fd
         	  };
 
         
-        fd.append('file', file);
-            $http.post(uploadUrl,multipartFormData,{
+        fd.append('file', file);*/
+            $http.post(uploadUrl,fd,{
                 transformRequest: angular.identity,
-               headers: {'Authorization' : 'Bearer '+$rootScope.gtbToken}
+                headers: {'Content-Type': undefined}
+               /*headers: {'Authorization' : 'Bearer '+$rootScope.gtbToken}*/
             })
             .success(function(data){
                 	console.log(data);
@@ -167,6 +168,40 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   				});
   			return deferred.promise;
   		};
+  		
+  		var getBOXFolders =  function(data){
+  			var deferred = $q.defer();
+  			$http.get(Box_API+'/folders/0/items', { headers: {'Authorization': 'Bearer '+$rootScope.gtbToken}})
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('Failed');
+  				});
+  			return deferred.promise;
+  		};
+  		var getBOXFoldersInfo =  function(folderID){
+  			var deferred = $q.defer();
+  			$http.get(Box_API+'/folders/'+folderID, { headers: {'Authorization': 'Bearer '+$rootScope.gtbToken}})
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('Failed');
+  				});
+  			return deferred.promise;
+  		};
+  		var getBoxAkanaToken =  function(){
+  			var deferred = $q.defer();
+  			$http.post(boxAkana_Url)
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('Akana Token not received');
+  				});
+  			return deferred.promise;
+  		};
             return{
             	authorizeUser:authorizeUser,            	
             	getCards:getCards,
@@ -179,7 +214,10 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
             	fileUpload:fileUpload,
             	createFolder:createFolder,
             	postComment:postComment,
-            	deleteComment:deleteComment
+            	deleteComment:deleteComment,
+            	getBOXFolders:getBOXFolders,
+            	getBOXFoldersInfo:getBOXFoldersInfo,
+            	getBoxAkanaToken:getBoxAkanaToken
             }
     }]);
 

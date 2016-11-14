@@ -146,17 +146,19 @@
 	<div id="popup" class="modal-box"> 
 	  <div class="userData">
 	    <a href="#" class="js-modal-close close">x</a>
-	    <h3> File Upload</h3>  
+	    <h3> File Upload</h3>
 	    <from id="files">
-		<input id="uploadFile" placeholder="Choose File" disabled="disabled" />
+		<input id="uploadFile" placeholder="Choose File" disabled="disabled" ng-model="filename" />
 		<div class="fileUpload btn btn-primary">
 		    <span> Browse</span>
-		    <input id="uploadBtn" type="file" class="upload"  ng-model="file" name="inputFile" base-sixty-four-input required maxsize="500" accept="image/*/">
-		    
+		    <input id="uploadBtn" type="file" class="upload"  ng-model="file" name="uploadfile" accept="*" file-model = "uploads">
+		    <input type="hidden" value="{{ssoId}}" name="sso">
+		    <input type="hidden" value="{{email}}" name="email">
+		    <input type="hidden" value="{{folderID}}" name="folderID">
 		</div>	    
-	    <button ng-click="fileupload(file.base64, file.filetype)" class="btn customBtn"> Upload </button>
-	    
-	  <!--   <input type="file" class="customInputBox" id="saveProcessName" accept="*" file-model = "uploads" ng-model="processName" /> </from>
+	    <button ng-click="fileupload()" class="btn customBtn"> Upload </button>
+	    </from>
+	  <!--   <input type="file" class="customInputBox" id="saveProcessName" accept="*" file-model = "uploads" ng-model="processName" /> 
 	    <button name="{{parentID}}"ng-click="fileupload(name)" class="btn customBtn"> Upload </button> -->
 	  </div>
 	  <!--  <div>{{file.base64}}...</div> -->
