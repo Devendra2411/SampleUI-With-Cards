@@ -46,6 +46,7 @@ h1 {
     /* top: -40px; */
     height: auto;
     text-indent: -100px;
+    font-weight: bold;
 }
 .actionsBlock {
 	    position: relative;
@@ -138,10 +139,10 @@ button.dashboardActions {
     top: 5px; cursor: pointer; padding-right: 5px;}
     
 .view .scroll-body.aha-table{ width: 99.9%; overflow: inherit; }
+aha-table#dataTable{margin-bottom: 10px}
 .view .flex.px-data-table{padding-right: 10px;}
  .striped.aha-table:nth-child(even), .tr--filter.aha-table{     background-color: #fff; }
  .th--no-borders.th--no-borders.th--no-borders.aha-table{    border: 1px solid #b1b1bc;}
- .aha-fileName-td{ font-weight: bold; color:#428ef1; font-size: 13px; cursor: pointer;}
  
  .filesTitle{ font-size: 18px; margin: 0; padding: 0; font-weight: normal;}
  .fileContent{ height: 70px; cursor:pointer; background-color: #fff; padding: 15px; position: relative; margin-bottom: 14px; border: 1px solid #e4e4e4}
@@ -362,3 +363,4 @@ padding: 0 10px; margin-bottom: 10px}
     text-indent: 5px;}
 .commentsData i.fa{ color: #4caf50}    
 .commentContent .title span.deleteMsg{ cursor:  pointer;  font-size: 15px; color:red}
+#logincontainer ul.dropdown-menu{padding: 0}

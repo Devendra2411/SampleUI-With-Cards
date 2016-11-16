@@ -16,7 +16,7 @@
 <header class="pageheader dashboard">
 
 	<!-- <h1> GPS Marketing Tool <span><i class="fa fa-caret-down" aria-hidden="true"></i></span></h1> -->
-	<div class="pageTitle">Dashboard</div>
+	<div class="pageTitle" ng-click="getBOXFoldersData()">Dashboard</div>
 	<div class="actionsBlock fright" ng-hide="roleId==2" ><button class="dashboardActions actionMenu2" ><i class="fa fa-ellipsis-v " aria-hidden="true"></i>
 	<ul>
 	  <li>
@@ -37,28 +37,8 @@
 			<div class="cardItem" ng-style="{'background-color':data.bgcolor}">
 				<parent-card id="parent-card" card-data="{{data}}" ng-click="getFolders(data.folderID, data.folderName)" ></parent-card>		
 			</div>		
-		</div>
-		<!-- <px-deck-selector decks='[{"name":"First Deck","url":"/cardsData"},{"name":"Second Deck","url":"/cardsData"},{"name":"Third Deck","url":"/deck3"}]'></px-deck-selector> --> 
+		</div> 
 	</div>
-	<div class="clear"></div>
-	<!-- <div class="folders" ng-show="cardContent" >
-		<div class="foldersData" ng-repeat="data in allfoldersData">
-			<div class="folderContent">
-				<sub-folder id="parent-folder" folder-data="{{data}}" ng-click="gotoFileView()"> </sub-folder>
-			</div>
-		</div>
-	</div> 
-	<div class="clear"></div>
-	<div ng-show="filesContent">
-		<h2 class="filesTitle">Files</h2>
-		<div class="files">
-			<div class="filesBlock " ng-repeat="data in allFilesData">
-				<div class="fileContent">
-					<files-data id="files-data" files-data="{{data}}" ng-click="gotoFileView()"> </files-data>
-				</div>
-			</div>
-		</div>
-	</div>-->
 	<div class="clear"></div>
 	<div class="saveModel">
 
@@ -91,7 +71,7 @@
 	    <a href="#" class="js-modal-close close">x</a>
 	    <h3> Create Folder</h3>  
 	    <from id="Create_folder">
-		<input type="text" ng-model="FolderNameData" >    
+		<input type="text" ng-model="FolderNameData"  ng-change="textOnly()">    
 	    <button name="home" ng-click="craeteFolderToBox('home')" class="btn customBtn"> Create Folder </button>
 	    
 	  <!--   <input type="file" class="customInputBox" id="saveProcessName" accept="*" file-model = "uploads" ng-model="processName" /> </from>

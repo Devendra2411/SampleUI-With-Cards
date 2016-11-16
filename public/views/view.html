@@ -15,7 +15,7 @@
 <div class="accessActionMenu" style="display:none">
 	<ul>
 		<li><button ng-click="getFileDownload()"><i class="fa fa-download" aria-hidden="true"></i> Download</button></li>
-		<li><button ng-click=""><i class="fa fa-times" aria-hidden="true"></i> Delete</button></li>
+<!-- 		<li><button ng-click=""><i class="fa fa-times" aria-hidden="true"></i> Delete</button></li> -->
 	</ul>
 </div>
 <div class="spinner" ng-show="spinner"><px-spinner size="75"></px-spinner></div>
@@ -176,7 +176,7 @@
 	    <a href="#" class="js-modal-close close">x</a>
 	    <h3> Create Folder</h3>  
 	    <from id="Create_folder">
-		<input type="text" ng-model="FolderNameData" >    
+		<input type="text" ng-model="FolderNameData" ng-change="textOnly() >    
 	    <button name="view" ng-click="craeteFolderToBox('view')" class="btn customBtn"> Create Folder </button>
 	    
 	  <!--   <input type="file" class="customInputBox" id="saveProcessName" accept="*" file-model = "uploads" ng-model="processName" /> </from>

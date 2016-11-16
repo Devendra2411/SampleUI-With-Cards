@@ -53,6 +53,16 @@ define(['angular', '../dashboard'], function (angular, controllers) {
                 }
             });
        	 };
+       	 $scope.textOnly = function(){
+       		 var text = $scope.FolderNameData
+       		 var transformedInput = text.replace(/[^a-zA-Z]/g, '');
+       		if (transformedInput !== text) {
+       			$scope.FolderNameData = transformedInput
+       		}
+       		return transformedInput;
+       		
+       		
+       	 }
     	 
     	 /*$scope.getCards = function(){
     		 $scope.spinner = true;
@@ -66,7 +76,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    			 $scope.cardsData = true;
  	    			 $rootScope.parentCards = response.folderList;
  	    			 $scope.getRandomColor();
- 	    			$scope.getFolderData();
+ 	    			//$scope.getFolderData();
  	    			 $rootScope.ParentfolderID ="0";
  	    			 $rootScope.ParentfolderName ="Dashboard"
  	    		     sessionStorage.setItem("ParentfolderID",  '0');
@@ -86,7 +96,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        })
  	        
     	 }*/
-    	 //$scope.getBOXFoldersData
+
     	 $scope.getCards= function(){
     		 $scope.spinner = true;
      		dashboardService.getAkanaToken().then(function (response) {
@@ -97,11 +107,12 @@ define(['angular', '../dashboard'], function (angular, controllers) {
           				$rootScope.gtbToken = data.accessToken;
          	    		 console.log('gtb_token', data);
          	    		 if(response!=""){
-         	    			 dashboardService.getBOXFolders().then(function (info) { 
+         	    			 var dataId ="0"
+         	    			 dashboardService.getBOXFolders(dataId).then(function (info) { 
  	     	      				if(info!=""){
  	     	      				 $scope.spinner = false;
  	     	      				$scope.cardsData = true;
- 	     	      					$scope.BoxFolderData = info.entries;
+ 	     	      					//$scope.BoxFolderData = info.entries;
  	     	      					//$rootScope.parentCards = info.entries;
  	     	      				
  	     	      					$scope.BoxFolders = {
@@ -130,7 +141,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	     	      				})
  	     	      				$rootScope.parentCards =$scope.BoxFolders.folderList;
  	     	      				$scope.getRandomColor();
- 	     	 	    			$scope.getFolderData();
  	     	      				
          	    			 })
          	    			 
@@ -153,125 +163,327 @@ define(['angular', '../dashboard'], function (angular, controllers) {
      		})
      		 console.log(JSON.stringify($scope.parentCards));
      	}
-    	 $scope.getFolderData = function(){
-    		 $rootScope.browserContextData =[]
- 			  for(var i=0; i< $rootScope.parentCards.length; i++){
- 				 
- 				 var temp = {
- 						"name": $rootScope.parentCards[i].folderName,
- 	    	            "identifier": "001-"+i,
- 	    	            "isOpenable": true
- 				 }
- 				 
- 				$rootScope.browserContextData.push(temp);
+    	 
+    	 $scope.getFolders= function(dataId, folderName){
+    		 $scope.spinner = true;
+    		 $scope.folderView =true;
+    		 $rootScope.folderName = folderName;
+    		 $rootScope.folderID = dataId;
+    		 //sessionStorage.setItem("ParentfolderID", dataId);
+    		 $rootScope.ParentfolderID = sessionStorage.getItem("folderId");
+			 $rootScope.ParentfolderName = sessionStorage.getItem("folderName");
+    		 if(dataId ==undefined){
+    			 dataId = sessionStorage.getItem("folderId");
+    		 }
+    		 else if(dataId !=undefined){
+    	 		sessionStorage.setItem("folderId", dataId);
+    		 }
+    		 if(folderName ==undefined){
+    			 folderName = sessionStorage.getItem("folderName");
+    			 $rootScope.folderName = folderName;
+    		 }
+    		 else if(folderName !=undefined){
+     	 		sessionStorage.setItem("folderName", folderName);
+     		 }
+     		dashboardService.getAkanaToken().then(function (response) {
+     			$rootScope.akanaToken = response.access_token;
+     			console.log('getAkanaToken', response);
+      			dashboardService.getGTBToken().then(function (data) {
+          			if(data!=null){
+          				$rootScope.gtbToken = data.accessToken;
+         	    		 console.log('gtb_token', data);
+         	    		 if(response!=""){
+         	    			 dashboardService.getBOXFolders(dataId).then(function (info) { 
+ 	     	      				if(info!=""){
+ 	     	      				 $scope.spinner = false;
+ 	     	      				$scope.folderView =false;    	      				
+ 	     	      					$scope.BoxSubFolders = {
+ 	     	 	     						  "folderID": dataId,
+ 	     	 	     						  "folderList": [],
+ 	     	 	     						  "fileList":[]
+ 	     	 	     					}
+ 	     	 	     				for(var i=0; i<info.entries.length; i++){
+ 	     	 	     					var tempId =info.entries[i].id;
+ 	     	 	     					if(info.entries[i].type =="folder"){
+ 	     	 	     						var tempFolderData = { 
+      			 	     						"folderID": info.entries[i].id,
+      			 							      "folderName": info.entries[i].name,
+      			 							      "totalCount":"0",
+      			 							      "folderSize":""
+      			 							   }
+ 	     	 	     					$scope.BoxSubFolders.folderList.push(tempFolderData);
+ 	     	 	     					}
+	 	     	 	     				if(info.entries[i].type =="file"){
+		     	 	     						var tempFileData = { 
+	  			 	     						"fileID": info.entries[i].id,
+	  			 							      "fileName": info.entries[i].name,
+	  			 							      "fileUpdatedBy": "",
+		     	 	     					      "fileUpdatedDate": "",
+		     	 	     					      "fileSize": "",
+		     	 	     					      "fileVersion": "" 
+	  			 							   }
+		     	 	     					$scope.BoxSubFolders.fileList.push(tempFileData);
+	     	 	     					}
+ 	     	 	     				}
+ 	     	      				}
+ 	     	      				angular.forEach($scope.BoxSubFolders.folderList, function(value, index) {
+ 		     	      				 var tempId =value.folderID;
+ 		        	    			 if(tempId!=""){
+ 			     						dashboardService.getBOXFoldersInfo(tempId).then(function (boxdata) {
+ 			     							if(boxdata!="" && boxdata.id==tempId){
+ 			     								var folderSize = (boxdata.size / (1024*1024)).toFixed(2);
+ 			     								value.totalCount = boxdata.item_collection.total_count;
+ 			     								value.folderSize = folderSize+' MB';
+ 			     							}
+ 			 	     					})
+ 			     					}
+ 	     	      				})
+ 	     	      				angular.forEach($scope.BoxSubFolders.fileList, function(value, index) {
+ 		     	      				 var tempId =value.fileID;
+ 		        	    			 if(tempId!=""){
+ 			     						dashboardService.getBOXFileInfo(tempId).then(function (boxdata) {
+ 			     							if(boxdata!="" && boxdata.id==tempId){
+ 			     								var size = (boxdata.size / (1024*1024)).toFixed(2);
+ 			     								var tempDate = boxdata.created_at;
+ 			     								var tempItem = tempDate.split('T');
+ 			     								var cDate = tempItem[0];
+ 			     								value.fileUpdatedBy =boxdata.created_by.name;
+ 			     								value.fileUpdatedDate =cDate;
+ 			     								value.fileSize =size+' MB';
+ 			     								value.fileVersion =boxdata.file_version.sha1;
+ 			     							}
+ 			 	     					})
+ 			     					}
+ 	     	      				})
+ 	     	      				$rootScope.allFoldersData =$scope.BoxSubFolders.folderList;
+ 	     	      			    $rootScope.allFilesData =$scope.BoxSubFolders.fileList;
+	 	     	      			$rootScope.parentID =dataId;
+	 	    	    			for(var i=0; i<$rootScope.allFilesData.length; i++){
+	 	    	    				$rootScope.allFilesData[i].actions="";
+	 	    	    				$rootScope.allFilesData[i].actions = '<button style="background: none;border: none" value="'+$rootScope.allFilesData[i].fileID+'"  class="actionBtn flex flex--center flex--middle style-scope aha-table"><i class="fa fa-bars" aria-hidden="true"></i></button>';
+	 	    	    			};
+	 	    	    			$scope.getCommentsData(dataId);
+	 	    	    			$state.go('view');
+	         	    			 })
+	      	      			}
+          			}
+          			else{
+          				 $scope.spinner = false;
+          				$scope.errorMsgdata = "No Data";
+          				$scope.serviceSuccessMsg = false;
+     	    			$scope.serviceError = true;
+                        $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+          			}
+  	    		},function(error){
+ 	 	    		 $scope.spinner = false
+ 	 	    		 $scope.serviceError = true;
+ 	 	    		 $scope.errorMsgdata = "Failed";
+ 	 	    		 $scope.serviceSuccess = false;
+ 	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+  	    		})
+     		})
+     		 console.log(JSON.stringify($scope.BoxSubFolders));
+     	}
+    	 
+    	 $scope.craeteFolderToBox= function(flag){
+    		 $scope.spinner = true;
+    		 var folderID;
+    		 if(flag=="home"){
+    			 folderID ="0"
+    		 }
+    		 else{
+    			 folderID =sessionStorage.getItem("folderId");
+    		 }
+     		dashboardService.getAkanaToken().then(function (response) {
+     			$rootScope.akanaToken = response.access_token;
+     			console.log('getAkanaToken', response);
+      			dashboardService.getGTBToken().then(function (data) {
+          			if(data!=null){
+          				$rootScope.gtbToken = data.accessToken;
+         	    		 console.log('gtb_token', data);
+         	    			 var data = {"name": $scope.FolderNameData, "parent": {"id": folderID}}
+         	    			 dashboardService.createFolder(data).then(function (response) { 
+         	    				$scope.spinner = false;
+         	    	    		if(response.type!="error"){
+         	    	    			if(flag=="home"){
+         	    	 	 	    		$scope.getCards();
+         	    	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+         	    	 	 	    		$scope.FolderNameData ="";
+         	    	 	 	    		$scope.successMsgdata = "Folder Created successfully";
+         	    	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+         	    	 	 	        	$scope.serviceSuccess = true;
+         	    	 	 	            $scope.serviceError = false;
+         	    	    			}
+         	    	    			else{
+	         	   	 	 	    		$scope.getFolders();
+	         	   	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+	         	   	 	 	    		$scope.FolderNameData ="";
+	         	   	 	 	    		console.log('createFolder', response);
+	         	   	 	 	    		$scope.successMsgdata = "Folder Created successfully";
+	         	   	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+	         	   	 	 	        	$scope.serviceSuccess = true;
+	         	   	 	 	        	$scope.serviceError = false;
+         	    	    			}
+         	    	    		}
+         	    			 },function(error){
+         	    				 $scope.spinner = false
+        	   	 	    		 $scope.serviceError = true;
+        	   	 	    		 $scope.errorMsgdata = error.message;
+        	   	 	    		 $scope.serviceSuccess = false;
+        	   	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+         	  	    		})
+         	    			 
+      	      				}
+  	    		},function(error){
+ 	 	    		 $scope.spinner = false
+ 	 	    		 $scope.serviceError = true;
+ 	 	    		 $scope.errorMsgdata = "Failed";
+ 	 	    		 $scope.serviceSuccess = false;
+ 	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+  	    		})
+     		})
+     	}
+    	 
+    	 $scope.fileupload= function(){
+    		 $scope.spinner = true;
+     		dashboardService.getAkanaToken().then(function (response) {
+     			$rootScope.akanaToken = response.access_token;
+     			console.log('getAkanaToken', response);
+      			dashboardService.getGTBToken().then(function (data) {
+          			if(data!=null){
+          				 $rootScope.gtbToken = data.accessToken;
+         	    		 console.log('gtb_token', data);
+         	    		 var formData = new FormData($('#files')[0]);
+         		         var fileBody = $scope.uploads;
+         		         var filetype = fileBody.type
+         		         var filename =fileBody.name
+         			     var blob = new Blob([fileBody], { type: filetype});
+         			     formData.append('file', blob, filename);
+         		         var folderDataId = sessionStorage.getItem("folderId");
+         		         formData.set("parent_id",folderDataId);
+         		         var tempAjaxUpload = $.ajax({
+         								         url: Upload_File,
+         								         headers: {"Authorization": "Bearer "+$rootScope.gtbToken},
+         								         type: 'POST',
+         								         processData: false,
+         								         contentType: false,
+         								         dataType : 'JSON',
+         								         data: formData
+         								         }).complete(function (data) {
+         								        	 $scope.spinner = false;
+         								             if(data.statusText=="Created"){
+         							 	 	 	    		$scope.filename ="";
+         							 	 	 	    		$scope.file="";
+         										            console.log(data.responseText);
+         										            $scope.getFolders();
+         							 	 	 	    		$scope.successMsgdata = "File uploaded successfully";
+         							 	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+         							 	 	 	        	$scope.serviceError = false;
+         							 	 	 	        	$scope.serviceSuccess = true;
+         							 	 	 	        	$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+         							 	 	 	            
+         								             }
+         								             else{	 $scope.spinner = false;
+         										            console.log(data.responseText);
+         							 	 	 	    		$scope.errorMsgdata = "Upload Failed";
+         							 	 	 	    		$scope.filename ="";
+         							 	 	 	    		$scope.file="";
+         							 	 	 	    	    $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+         							 	 	 	    	    $scope.serviceSuccess = false;
+         							 	 	 	        	$scope.serviceError = true;
+         							 	 	 	         $(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+         							 	 	 	            
+         								             }
+         								         });
+         	    			 
+      	      				}
+          			else{
+          				 $scope.spinner = false;
+          				$scope.errorMsgdata = "Failed";
+          				$scope.serviceSuccessMsg = false;
+     	    			$scope.serviceError = true;
+                        $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+          			}
+  	    		},function(error){
+ 	 	    		 $scope.spinner = false
+ 	 	    		 $scope.serviceError = true;
+ 	 	    		 $scope.errorMsgdata = "Failed";
+ 	 	    		 $scope.serviceSuccess = false;
+ 	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+  	    		})
+     		})
+     	}
+    	 
+    	 /* $scope.fileupload = function(){
+         	 $scope.spinner = true;
+ 	    	 var getakana= dashboardService.getAkanaToken();
+ 	    	 getakana.then(function(result){
+ 		         var formData = new FormData($('#files')[0]);
+ 		         var fileBody = $scope.uploads;
+ 		         var filetype = fileBody.type
+ 		         var filename =fileBody.name
+ 			      var blob = new Blob([fileBody], { type: filetype});
+ 			      formData.append('file', blob, filename);
+ 		         var folderDataId = sessionStorage.getItem("folderId");
+ 		         //formData.set("name", $rootScope.filename);
+ 		         formData.set("parent_id",folderDataId);
+ 		         var tempAjaxUpload = $.ajax({
+ 								         url: Upload_File,
+ 								         headers: {"Authorization": "Bearer "+$rootScope.gtbToken},
+ 								         type: 'POST',
+ 								         processData: false,
+ 								         contentType: false,
+ 								         dataType : 'JSON',
+ 								         data: formData
+ 								         }).complete(function (data) {
+ 								        	 $scope.spinner = false;
+ 								             if(data.statusText=="Created"){
+ 							 	 	 	    		$scope.filename ="";
+ 							 	 	 	    		$scope.file="";
+ 										            console.log(data.responseText);
+ 										            $scope.getFolders();
+ 							 	 	 	    		$scope.successMsgdata = "File uploaded successfully";
+ 							 	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+ 							 	 	 	        	$scope.serviceError = false;
+ 							 	 	 	        	$scope.serviceSuccess = true;
+ 							 	 	 	        	$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+ 							 	 	 	            
+ 								             }
+ 								             else{	 $scope.spinner = false;
+ 										            console.log(data.responseText);
+ 							 	 	 	    		$scope.errorMsgdata = "Upload Failed";
+ 							 	 	 	    		$scope.filename ="";
+ 							 	 	 	    		$scope.file="";
+ 							 	 	 	    	    $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+ 							 	 	 	    	    $scope.serviceSuccess = false;
+ 							 	 	 	        	$scope.serviceError = true;
+ 							 	 	 	         $(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+ 							 	 	 	            
+ 								             }
+ 								         });
+ 	    	 })
+          }*/
+    	  
+    	 $scope.getCommentsData = function(dataId){
+    		 $scope.spinner = true;
+    		var data = {"folderID":dataId}
+    		 dashboardService.getComments(data).then(function (response) {
+      				$scope.spinner = false;
+     				$rootScope.commentsData = response;
+     				$scope.MoreCommentsData();
 
- 			 }
-    		 console.log($rootScope.browserContextData);
-    		 var initialContexts = {
-       	          data:$rootScope.browserContextData,
-       	          meta: {
-       	            parentId: null // the id of the asset of the tree above
-       	          }
-       	        };
-       	 		console.log('initialContexts', initialContexts);
-       	          var colBrowser = document.querySelector('px-context-browser');
-       	          colBrowser.handlers = {
-       	            getChildren: function(parent, newIndex) {
-       	              return demoGetChildren(parent, newIndex)
-       	            },
-       	            itemOpenHandler: function(context) {
-       	              console.log('Opened: ', context);
-       	            }
-       	          };
-       	         
-       	        colBrowser.initialContexts = initialContexts;
-       	        function demoGetChildren(node, rangeStart) {
-       	          var nodeId = node.identifier;
-       	          var deferred = $q.defer();
-       	          if (!rangeStart) {
-       	            rangeStart = 0;
-       	          }
-       	          var lotsOfChildren = {
-       	            data: [{
-       	              "name": "A",
-       	              "identifier": "001-1a"
-       	            }, {
-       	              "name": "B",
-       	              "identifier": "001-1b"
-       	            }],
-       	            meta: {
-       	              parentId: '001-1'
-       	            }
-       	          };
-       	          var deepNestedChildren = {
-       	            data: [{
-       	              "name": "Nested Child",
-       	              "identifier": "001-2a",
-       	              "isOpenable": true
-       	            }],
-       	            meta: {
-       	              parentId: '001-2'
-       	            }
-       	          };
-
-       	          var deepNestedGrandchildren = {
-       	            data: [{
-       	              "name": "Nested Grandchild",
-       	              "identifier": "001-2aa",
-       	              "isOpenable": true
-       	            }],
-       	            meta: {
-       	              parentId: '001-2a'
-       	            }
-       	          };
-
-       	          var deepNestedGreatGrandchild = {
-       	            data: [{
-       	              "name": "Nested Great Grandchild",
-       	              "identifier": "001-2aaa",
-       	              "isOpenable": true
-       	            }],
-       	            meta: {
-       	              parentId: '001-2aa'
-       	            }
-       	          };
-
-       	          var children;
-
-       	          if (nodeId === "001-1") {
-       	            children = lotsOfChildren;
-       	            var rangeEnd = Math.min(rangeStart + 9, children.data.length); //groups of nine
-       	            children.data = children.data.slice(rangeStart, rangeEnd);
-       	          }
-       	          else if (nodeId === "001-2") {
-       	            children = deepNestedChildren;
-       	          }
-       	          else if (nodeId === "001-2a") {
-       	            children = deepNestedGrandchildren;
-       	          }
-       	          else if (nodeId === "001-2aa") {
-       	            children = deepNestedGreatGrandchild;
-       	          }
-       	          else {
-       	            children = {
-       	              data: [],
-       	              meta: {
-       	                parentId: nodeId
-       	              }
-       	            };
-       	          }
-
-       	          deferred.resolve(children);
-
-       	          return deferred.promise;
-       	        }
+  	    		},function(error){
+  	    		 $scope.spinner = false
+  	    		 $scope.serviceError = true;
+  	    		})
     	 }
+
     	 $scope.getParentIDandName = function(){
     		 var dataId; var folderName;
     		 $rootScope.ParentfolderID = sessionStorage.getItem("ParentfolderID");
     		 $scope.getFolders($rootScope.ParentfolderID, folderName);
     	 }
-    	 $scope.getFolders = function(dataId, folderName){
+    	 /*$scope.getFolders = function(dataId, folderName){
     		 $scope.spinner = true;
     		 $scope.folderView =true;
     		 $rootScope.folderName = folderName;
@@ -332,7 +544,10 @@ define(['angular', '../dashboard'], function (angular, controllers) {
                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	        })
  	        
-    	 }
+    	 }*/
+    	 
+    	 
+    	
     	 
     	 
     	 $scope.getAkanaToken = function(){
@@ -394,97 +609,10 @@ define(['angular', '../dashboard'], function (angular, controllers) {
         		    document.getElementById('uploadFile').value = $rootScope.filename;
         		}
          }
-       /*$scope.fileupload = function(){
-        	 $scope.getAkanaToken();
-	         var formData = new FormData($('#files')[0]);
-	         var folderDataId = sessionStorage.getItem("folderId");
-	         formData.set("name", $rootScope.filename);
-	         formData.set("id",folderDataId);
-	         var tempAjaxUpload = $.ajax({
-	         url: 'https://upload.box.com/api/2.0/files/content',
-	         headers: {
-	         "Authorization": "Bearer "+$rootScope.gtbToken,
-	         "Accept": "application/json",
-	         "crossDomain": true,
-	         },
-	         type: 'POST',
-	         data: formData,
-	         processData: false,
-	         contentType: false,
-	         success: function(response, textStatus, jqXHR)
-	         {
-	         console.log(jqXHR.status);
-	         console.log(response);
-	         },
-	         error: function(jqXHR, textStatus, errorThrown)
-	         {
-	         console.log("errorThrown : " + errorThrown)
-	         console.log('ERRORS: ' + textStatus);
-	         }
-	         });
-         }*/
-         $scope.fileupload = function(){
-        	 $scope.spinner = true;
-	    	 var getakana= dashboardService.getAkanaToken();
-	    	 getakana.then(function(result){
-		         var formData = new FormData($('#files')[0]);
-		         var fileBody = $scope.uploads;
-		         var filetype = fileBody.type
-		         var filename =fileBody.name
-			      var blob = new Blob([fileBody], { type: filetype});
-			      formData.append('file', blob, filename);
-		         var folderDataId = sessionStorage.getItem("folderId");
-		         //formData.set("name", $rootScope.filename);
-		         formData.set("parent_id",folderDataId);
-		         var tempAjaxUpload = $.ajax({
-								         url: 'https://upload.box.com/api/2.0/files/content',
-								         headers: {"Authorization": "Bearer "+$rootScope.gtbToken},
-								         type: 'POST',
-								         processData: false,
-								         contentType: false,
-								         dataType : 'JSON',
-								         data: formData
-								         }).complete(function (data) {
-								        	 $scope.spinner = false;
-								             if(data.statusText=="Created"){
-							 	 	 	    		$scope.filename ="";
-							 	 	 	    		$scope.file="";
-										            console.log(data.responseText);
-										            $scope.getFolders();
-							 	 	 	    		$scope.successMsgdata = "File uploaded successfully";
-							 	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
-							 	 	 	        	$scope.serviceError = false;
-							 	 	 	        	$scope.serviceSuccess = true;
-							 	 	 	        	$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
-							 	 	 	            
-								             }
-								             else{	 $scope.spinner = false;
-										            console.log(data.responseText);
-							 	 	 	    		$scope.errorMsgdata = "Upload Failed";
-							 	 	 	    		$scope.filename ="";
-							 	 	 	    		$scope.file="";
-							 	 	 	    	    $('#serviceErroMsg #alert').removeClass('fade-out hidden');
-							 	 	 	    	    $scope.serviceSuccess = false;
-							 	 	 	        	$scope.serviceError = true;
-							 	 	 	         $(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
-							 	 	 	            
-								             }
-								         });
-	    	 })
-         }         
+       
+                
          
-    	 /*$scope.fileupload = function(){
-    		$scope.spinner = true;
-    		var folderID = sessionStorage.getItem("folderId");
-    		var fd = new FormData($('#files')[0]);
-    		var file = $scope.uploads;
-			 fd.append('sso', $rootScope.ssoId);
-			 fd.append('email', $rootScope.email);
-			 fd.append('folderID', $rootScope.folderID);
-			 fd.append('file', file);
-    		var uploadUrl =  API_URL+"/uploadFile"
-    		fileUpload.uploadFileToUrl(file, uploadUrl, fd);
-    	 };*/
+
     	
     	 $scope.popupWindow = function(){
     			var appendthis =  ("<div class='modal-overlay js-modal-close'></div>");
@@ -498,6 +626,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     			$(".closeBtn, .btnClose, .actionbuttons, .js-modal-close").click(function() {
     			  $(".modal-box, .modal-overlay").fadeOut(500, function() {
     			    $(".modal-overlay").remove();
+    			    $scope.filename ="";
+    			    $scope.file ="";
     			    
     			  });
     			});
@@ -523,6 +653,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			$(".closeBtn, .btnClose, .actionbuttons, .js-modal-close").click(function() {
  			  $(".modal-box, .modal-overlay").fadeOut(500, function() {
  			    $(".modal-overlay").remove();
+ 			    $scope.FolderNameData="";
  			    
  			  });
  			});
@@ -536,7 +667,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			$(window).resize();
  			//$scope.saveProcesDefaultdata();
  		}
-    	 $scope.craeteFolderToBox = function(flag){
+    	 /*$scope.craeteFolderToBox = function(flag){
     		 $scope.spinner = true;
     		 var folderID;
     		 if(flag=="home"){
@@ -585,7 +716,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    		 $scope.serviceSuccess = false;
                  $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	        })
-    	 };
+    	 };*/
     	 
     	 $scope.postComment = function(){
     		 $scope.spinner = true;
@@ -602,7 +733,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
      		dashboardService.postComment(data).then(function (response) {
      			$scope.spinner = false;
 				$rootScope.commentResponse = response;
-				$scope.getFolders();
+				$scope.getCommentsData(folderID);
  	    		$scope.commentData ="";
  	    		$scope.successMsgdata = "Comment posted successfully";
  	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
@@ -616,10 +747,11 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	 };
     	 $scope.deleteComment = function(id){
     		$scope.spinner = true;
+    		var dataId = sessionStorage.getItem("folderId");
     		var data = { "commentID":id}
      		dashboardService.deleteComment(data).then(function (response) {
      			$scope.spinner = false;
-				$scope.getFolders();
+     			$scope.getCommentsData(dataId);
  	    		$scope.successMsgdata = "Comment is deleted successfully";
  	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
  	        	$scope.serviceSuccess = true;
@@ -665,6 +797,119 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		})
     	}
     	
+    	$scope.BrowserData = function(){
+		 $rootScope.browserContextData =[]
+		  for(var i=0; i< $rootScope.parentCards.length; i++){
+			 
+			 var temp = {
+					"name": $rootScope.parentCards[i].folderName,
+    	            "identifier": "001-"+i,
+    	            "isOpenable": true
+			 }
+			 
+			$rootScope.browserContextData.push(temp);
+
+		 }
+		 console.log($rootScope.browserContextData);
+		 var initialContexts = {
+  	          data:$rootScope.browserContextData,
+  	          meta: {
+  	            parentId: null // the id of the asset of the tree above
+  	          }
+  	        };
+  	 		console.log('initialContexts', initialContexts);
+  	          var colBrowser = document.querySelector('px-context-browser');
+  	          colBrowser.handlers = {
+  	            getChildren: function(parent, newIndex) {
+  	              return demoGetChildren(parent, newIndex)
+  	            },
+  	            itemOpenHandler: function(context) {
+  	              console.log('Opened: ', context);
+  	            }
+  	          };
+  	         
+  	        colBrowser.initialContexts = initialContexts;
+  	        function demoGetChildren(node, rangeStart) {
+  	          var nodeId = node.identifier;
+  	          var deferred = $q.defer();
+  	          if (!rangeStart) {
+  	            rangeStart = 0;
+  	          }
+  	          var lotsOfChildren = {
+  	            data: [{
+  	              "name": "A",
+  	              "identifier": "001-1a"
+  	            }, {
+  	              "name": "B",
+  	              "identifier": "001-1b"
+  	            }],
+  	            meta: {
+  	              parentId: '001-1'
+  	            }
+  	          };
+  	          var deepNestedChildren = {
+  	            data: [{
+  	              "name": "Nested Child",
+  	              "identifier": "001-2a",
+  	              "isOpenable": true
+  	            }],
+  	            meta: {
+  	              parentId: '001-2'
+  	            }
+  	          };
+
+  	          var deepNestedGrandchildren = {
+  	            data: [{
+  	              "name": "Nested Grandchild",
+  	              "identifier": "001-2aa",
+  	              "isOpenable": true
+  	            }],
+  	            meta: {
+  	              parentId: '001-2a'
+  	            }
+  	          };
+
+  	          var deepNestedGreatGrandchild = {
+  	            data: [{
+  	              "name": "Nested Great Grandchild",
+  	              "identifier": "001-2aaa",
+  	              "isOpenable": true
+  	            }],
+  	            meta: {
+  	              parentId: '001-2aa'
+  	            }
+  	          };
+
+  	          var children;
+
+  	          if (nodeId === "001-1") {
+  	            children = lotsOfChildren;
+  	            var rangeEnd = Math.min(rangeStart + 9, children.data.length); //groups of nine
+  	            children.data = children.data.slice(rangeStart, rangeEnd);
+  	          }
+  	          else if (nodeId === "001-2") {
+  	            children = deepNestedChildren;
+  	          }
+  	          else if (nodeId === "001-2a") {
+  	            children = deepNestedGrandchildren;
+  	          }
+  	          else if (nodeId === "001-2aa") {
+  	            children = deepNestedGreatGrandchild;
+  	          }
+  	          else {
+  	            children = {
+  	              data: [],
+  	              meta: {
+  	                parentId: nodeId
+  	              }
+  	            };
+  	          }
+
+  	          deferred.resolve(children);
+
+  	          return deferred.promise;
+  	        }
+	 }
     	 //$scope.getAkanaToken();
     	 $scope.addFile();
     	 $scope.gotoDashBoard = function(){
@@ -680,9 +925,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		  $scope.userActions();
     		  $scope.getFolders();
     		  $rootScope.folderID = sessionStorage.getItem("folderId");
-    		  
-    		  
-    		  
     	  }
     	  if($state.current.name =="dashboard" ){ 
     		  $scope.getCards();

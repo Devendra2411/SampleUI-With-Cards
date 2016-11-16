@@ -16,6 +16,8 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
             }
         };
     }]);
+
+    
     
     dashboardService.service('fileUpload', ['$http','$rootScope','$state', function ($http,$rootScope,$state) {
     	this.uploadFileToUrl = function(file,uploadUrl, fd){
@@ -135,7 +137,7 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   			return deferred.promise;
   		};
      	  
-  		var createFolder =  function(data){
+  		/*var createFolder =  function(data){
   			var deferred = $q.defer();
   			$http.post(API_URL+'/createFolder', data)
   				.success(function(data) {
@@ -145,10 +147,21 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   					deferred.reject('Failed');
   				});
   			return deferred.promise;
-  		};
+  		};*/
   		var postComment =  function(data){
   			var deferred = $q.defer();
   			$http.post(API_URL+'/postComments', data)
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('Failed');
+  				});
+  			return deferred.promise;
+  		};
+  		var getComments =  function(data){
+  			var deferred = $q.defer();
+  			$http.post(API_URL+'/getComments', data)
   				.success(function(data) {
   					deferred.resolve(data);
   				})
@@ -169,9 +182,9 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   			return deferred.promise;
   		};
   		
-  		var getBOXFolders =  function(data){
+  		var getBOXFolders =  function(dataId){
   			var deferred = $q.defer();
-  			$http.get(Box_API+'/folders/0/items', { headers: {'Authorization': 'Bearer '+$rootScope.gtbToken}})
+  			$http.get(Box_API+'/folders/'+dataId+'/items', { headers: {'Authorization': 'Bearer '+$rootScope.gtbToken}})
   				.success(function(data) {
   					deferred.resolve(data);
   				})
@@ -188,6 +201,28 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   				})
   				.error(function() {
   					deferred.reject('Failed');
+  				});
+  			return deferred.promise;
+  		};
+  		var getBOXFileInfo =  function(fileID){
+  			var deferred = $q.defer();
+  			$http.get(Box_API+'/files/'+fileID, { headers: {'Authorization': 'Bearer '+$rootScope.gtbToken}})
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('Failed');
+  				});
+  			return deferred.promise;
+  		};
+  		var createFolder =  function(data){
+  			var deferred = $q.defer();
+  			$http.post(Box_API+'/folders',data, { headers: {'Authorization': 'Bearer '+$rootScope.gtbToken}})
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function(data) {
+  					deferred.reject(data);
   				});
   			return deferred.promise;
   		};
@@ -217,7 +252,10 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
             	deleteComment:deleteComment,
             	getBOXFolders:getBOXFolders,
             	getBOXFoldersInfo:getBOXFoldersInfo,
-            	getBoxAkanaToken:getBoxAkanaToken
+            	getBoxAkanaToken:getBoxAkanaToken,
+            	getComments:getComments,
+            	getBOXFileInfo:getBOXFileInfo,
+            	createFolder:createFolder
             }
     }]);
 
