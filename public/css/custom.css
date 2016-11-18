@@ -186,7 +186,11 @@ header.pageheader.fileView{top:0}
 .fileView .pageTitle{left: 30%; top: 0}
 px-context-browser.gps{     padding: 0;
     margin: 0;
-    height: 30px; width: 80%}
+    height: 30px; width: 80%;     position: relative;
+    z-index: 1;
+    background: transparent;}
+#selectContext{background: transparent !important; }
+#ruler.px-context-browser{top:3rem}
 .accessActionMenu button{ background: none; border: 0; cursor: pointer;      }
 .accessActionMenu{width: 129px;   z-index: 1; background-color:#f7f7fb; border: 1px solid #cdcdd0; font-family: "GE Inspira Sans", sans-serif;    padding: 1px; border-radius:2px;}
 .accessActionMenu ul{list-style-type: none; margin: 0 !important;     padding: 0px;}
@@ -363,4 +367,4 @@ padding: 0 10px; margin-bottom: 10px}
     text-indent: 5px;}
 .commentsData i.fa{ color: #4caf50}    
 .commentContent .title span.deleteMsg{ cursor:  pointer;  font-size: 15px; color:red}
-#logincontainer ul.dropdown-menu{padding: 0}
+#logincontainer ul.dropdown-menu{padding: 0; border: 2.5rem;}

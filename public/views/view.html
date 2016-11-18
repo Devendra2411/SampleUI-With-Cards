@@ -74,15 +74,7 @@
 			              required
 			              sort-function-name="sortColumn">
 			              </px-data-table-column>
-			              <px-data-table-column name="fileUpdatedBy"
-			              type="string"
-			              label="UPLOADED BY"
-			              sortable
-			              searchable
-			              filterable
-			              required
-			              sort-function-name="sortColumn">
-			              </px-data-table-column>
+			             
 			              <px-data-table-column name="fileUpdatedDate"
 			              type="string"
 			              label="UPLOAD DATE"
@@ -100,15 +92,7 @@
 			              filterable
 			              required
 			              sort-function-name="sortColumn">
-			              <px-data-table-column name="fileVersion"
-			              type="html"
-			              label="VERSION"
-			              sortable
-			              searchable
-			              filterable
-			              required
-			              sort-function-name="sortColumn">
-			              </px-data-table-column>
+			            
 			              <px-data-table-column name="actions"
 			              type="html"
 			              label="Actions"
@@ -176,10 +160,10 @@
 	    <a href="#" class="js-modal-close close">x</a>
 	    <h3> Create Folder</h3>  
 	    <from id="Create_folder">
-		<input type="text" ng-model="FolderNameData" ng-change="textOnly() >    
+		<input type="text" ng-model="FolderNameData" ng-change="textOnly()">    
 	    <button name="view" ng-click="craeteFolderToBox('view')" class="btn customBtn"> Create Folder </button>
-	    
-	  <!--   <input type="file" class="customInputBox" id="saveProcessName" accept="*" file-model = "uploads" ng-model="processName" /> </from>
+	     </from>
+	  <!--   <input type="file" class="customInputBox" id="saveProcessName" accept="*" file-model = "uploads" ng-model="processName" />
 	    <button name="{{parentID}}"ng-click="fileupload(name)" class="btn customBtn"> Upload </button> -->
 	  </div>
 		<div class="clearfix"></div>

@@ -64,39 +64,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
        		
        	 }
     	 
-    	 /*$scope.getCards = function(){
-    		 $scope.spinner = true;
-     		var data = {"folderID":"0",
-     				 "sso":$rootScope.ssoId,
-     				"email":$rootScope.email
-     				}
-     		dashboardService.getCards(data).then(function (response) {
- 	    		if(response!=""){
- 	    			$scope.spinner=false;
- 	    			 $scope.cardsData = true;
- 	    			 $rootScope.parentCards = response.folderList;
- 	    			 $scope.getRandomColor();
- 	    			//$scope.getFolderData();
- 	    			 $rootScope.ParentfolderID ="0";
- 	    			 $rootScope.ParentfolderName ="Dashboard"
- 	    		     sessionStorage.setItem("ParentfolderID",  '0');
- 	    			 sessionStorage.setItem("ParentfolderName",  'Dashboard');
- 	    		}
- 	    		else{
- 	    			$scope.errorMsgdata = "No Cards";
- 	    			$scope.serviceError = true;
-                    $('#serviceErroMsg #alert').removeClass('fade-out hidden');
- 	    		}
- 	    		
- 	    	},function(error){
- 	        	$scope.spinner = false;
- 	        	$scope.errorMsgdata = "Failed to load data";
- 	        	$scope.serviceError = true;
-                $('#serviceErroMsg #alert').removeClass('fade-out hidden');
- 	        })
- 	        
-    	 }*/
-
     	 $scope.getCards= function(){
     		 $scope.spinner = true;
      		dashboardService.getAkanaToken().then(function (response) {
@@ -107,16 +74,13 @@ define(['angular', '../dashboard'], function (angular, controllers) {
           				$rootScope.gtbToken = data.accessToken;
          	    		 console.log('gtb_token', data);
          	    		 if(response!=""){
-         	    			 var dataId ="0"
+         	    			 var dataId ="12351304648"
          	    			 dashboardService.getBOXFolders(dataId).then(function (info) { 
- 	     	      				if(info!=""){
+ 	     	      				if(info.total_count!="0"){
  	     	      				 $scope.spinner = false;
  	     	      				$scope.cardsData = true;
- 	     	      					//$scope.BoxFolderData = info.entries;
- 	     	      					//$rootScope.parentCards = info.entries;
- 	     	      				
  	     	      					$scope.BoxFolders = {
- 	     	 	     						  "folderID": "0",
+ 	     	 	     						  "folderID": "",
  	     	 	     						  "folderList": []
  	     	 	     					}
  	     	 	     				for(var i=0; i<info.entries.length; i++){
@@ -128,19 +92,27 @@ define(['angular', '../dashboard'], function (angular, controllers) {
       			 							   }
  	     	 	     					$scope.BoxFolders.folderList.push(tempFolderData);
  	     	 	     				}
- 	     	      				}
  	     	      				angular.forEach($scope.BoxFolders.folderList, function(value, index) {
- 		     	      				 var tempId =value.folderID;
- 		        	    			 if(tempId!=""){
- 			     						dashboardService.getBOXFoldersInfo(tempId).then(function (boxdata) {
- 			     							if(boxdata!="" && boxdata.id==tempId){
- 			     								value.totalCount = boxdata.item_collection.total_count
- 			     							}
- 			 	     					})
- 			     					}
- 	     	      				})
- 	     	      				$rootScope.parentCards =$scope.BoxFolders.folderList;
- 	     	      				$scope.getRandomColor();
+		     	      				 var tempId =value.folderID;
+		        	    			 if(tempId!=""){
+			     						dashboardService.getBOXFoldersInfo(tempId).then(function (boxdata) {
+			     							if(boxdata!="" && boxdata.id==tempId){
+			     								value.totalCount = boxdata.item_collection.total_count
+			     							}
+			 	     					})
+			     					}
+	     	      				})
+	     	      				$rootScope.parentCards =$scope.BoxFolders.folderList;
+	     	      				$scope.getRandomColor();
+	     	      				//$scope.BrowserData();
+ 	     	      				}
+ 	     	      				else{
+ 	     	      				$scope.spinner = false;
+ 	              				$scope.errorMsgdata = "No Cards";
+ 	              				$scope.serviceSuccessMsg = false;
+ 	         	    			$scope.serviceError = true;
+ 	                            $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+ 	     	      				}
  	     	      				
          	    			 })
          	    			 
@@ -156,7 +128,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
   	    		},function(error){
  	 	    		 $scope.spinner = false
  	 	    		 $scope.serviceError = true;
- 	 	    		 $scope.errorMsgdata = "Failed";
+ 	 	    		 $scope.errorMsgdata = "Akana GTB token not received";
  	 	    		 $scope.serviceSuccess = false;
  	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
   	    		})
@@ -245,8 +217,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			     							if(boxdata!="" && boxdata.id==tempId){
  			     								var size = (boxdata.size / (1024*1024)).toFixed(2);
  			     								var tempDate = boxdata.created_at;
- 			     								var tempItem = tempDate.split('T');
- 			     								var cDate = tempItem[0];
+ 			     								var cDate = tempDate.split('T')[0] +' '+tempDate.split('T')[1].split('-')[0];
  			     								value.fileUpdatedBy =boxdata.created_by.name;
  			     								value.fileUpdatedDate =cDate;
  			     								value.fileSize =size+' MB';
@@ -264,6 +235,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 	 	    	    			};
 	 	    	    			$scope.getCommentsData(dataId);
 	 	    	    			$state.go('view');
+	 	    	    			$scope.spinner = false;
 	         	    			 })
 	      	      			}
           			}
@@ -282,7 +254,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
   	    		})
      		})
-     		 console.log(JSON.stringify($scope.BoxSubFolders));
      	}
     	 
     	 $scope.craeteFolderToBox= function(flag){
@@ -360,42 +331,44 @@ define(['angular', '../dashboard'], function (angular, controllers) {
          			     var blob = new Blob([fileBody], { type: filetype});
          			     formData.append('file', blob, filename);
          		         var folderDataId = sessionStorage.getItem("folderId");
-         		         formData.set("parent_id",folderDataId);
-         		         var tempAjaxUpload = $.ajax({
-         								         url: Upload_File,
-         								         headers: {"Authorization": "Bearer "+$rootScope.gtbToken},
-         								         type: 'POST',
-         								         processData: false,
-         								         contentType: false,
-         								         dataType : 'JSON',
-         								         data: formData
-         								         }).complete(function (data) {
-         								        	 $scope.spinner = false;
-         								             if(data.statusText=="Created"){
-         							 	 	 	    		$scope.filename ="";
-         							 	 	 	    		$scope.file="";
-         										            console.log(data.responseText);
-         										            $scope.getFolders();
-         							 	 	 	    		$scope.successMsgdata = "File uploaded successfully";
-         							 	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
-         							 	 	 	        	$scope.serviceError = false;
-         							 	 	 	        	$scope.serviceSuccess = true;
-         							 	 	 	        	$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
-         							 	 	 	            
-         								             }
-         								             else{	 $scope.spinner = false;
-         										            console.log(data.responseText);
-         							 	 	 	    		$scope.errorMsgdata = "Upload Failed";
-         							 	 	 	    		$scope.filename ="";
-         							 	 	 	    		$scope.file="";
-         							 	 	 	    	    $('#serviceErroMsg #alert').removeClass('fade-out hidden');
-         							 	 	 	    	    $scope.serviceSuccess = false;
-         							 	 	 	        	$scope.serviceError = true;
-         							 	 	 	         $(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
-         							 	 	 	            
-         								             }
-         								         });
-         	    			 
+         		         formData.set("parent_id",folderDataId);	         		        
+	         		       $.ajax({
+	         		    	     url: Upload_File,
+						         headers: {"Authorization": "Bearer "+$rootScope.gtbToken},
+						         type: 'POST',
+						         processData: false,
+						         contentType: false,
+						         dataType : 'JSON',
+						         data: formData
+						         }).success (function(res, xhr, jq) {
+						        	 if(res.total_count!=""){
+							            	    $scope.spinner = false;
+							            	    $rootScope.filename ="";
+							            	    $('#uploadFile').val('');
+							            	    $('#uploadBtn').val('');
+									            console.log(res.responseText);
+									            $scope.getFolders();
+						 	 	 	    		$scope.successMsgdata = "File uploaded successfully";
+						 	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+						 	 	 	        	$scope.serviceError = false;
+						 	 	 	        	$scope.serviceSuccess = true;
+						 	 	 	        	$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+							             }
+						        	 
+	         		             }).error(function(res) {
+	         		            	$scope.spinner = false
+         		            	 	$scope.errorMsgdata = res.responseJSON.message
+			 	 	 	    		$('#uploadFile').val('');
+			 	 	 	    		$('#uploadBtn').val('');
+			 	 	 	    	    $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+			 	 	 	    	    $scope.serviceSuccess = false;
+			 	 	 	        	$scope.serviceError = true;
+			 	 	 	            $(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+			 	 	 	            $state.go('view');
+		 	    	    			$scope.spinner = false;
+			 	 	 	            
+	         		       });
+	         		       
       	      				}
           			else{
           				 $scope.spinner = false;
@@ -413,56 +386,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
   	    		})
      		})
      	}
-    	 
-    	 /* $scope.fileupload = function(){
-         	 $scope.spinner = true;
- 	    	 var getakana= dashboardService.getAkanaToken();
- 	    	 getakana.then(function(result){
- 		         var formData = new FormData($('#files')[0]);
- 		         var fileBody = $scope.uploads;
- 		         var filetype = fileBody.type
- 		         var filename =fileBody.name
- 			      var blob = new Blob([fileBody], { type: filetype});
- 			      formData.append('file', blob, filename);
- 		         var folderDataId = sessionStorage.getItem("folderId");
- 		         //formData.set("name", $rootScope.filename);
- 		         formData.set("parent_id",folderDataId);
- 		         var tempAjaxUpload = $.ajax({
- 								         url: Upload_File,
- 								         headers: {"Authorization": "Bearer "+$rootScope.gtbToken},
- 								         type: 'POST',
- 								         processData: false,
- 								         contentType: false,
- 								         dataType : 'JSON',
- 								         data: formData
- 								         }).complete(function (data) {
- 								        	 $scope.spinner = false;
- 								             if(data.statusText=="Created"){
- 							 	 	 	    		$scope.filename ="";
- 							 	 	 	    		$scope.file="";
- 										            console.log(data.responseText);
- 										            $scope.getFolders();
- 							 	 	 	    		$scope.successMsgdata = "File uploaded successfully";
- 							 	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
- 							 	 	 	        	$scope.serviceError = false;
- 							 	 	 	        	$scope.serviceSuccess = true;
- 							 	 	 	        	$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
- 							 	 	 	            
- 								             }
- 								             else{	 $scope.spinner = false;
- 										            console.log(data.responseText);
- 							 	 	 	    		$scope.errorMsgdata = "Upload Failed";
- 							 	 	 	    		$scope.filename ="";
- 							 	 	 	    		$scope.file="";
- 							 	 	 	    	    $('#serviceErroMsg #alert').removeClass('fade-out hidden');
- 							 	 	 	    	    $scope.serviceSuccess = false;
- 							 	 	 	        	$scope.serviceError = true;
- 							 	 	 	         $(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
- 							 	 	 	            
- 								             }
- 								         });
- 	    	 })
-          }*/
+
     	  
     	 $scope.getCommentsData = function(dataId){
     		 $scope.spinner = true;
@@ -483,72 +407,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		 $rootScope.ParentfolderID = sessionStorage.getItem("ParentfolderID");
     		 $scope.getFolders($rootScope.ParentfolderID, folderName);
     	 }
-    	 /*$scope.getFolders = function(dataId, folderName){
-    		 $scope.spinner = true;
-    		 $scope.folderView =true;
-    		 $rootScope.folderName = folderName;
-    		 $rootScope.folderID = dataId;
-    		 //sessionStorage.setItem("ParentfolderID", dataId);
-    		$rootScope.ParentfolderID = sessionStorage.getItem("folderId");
-			 $rootScope.ParentfolderName = sessionStorage.getItem("folderName");
-			 sessionStorage.setItem("ParentfolderID",  $rootScope.ParentfolderID);
-			 sessionStorage.setItem("ParentfolderName",  $rootScope.ParentfolderName);
-    		 if(dataId ==undefined){
-    			 dataId = sessionStorage.getItem("folderId");
-    		 }
-    		 else if(dataId !=undefined){
-    	 		sessionStorage.setItem("folderId", dataId);
-    		 }
-    
-    		 if(folderName ==undefined){
-    			 folderName = sessionStorage.getItem("folderName");
-    			 $rootScope.folderName = folderName;
-    		 }
-    		 else if(folderName !=undefined){
-     	 		sessionStorage.setItem("folderName", folderName);
-     		 }
-     		var data = {"folderID":dataId,
-     				 "sso":$rootScope.ssoId,
-     				"email":$rootScope.email
-     				}
-     		dashboardService.getFolders(data).then(function (response) {
- 	    		if(response!=""){
- 	    			 $scope.spinner=false;
- 	    			 $scope.folderView =false;
- 	    			
- 	    			 $rootScope.allFoldersData = response.folderList;
- 	    			 $rootScope.allFilesData = response.fileList;
- 	    			$rootScope.commentsData = response.commentsList;
- 	    			 $rootScope.parentID =dataId;
- 	    			for(var i=0; i<$rootScope.allFilesData.length; i++){
- 	    				$rootScope.allFilesData[i].actions="";
- 	    				$rootScope.allFilesData[i].actions = '<button style="background: none;border: none" value="'+$rootScope.allFilesData[i].fileID+'"  class="actionBtn flex flex--center flex--middle style-scope aha-table"><i class="fa fa-bars" aria-hidden="true"></i></button>';
- 	    				//var val=$('button.actionBtn').attr("value").split(',');
- 	    			};
- 	    			$scope.MoreCommentsData();
- 	    			 console.log(response);
- 	    			 $state.go('view');
- 	    			 $scope.errrorMsg== true;
- 	
- 	    		}
- 	    		else{
- 	    			$scope.errorMsgdata = "No data";
- 	    			$scope.serviceError = true;
-                    $('#serviceErroMsg #alert').removeClass('fade-out hidden');
- 	    		}
- 	    		
- 	    	},function(error){
- 	        	$scope.spinner = false;
- 	        	$scope.errorMsgdata = "Failed to load data";
- 	        	$scope.serviceError = true;
-                $('#serviceErroMsg #alert').removeClass('fade-out hidden');
- 	        })
- 	        
-    	 }*/
-    	 
-    	 
-    	
-    	 
     	 
     	 $scope.getAkanaToken = function(){
      		dashboardService.getAkanaToken().then(function (response) {
@@ -609,12 +467,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
         		    document.getElementById('uploadFile').value = $rootScope.filename;
         		}
          }
-       
-                
          
-
-    	
-    	 $scope.popupWindow = function(){
+         $scope.popupWindow = function(){
     			var appendthis =  ("<div class='modal-overlay js-modal-close'></div>");
     			//$('button[data-modal-id]').click(function(e) {
     			    $("body").append(appendthis);
@@ -626,8 +480,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     			$(".closeBtn, .btnClose, .actionbuttons, .js-modal-close").click(function() {
     			  $(".modal-box, .modal-overlay").fadeOut(500, function() {
     			    $(".modal-overlay").remove();
-    			    $scope.filename ="";
-    			    $scope.file ="";
+    			    $('#uploadFile').val('');
+	            	$('#uploadBtn').val('');
     			    
     			  });
     			});
@@ -665,58 +519,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			  });
  			});
  			$(window).resize();
- 			//$scope.saveProcesDefaultdata();
  		}
-    	 /*$scope.craeteFolderToBox = function(flag){
-    		 $scope.spinner = true;
-    		 var folderID;
-    		 if(flag=="home"){
-    			 folderID ="0"
-    		 }
-    		 else{
-    			 folderID =sessionStorage.getItem("folderId");
-    		 }
-    		 var data = {
-    				 "folderID":folderID,
-    				 "sso":$rootScope.ssoId,
-      				 "email":$rootScope.email,
-    				 "folderList": [{
-    				       "folderName": $scope.FolderNameData 
-    				     }]
-    				 }
-     		dashboardService.createFolder(data).then(function (response) {
-     			 $scope.spinner = false;
- 	    		if(response!=""){
- 	    			if(flag=="home"){
- 	 	 	    		$scope.getCards();
- 	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
- 	 	 	    		$scope.FolderNameData ="";
- 	 	 	    		console.log('createFolder', response);
- 	 	 	    		$scope.successMsgdata = "Folder Created successfully";
- 	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
- 	 	 	        	$scope.serviceSuccess = true;
- 	 	 	            $scope.serviceError = false;
- 	    			}
- 	    			else{
-	 	 	    		$scope.getFolders();
-	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
-	 	 	    		$scope.FolderNameData ="";
-	 	 	    		console.log('createFolder', response);
-	 	 	    		$scope.successMsgdata = "Folder Created successfully";
-	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
-	 	 	        	$scope.serviceSuccess = true;
-	 	 	        	$scope.serviceError = false;
- 	    			}
- 	    		}
- 	    		
- 	    	},function(error){
- 	    		 $scope.spinner = false
- 	    		 $scope.serviceError = true;
- 	    		 $scope.errorMsgdata = "Failed";
- 	    		 $scope.serviceSuccess = false;
-                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
- 	        })
-    	 };*/
     	 
     	 $scope.postComment = function(){
     		 $scope.spinner = true;
@@ -798,7 +601,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	}
     	
     	$scope.BrowserData = function(){
-		 $rootScope.browserContextData =[]
+		/* $rootScope.browserContextData =[]
 		  for(var i=0; i< $rootScope.parentCards.length; i++){
 			 
 			 var temp = {
@@ -810,106 +613,208 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 			$rootScope.browserContextData.push(temp);
 
 		 }
-		 console.log($rootScope.browserContextData);
-		 var initialContexts = {
+		 console.log($rootScope.browserContextData);*/
+		 
+/*		 var initialContexts = {
   	          data:$rootScope.browserContextData,
   	          meta: {
   	            parentId: null // the id of the asset of the tree above
   	          }
-  	        };
-  	 		console.log('initialContexts', initialContexts);
-  	          var colBrowser = document.querySelector('px-context-browser');
-  	          colBrowser.handlers = {
-  	            getChildren: function(parent, newIndex) {
-  	              return demoGetChildren(parent, newIndex)
-  	            },
-  	            itemOpenHandler: function(context) {
-  	              console.log('Opened: ', context);
-  	            }
-  	          };
-  	         
-  	        colBrowser.initialContexts = initialContexts;
-  	        function demoGetChildren(node, rangeStart) {
-  	          var nodeId = node.identifier;
-  	          var deferred = $q.defer();
-  	          if (!rangeStart) {
-  	            rangeStart = 0;
-  	          }
-  	          var lotsOfChildren = {
-  	            data: [{
-  	              "name": "A",
-  	              "identifier": "001-1a"
-  	            }, {
-  	              "name": "B",
-  	              "identifier": "001-1b"
-  	            }],
-  	            meta: {
-  	              parentId: '001-1'
-  	            }
-  	          };
-  	          var deepNestedChildren = {
-  	            data: [{
-  	              "name": "Nested Child",
-  	              "identifier": "001-2a",
-  	              "isOpenable": true
-  	            }],
-  	            meta: {
-  	              parentId: '001-2'
-  	            }
-  	          };
+  	        };*/
+    		
+            var initialContexts = {
+                    data: [{
+                      "name": "Lots of children",
+                      "identifier": "001-1",
+                      "isOpenable": true
+                    }, {
+                      "name": "Deep nested",
+                      "identifier": "001-2",
+                      "isOpenable": true
+                    }, {
+                      "name": "Nothing Below Me",
+                      "identifier": "001-3",
+                      "isOpenable": true
+                    }, {
+                      "name": "Nothing Below, Not openable",
+                      "identifier": "001-4",
+                      "isOpenable": false
+                    }],
+                    meta: {
+                      parentId: null // the id of the asset of the tree above
+                    }
+                  };
+            console.log(initialContexts);
+                    var colBrowser = document.querySelector('px-context-browser');
+                    colBrowser.handlers = {
+                      getChildren: function(parent, newIndex) {
+                        return demoGetChildren(parent, newIndex)
+                      },
+                      itemOpenHandler: function(context) {
+                        console.log('Opened: ', context);
+                      }
+                    };
+                    colBrowser.initialContexts = initialContexts;
 
-  	          var deepNestedGrandchildren = {
-  	            data: [{
-  	              "name": "Nested Grandchild",
-  	              "identifier": "001-2aa",
-  	              "isOpenable": true
-  	            }],
-  	            meta: {
-  	              parentId: '001-2a'
-  	            }
-  	          };
+                  function demoGetChildren(node, rangeStart) {
+                    var nodeId = node.identifier;
+                    var deferred = $q.defer();
+                    if (!rangeStart) {
+                      rangeStart = 0;
+                    }
+                    var lotsOfChildren = {
+                      data: [{
+                        "name": "A",
+                        "identifier": "001-1a"
+                      }, {
+                        "name": "B",
+                        "identifier": "001-1b"
+                      }, {
+                        "name": "C",
+                        "identifier": "001-1c"
+                      }, {
+                        "name": "D",
+                        "identifier": "001-1d"
+                      }, {
+                        "name": "E",
+                        "identifier": "001-1e"
+                      }, {
+                        "name": "F",
+                        "identifier": "001-1f"
+                      }, {
+                        "name": "G",
+                        "identifier": "001-1g"
+                      }, {
+                        "name": "H",
+                        "identifier": "001-1h"
+                      }, {
+                        "name": "I",
+                        "identifier": "001-1i"
+                      }, {
+                        "name": "AA",
+                        "identifier": "001-1a"
+                      }, {
+                        "name": "BB",
+                        "identifier": "001-1b"
+                      }, {
+                        "name": "CC",
+                        "identifier": "001-1c"
+                      }, {
+                        "name": "DD",
+                        "identifier": "001-1d"
+                      }, {
+                        "name": "EE",
+                        "identifier": "001-1e"
+                      }, {
+                        "name": "FF",
+                        "identifier": "001-1f"
+                      }, {
+                        "name": "GG",
+                        "identifier": "001-1g"
+                      }, {
+                        "name": "HH",
+                        "identifier": "001-1h"
+                      }, {
+                        "name": "II",
+                        "identifier": "001-1i"
+                      }, {
+                        "name": "AAA",
+                        "identifier": "001-1a"
+                      }, {
+                        "name": "BBB",
+                        "identifier": "001-1b"
+                      }, {
+                        "name": "CCC",
+                        "identifier": "001-1c"
+                      }, {
+                        "name": "DDD",
+                        "identifier": "001-1d"
+                      }, {
+                        "name": "EEE",
+                        "identifier": "001-1e"
+                      }, {
+                        "name": "FFF",
+                        "identifier": "001-1f"
+                      }, {
+                        "name": "GGG",
+                        "identifier": "001-1g"
+                      }, {
+                        "name": "HHH",
+                        "identifier": "001-1h"
+                      }, {
+                        "name": "III",
+                        "identifier": "001-1i"
+                      }],
+                      meta: {
+                        parentId: '001-1'
+                      }
+                    };
+                    var deepNestedChildren = {
+                      data: [{
+                        "name": "Nested Child",
+                        "identifier": "001-2a",
+                        "isOpenable": true
+                      }],
+                      meta: {
+                        parentId: '001-2'
+                      }
+                    };
 
-  	          var deepNestedGreatGrandchild = {
-  	            data: [{
-  	              "name": "Nested Great Grandchild",
-  	              "identifier": "001-2aaa",
-  	              "isOpenable": true
-  	            }],
-  	            meta: {
-  	              parentId: '001-2aa'
-  	            }
-  	          };
+                    var deepNestedGrandchildren = {
+                      data: [{
+                        "name": "Nested Grandchild",
+                        "identifier": "001-2aa",
+                        "isOpenable": true
+                      }],
+                      meta: {
+                        parentId: '001-2a'
+                      }
+                    };
 
-  	          var children;
+                    var deepNestedGreatGrandchild = {
+                      data: [{
+                        "name": "Nested Great Grandchild",
+                        "identifier": "001-2aaa",
+                        "isOpenable": true
+                      }],
+                      meta: {
+                        parentId: '001-2aa'
+                      }
+                    };
 
-  	          if (nodeId === "001-1") {
-  	            children = lotsOfChildren;
-  	            var rangeEnd = Math.min(rangeStart + 9, children.data.length); //groups of nine
-  	            children.data = children.data.slice(rangeStart, rangeEnd);
-  	          }
-  	          else if (nodeId === "001-2") {
-  	            children = deepNestedChildren;
-  	          }
-  	          else if (nodeId === "001-2a") {
-  	            children = deepNestedGrandchildren;
-  	          }
-  	          else if (nodeId === "001-2aa") {
-  	            children = deepNestedGreatGrandchild;
-  	          }
-  	          else {
-  	            children = {
-  	              data: [],
-  	              meta: {
-  	                parentId: nodeId
-  	              }
-  	            };
-  	          }
+                    var children;
 
-  	          deferred.resolve(children);
+                    if (nodeId === "001-1") {
+                      children = lotsOfChildren;
+                      var rangeEnd = Math.min(rangeStart + 9, children.data.length); //groups of nine
+                      children.data = children.data.slice(rangeStart, rangeEnd);
+                    }
+                    else if (nodeId === "001-2") {
+                      children = deepNestedChildren;
+                    }
+                    else if (nodeId === "001-2a") {
+                      children = deepNestedGrandchildren;
+                    }
+                    else if (nodeId === "001-2aa") {
+                      children = deepNestedGreatGrandchild;
+                    }
+                    else {
+                      children = {
+                        data: [],
+                        meta: {
+                          parentId: nodeId
+                        }
+                      };
+                    }
 
-  	          return deferred.promise;
-  	        }
+                    deferred.resolve(children);
+
+                    return deferred.promise;
+                  }
+
+  	 		
 	 }
+    	
     	 //$scope.getAkanaToken();
     	 $scope.addFile();
     	 $scope.gotoDashBoard = function(){
@@ -928,6 +833,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	  }
     	  if($state.current.name =="dashboard" ){ 
     		  $scope.getCards();
+    		  //$scope.BrowserData();
     		  //$scope.getBOXFoldersData();
     	  }
     }]);
