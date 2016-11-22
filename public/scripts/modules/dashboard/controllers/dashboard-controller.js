@@ -60,8 +60,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
        			$scope.FolderNameData = transformedInput
        		}
        		return transformedInput;
-       		
-       		
        	 }
     	 
     	 $scope.getCards= function(){
@@ -136,7 +134,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
      		 console.log(JSON.stringify($scope.parentCards));
      	}
     	 
-    	 $scope.getFolders= function(dataId, folderName){
+    	 $scope.getFolders= function(dataId, folderName, flag){
     		 $scope.spinner = true;
     		 $scope.folderView =true;
     		 $rootScope.folderName = folderName;
@@ -148,6 +146,29 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     			 dataId = sessionStorage.getItem("folderId");
     		 }
     		 else if(dataId !=undefined){
+    			 if(flag=="home"){
+     					var parentData = [{'id':dataId, 'name':folderName}];
+     					sessionStorage.setItem("parentData", JSON.stringify(parentData));
+     				}
+ 				else{
+      				var parentData = JSON.parse(sessionStorage.getItem("parentData"));
+      				var testData = 0;
+      				angular.forEach(parentData, function(value, index) {
+      				 var tempId =value.id;
+ 	    			 if(tempId==dataId){
+ 	    				 testData++;
+ 	    				 var tempData = parentData.splice(0, parentData.length-1);
+ 	    				 sessionStorage.setItem("parentData", JSON.stringify(tempData));
+     					 }
+      				})
+      				
+      				if(testData==0){
+      					var parentItem = {'id':dataId, 'name':folderName};
+    				 parentData.push(parentItem);
+    				 sessionStorage.setItem("parentData", JSON.stringify(parentData));
+      				}
+ 				}
+    			 
     	 		sessionStorage.setItem("folderId", dataId);
     		 }
     		 if(folderName ==undefined){
@@ -197,6 +218,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 		     	 	     					$scope.BoxSubFolders.fileList.push(tempFileData);
 	     	 	     					}
  	     	 	     				}
+ 	     	      				//$scope.addDataItem(id,name);	    	      				
+	    	      				$scope.breadcrumbData();
  	     	      				}
  	     	      				angular.forEach($scope.BoxSubFolders.folderList, function(value, index) {
  		     	      				 var tempId =value.folderID;
@@ -255,7 +278,33 @@ define(['angular', '../dashboard'], function (angular, controllers) {
   	    		})
      		})
      	}
+    	/* $scope.addDataItem = function (id, name) {
+    		 var arr = JSON.parse(sessionStorage.getItem("parentData"));
+    		    var found = arr.some(function (el) {
+    		      return el.id === id;
+    		    });
+    		    if (!found) {
+    		        arr.push({ 'id': id, 'name': name });
+    		    }
+    		    else{
+    		     var tempData = parentData.splice(0, parentData.length-1);
+   				 sessionStorage.setItem("parentData", JSON.stringify(tempData));
+    		    }
+    		}*/
     	 
+    	$scope.breadcrumbData = function(){
+    		 $scope.namesData = JSON.parse(sessionStorage.getItem("parentData"));
+    	}
+    	
+    	$scope.gotoView = function(id,name){
+    		if(name =="Dashboard"){
+    			$state.go('dashboard');
+    			$scope.getCards()
+    		}
+    		else{
+    			$scope.getFolders(id,name)
+    		}
+    	}
     	 $scope.craeteFolderToBox= function(flag){
     		 $scope.spinner = true;
     		 var folderID;
@@ -833,6 +882,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	  }
     	  if($state.current.name =="dashboard" ){ 
     		  $scope.getCards();
+    		  sessionStorage.removeItem('parentData');
     		  //$scope.BrowserData();
     		  //$scope.getBOXFoldersData();
     	  }

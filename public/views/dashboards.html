@@ -16,7 +16,7 @@
 <px-context-browser label-field="name" id-field="identifier" browser-context="{{browserContext}}" opened-item-name="GPS Marketing Portal" class="gps"> </px-context-browser>  
 <header class="pageheader dashboard">
 
-	<!-- <h1> GPS Marketing Tool <span><i class="fa fa-caret-down" aria-hidden="true"></i></span></h1> -->
+	<!-- <h1> GPS Marketing Portal </h1> -->
 	<div class="pageTitle" ng-click="getBOXFoldersData()">Dashboard</div>
 	<div class="actionsBlock fright" ng-hide="roleId==2" ><button class="dashboardActions actionMenu2" ><i class="fa fa-ellipsis-v " aria-hidden="true"></i>
 	<ul>
@@ -36,7 +36,7 @@
 	<div class="cardsData" ng-show="cardsData">
 		 <div class="dataColom" ng-repeat="data in parentCards"> 
 			<div class="cardItem" ng-style="{'background-color':data.bgcolor}">
-				<parent-card id="parent-card" card-data="{{data}}" ng-click="getFolders(data.folderID, data.folderName)" ></parent-card>		
+				<parent-card id="parent-card" card-data="{{data}}" ng-click="getFolders(data.folderID, data.folderName, 'home')" ></parent-card>		
 			</div>		
 		</div> 
 	</div>

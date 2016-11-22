@@ -21,7 +21,7 @@
 <div class="spinner" ng-show="spinner"><px-spinner size="75"></px-spinner></div>
 <!-- <px-context-browser label-field="name" id-field="identifier" opened-item-name="GPS Marketing Tool" class="gps"> </px-context-browser> -->  
 <header class="pageheader fileView"> 
-	<span class="rightIcon" ng-click="gotoDashBoard()"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
+	<span class="rightIcon" ng-click="gotoDashBoard()"><i class="fa fa-home" aria-hidden="true"></i></span>
 	<h1> GPS Marketing Portal</h1>
 	<div class="pageTitle">{{folderName}}</div>
 	<div class="actionsBlock fright" ng-hide="roleId==2"><button class="dashboardActions actionMenu2"><i class="fa fa-ellipsis-v " aria-hidden="true"></i>
@@ -43,7 +43,8 @@
 <div class="viewContent view" ng-hide="folderView" >
 <div class="leftCol fleft">
 <div class="breadcrumbs">
-	<a href="" ng-click="gotoDashBoard()">Home</a> > <a href="" ng-click="getFolders(data.folderID, data.folderName)">{{folderName}}</a>
+	<a ng-repeat="data in namesData" href="" ng-click="gotoView(data.id, data.name)">{{data.name}} > </a> 
+	<!-- <a href="" ng-click="gotoDashBoard()">Home</a> > <a href="" ng-click="getFolders(data.folderID, data.folderName)">{{folderName}}</a> -->
 </div>
 	<div class="titleBlock " ng-show="allFoldersData.length!=0">
 	<h2 class="filepageTitle"><i class="fa fa-folder-open" aria-hidden="true"></i> {{folderName}}</h2>

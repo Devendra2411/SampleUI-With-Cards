@@ -35,13 +35,13 @@ define(['angular', 'angular-ui-router'], function(angular) {
                 }
             })
             .state('dashboard', {
-                //parent: 'secure',
+                parent: 'secure',
                 url: '/dashboard',
                 templateUrl: 'views/dashboards.html',
                 controller: 'dashboard-controller'
             })
             .state('view', {
-                //parent: 'secure',
+                parent: 'secure',
                 url: '/view',
                 templateUrl: 'views/view.html',
                 controller: 'dashboard-controller'
