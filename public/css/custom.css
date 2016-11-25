@@ -9,7 +9,7 @@ header.pageheader {
 	width: 100%;
 	padding: 0 1%;
 	position: relative;
-	top:-11px
+	/* top:-11px */
 	
 }
 .alert-message-container{
@@ -29,11 +29,10 @@ h1 {
 .clear{clear: both;}
 .pageTitle {
     position: relative;
-    left: 44%;
+    left: 35%;
     display: inline-block;
     font-size: 20px;
     color: #101010;
-    top: -9px;
 }
 .fileView .pageTitle {
    position: relative; */
@@ -52,7 +51,7 @@ h1 {
 	    position: relative;
     right: 0;
     display: inline-block;
-    top: -9px;
+    top: 14px;
 }
 
 .fleft {
