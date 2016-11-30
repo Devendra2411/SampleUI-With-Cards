@@ -72,7 +72,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
           				$rootScope.gtbToken = data.accessToken;
          	    		 console.log('gtb_token', data);
          	    		 if(response!=""){
-         	    			 var dataId ="12351304648"
+         	    			 var dataId ="11858048707"
          	    			 dashboardService.getBOXFolders(dataId).then(function (info) { 
  	     	      				if(info.total_count!="0"){
  	     	      				 $scope.spinner = false;
