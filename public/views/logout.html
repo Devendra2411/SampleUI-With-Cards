@@ -18,7 +18,7 @@
 		}, 6000);
 	}); */
 	
-	$(document).ready(function() {
+/* 	$(document).ready(function() {
 		if(window.isAuthorized.toUpperCase()=="YES"){
 		console.log("inside logout authorized");
 		$("#authorizationCheck").html("Logging off...");
@@ -27,11 +27,13 @@
 		console.log("inside logout un authorized");
 		$("#authorizationCheck").html("You are not Authorized to view this page"); 
 		}
-		setTimeout(function() {
+
+		}); */
+	
+	setTimeout(function() {
 		$("px-spinner").hide();
 		window.location.reload();
 		}, 6000);
-		});
 </script>
 
 </head>

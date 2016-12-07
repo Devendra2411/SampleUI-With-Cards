@@ -127,7 +127,7 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   		
   		var getGTBToken =  function(){
   			var deferred = $q.defer();
-  			$http.get(Gtb_Url,{ headers: {'Authorization': 'Bearer '+$rootScope.akanaToken}})
+  			$http.post(Gtb_Url,{ headers: {'Authorization': 'Bearer '+$rootScope.akanaToken}})
   				.success(function(data, status, headers) {
   					deferred.resolve(data);
   				})

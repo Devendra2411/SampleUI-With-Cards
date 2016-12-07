@@ -59,10 +59,11 @@ define([
 						console.log(response)
 					}
 					else{
-						window.isAuthorized="No";
-						console.log("Unauthorized user");
-						document.querySelector('px-app-nav').markSelected('/logout');
-						$state.go('logout');
+						$rootScope.roleId ="2";
+						//window.isAuthorized="No";
+						//console.log("Unauthorized user");
+						//document.querySelector('px-app-nav').markSelected('/logout');
+						//$state.go('logout');
 					}
 				});
 			}
