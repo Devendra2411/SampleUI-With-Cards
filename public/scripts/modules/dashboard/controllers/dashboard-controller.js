@@ -310,7 +310,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		 $scope.spinner = true;
     		 var folderID;
     		 if(flag=="home"){
-    			 folderID ="0"
+    			 folderID =$rootScope.dataId
     		 }
     		 else{
     			 folderID =sessionStorage.getItem("folderId");
