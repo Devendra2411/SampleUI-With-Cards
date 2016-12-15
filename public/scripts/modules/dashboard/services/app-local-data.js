@@ -11,7 +11,7 @@ define(['angular', '../dashboard'], function(angular, localDataStore) {
         var getSSODetails = function(){
         	
         	//commment below line when pushing to cloud
-        	$rootScope.userObject = {"sso": "502450548","user_pref_id": 0,"validUser": "Yes","roleID": "1","accessrole": "Admin(All Models)"};
+        	//$rootScope.userObject = {"sso": "502450548","user_pref_id": 0,"validUser": "Yes","roleID": "1","accessrole": "Admin(All Models)"};
         	userObj.sso = $rootScope.userObject.sso;
         	userObj.accessrole = $rootScope.userObject.accessrole;
         	userObj.isAdmin = $rootScope.userObject.roleID == "1" ? true : false;

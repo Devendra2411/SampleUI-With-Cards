@@ -4,6 +4,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService','$q', '$urlRouter','fileUpload', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService, $q, $urlRouter, fileUpload) {
        	    //$rootScope.ssoId = "502450548";
     		//$rootScope.roleId ="1"
+    		//$rootScope.dataId ="12351304648"; //for stage
+    		$rootScope.dataId ="11858048707"; //for Prod
        	    $rootScope.email = $rootScope.ssoId+"@mail.ad.ge.com"
        	    
     	 $scope.getRandomColor = function(id){
@@ -72,8 +74,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
           				$rootScope.gtbToken = data.accessToken;
          	    		 console.log('gtb_token', data);
          	    		 if(response!=""){
-         	    			 var dataId ="11858048707"
-         	    			 dashboardService.getBOXFolders(dataId).then(function (info) { 
+         	    			 var dataId = $rootScope.dataId;
+         	    			 dashboardService.getBOXFolders(dataId).then(function (info) {
  	     	      				if(info.total_count!="0"){
  	     	      				 $scope.spinner = false;
  	     	      				$scope.cardsData = true;
@@ -133,7 +135,17 @@ define(['angular', '../dashboard'], function (angular, controllers) {
      		})
      		 console.log(JSON.stringify($scope.parentCards));
      	}
-    	 
+    	 $scope.getFolderHitCount= function(dataId, folderName){
+    		 var data = { "sso":$rootScope.ssoId, "folderID":dataId,  "folderName":folderName}
+    			dashboardService.getHitCount(data).then(function (response) {
+    				if(response.statusFlag == "success"){
+    					console.log(response.statusMsg);
+    				}
+    				else{
+    					console.log('count is failed');
+    				}
+    			})
+    	 } 
     	 $scope.getFolders= function(dataId, folderName, flag){
     		 $scope.spinner = true;
     		 $scope.folderView =true;
@@ -188,8 +200,10 @@ define(['angular', '../dashboard'], function (angular, controllers) {
          	    		 if(response!=""){
          	    			 dashboardService.getBOXFolders(dataId).then(function (info) { 
  	     	      				if(info!=""){
+ 	     	      				 
  	     	      				 $scope.spinner = false;
- 	     	      				$scope.folderView =false;    	      				
+ 	     	      				$scope.folderView =false;
+ 	     	      			$scope.getFolderHitCount(dataId, folderName);
  	     	      					$scope.BoxSubFolders = {
  	     	 	     						  "folderID": dataId,
  	     	 	     						  "folderList": [],
@@ -278,19 +292,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
   	    		})
      		})
      	}
-    	/* $scope.addDataItem = function (id, name) {
-    		 var arr = JSON.parse(sessionStorage.getItem("parentData"));
-    		    var found = arr.some(function (el) {
-    		      return el.id === id;
-    		    });
-    		    if (!found) {
-    		        arr.push({ 'id': id, 'name': name });
-    		    }
-    		    else{
-    		     var tempData = parentData.splice(0, parentData.length-1);
-   				 sessionStorage.setItem("parentData", JSON.stringify(tempData));
-    		    }
-    		}*/
     	 
     	$scope.breadcrumbData = function(){
     		 $scope.namesData = JSON.parse(sessionStorage.getItem("parentData"));
@@ -436,7 +437,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
      		})
      	}
 
-    	  
+
+    	 
     	 $scope.getCommentsData = function(dataId){
     		 $scope.spinner = true;
     		var data = {"folderID":dataId}
@@ -648,221 +650,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    		})
     		})
     	}
-    	
-    	$scope.BrowserData = function(){
-		/* $rootScope.browserContextData =[]
-		  for(var i=0; i< $rootScope.parentCards.length; i++){
-			 
-			 var temp = {
-					"name": $rootScope.parentCards[i].folderName,
-    	            "identifier": "001-"+i,
-    	            "isOpenable": true
-			 }
-			 
-			$rootScope.browserContextData.push(temp);
-
-		 }
-		 console.log($rootScope.browserContextData);*/
-		 
-/*		 var initialContexts = {
-  	          data:$rootScope.browserContextData,
-  	          meta: {
-  	            parentId: null // the id of the asset of the tree above
-  	          }
-  	        };*/
-    		
-            var initialContexts = {
-                    data: [{
-                      "name": "Lots of children",
-                      "identifier": "001-1",
-                      "isOpenable": true
-                    }, {
-                      "name": "Deep nested",
-                      "identifier": "001-2",
-                      "isOpenable": true
-                    }, {
-                      "name": "Nothing Below Me",
-                      "identifier": "001-3",
-                      "isOpenable": true
-                    }, {
-                      "name": "Nothing Below, Not openable",
-                      "identifier": "001-4",
-                      "isOpenable": false
-                    }],
-                    meta: {
-                      parentId: null // the id of the asset of the tree above
-                    }
-                  };
-            console.log(initialContexts);
-                    var colBrowser = document.querySelector('px-context-browser');
-                    colBrowser.handlers = {
-                      getChildren: function(parent, newIndex) {
-                        return demoGetChildren(parent, newIndex)
-                      },
-                      itemOpenHandler: function(context) {
-                        console.log('Opened: ', context);
-                      }
-                    };
-                    colBrowser.initialContexts = initialContexts;
-
-                  function demoGetChildren(node, rangeStart) {
-                    var nodeId = node.identifier;
-                    var deferred = $q.defer();
-                    if (!rangeStart) {
-                      rangeStart = 0;
-                    }
-                    var lotsOfChildren = {
-                      data: [{
-                        "name": "A",
-                        "identifier": "001-1a"
-                      }, {
-                        "name": "B",
-                        "identifier": "001-1b"
-                      }, {
-                        "name": "C",
-                        "identifier": "001-1c"
-                      }, {
-                        "name": "D",
-                        "identifier": "001-1d"
-                      }, {
-                        "name": "E",
-                        "identifier": "001-1e"
-                      }, {
-                        "name": "F",
-                        "identifier": "001-1f"
-                      }, {
-                        "name": "G",
-                        "identifier": "001-1g"
-                      }, {
-                        "name": "H",
-                        "identifier": "001-1h"
-                      }, {
-                        "name": "I",
-                        "identifier": "001-1i"
-                      }, {
-                        "name": "AA",
-                        "identifier": "001-1a"
-                      }, {
-                        "name": "BB",
-                        "identifier": "001-1b"
-                      }, {
-                        "name": "CC",
-                        "identifier": "001-1c"
-                      }, {
-                        "name": "DD",
-                        "identifier": "001-1d"
-                      }, {
-                        "name": "EE",
-                        "identifier": "001-1e"
-                      }, {
-                        "name": "FF",
-                        "identifier": "001-1f"
-                      }, {
-                        "name": "GG",
-                        "identifier": "001-1g"
-                      }, {
-                        "name": "HH",
-                        "identifier": "001-1h"
-                      }, {
-                        "name": "II",
-                        "identifier": "001-1i"
-                      }, {
-                        "name": "AAA",
-                        "identifier": "001-1a"
-                      }, {
-                        "name": "BBB",
-                        "identifier": "001-1b"
-                      }, {
-                        "name": "CCC",
-                        "identifier": "001-1c"
-                      }, {
-                        "name": "DDD",
-                        "identifier": "001-1d"
-                      }, {
-                        "name": "EEE",
-                        "identifier": "001-1e"
-                      }, {
-                        "name": "FFF",
-                        "identifier": "001-1f"
-                      }, {
-                        "name": "GGG",
-                        "identifier": "001-1g"
-                      }, {
-                        "name": "HHH",
-                        "identifier": "001-1h"
-                      }, {
-                        "name": "III",
-                        "identifier": "001-1i"
-                      }],
-                      meta: {
-                        parentId: '001-1'
-                      }
-                    };
-                    var deepNestedChildren = {
-                      data: [{
-                        "name": "Nested Child",
-                        "identifier": "001-2a",
-                        "isOpenable": true
-                      }],
-                      meta: {
-                        parentId: '001-2'
-                      }
-                    };
-
-                    var deepNestedGrandchildren = {
-                      data: [{
-                        "name": "Nested Grandchild",
-                        "identifier": "001-2aa",
-                        "isOpenable": true
-                      }],
-                      meta: {
-                        parentId: '001-2a'
-                      }
-                    };
-
-                    var deepNestedGreatGrandchild = {
-                      data: [{
-                        "name": "Nested Great Grandchild",
-                        "identifier": "001-2aaa",
-                        "isOpenable": true
-                      }],
-                      meta: {
-                        parentId: '001-2aa'
-                      }
-                    };
-
-                    var children;
-
-                    if (nodeId === "001-1") {
-                      children = lotsOfChildren;
-                      var rangeEnd = Math.min(rangeStart + 9, children.data.length); //groups of nine
-                      children.data = children.data.slice(rangeStart, rangeEnd);
-                    }
-                    else if (nodeId === "001-2") {
-                      children = deepNestedChildren;
-                    }
-                    else if (nodeId === "001-2a") {
-                      children = deepNestedGrandchildren;
-                    }
-                    else if (nodeId === "001-2aa") {
-                      children = deepNestedGreatGrandchild;
-                    }
-                    else {
-                      children = {
-                        data: [],
-                        meta: {
-                          parentId: nodeId
-                        }
-                      };
-                    }
-
-                    deferred.resolve(children);
-
-                    return deferred.promise;
-                  }
-
-  	 		
-	 }
     	
     	 //$scope.getAkanaToken();
     	 $scope.addFile();
