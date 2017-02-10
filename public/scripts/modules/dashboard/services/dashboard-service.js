@@ -15,9 +15,7 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
                 });
             }
         };
-    }]);
-
-    
+    }]);   
     
     dashboardService.service('fileUpload', ['$http','$rootScope','$state', function ($http,$rootScope,$state) {
     	this.uploadFileToUrl = function(file,uploadUrl, fd){
@@ -116,7 +114,7 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   		
   		var getGTBToken =  function(){
   			var deferred = $q.defer();
-  			$http.post(Gtb_Url,{ headers: {'Authorization': 'Bearer '+$rootScope.akanaToken}})
+  			$http.post(Gtb_Url)
   				.success(function(data, status, headers) {
   					deferred.resolve(data);
   				})
@@ -225,6 +223,42 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   				});
   			return deferred.promise;
   		};
+  		
+  		var getFileComments =  function(data){
+  			var deferred = $q.defer();
+  			$http.get(Box_API+'/files/'+data+'/comments', { headers: {'Authorization': 'Bearer '+$rootScope.gtbToken}})
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('failed to count');
+  				});
+  			return deferred.promise;
+  		};
+  		
+  		var subscribeUpdates =  function(data){
+  			var deferred = $q.defer();
+  			$http.post(API_URL+'/insertUserDetails',data)
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('failed to load');
+  				});
+  			return deferred.promise;
+  		};
+  		
+  		var sendMail =  function(data){
+  			var deferred = $q.defer();
+  			$http.post(API_URL+'/sendMail',data)
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('failed to load');
+  				});
+  			return deferred.promise;
+  		};
             return{
             	authorizeUser:authorizeUser,            	
             	getCards:getCards,
@@ -242,7 +276,11 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
             	getComments:getComments,
             	getBOXFileInfo:getBOXFileInfo,
             	createFolder:createFolder,
-            	getHitCount:getHitCount
+            	getHitCount:getHitCount,
+            	getFileComments:getFileComments,
+            	subscribeUpdates:subscribeUpdates,
+            	sendMail:sendMail
+            	
             }
     }]);
 
