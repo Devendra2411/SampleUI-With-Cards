@@ -242,7 +242,7 @@ text-align: left;
   padding: 0;
   position: absolute;
   top: 19px;
-  left: -123px;
+  left: -121px;
   width: 120px;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -256,6 +256,7 @@ text-align: left;
   -o-transition: opacity 0.2s;
   -transition: opacity 0.2s;
 }
+
 .actionMenu2 ul li ul li { 
   background: #f7f7fb; 
   display: block; 
@@ -367,3 +368,23 @@ padding: 0 10px; margin-bottom: 10px}
 .commentsData i.fa{ color: #4caf50}    
 .commentContent .title span.deleteMsg{ cursor:  pointer;  font-size: 15px; color:red}
 #logincontainer ul.dropdown-menu{padding: 0; border: 2.5rem;}
+
+.treeMap{ border-top: 1px solid #000; padding-bottom: 1%; margin-top: 1%;     margin-left: -10px;
+    padding: 0 10px;}
+.treeMap ul:not([style-scope]):not(.style-scope), ol:not([style-scope]):not(.style-scope), dd:not([style-scope]):not(.style-scope){ padding: 0; margin: 0}
+.treeMap ul ul { margin-left: 10px !important;} 
+.treeMap ul li{  }
+.notifyBtn{border: 0;
+    background-color: #169bd5;
+    color: #fff;
+    border-radius: 3px;
+    padding: 7px 5px;
+    cursor: pointer;
+    min-width: 135px;
+    font-family: inherit;
+    position: absolute;
+    top: 10px;
+    right:42px;
+    font-size: 15px
+}
+

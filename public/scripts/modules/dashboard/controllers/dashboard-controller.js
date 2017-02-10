@@ -4,8 +4,9 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService','$q', '$urlRouter','fileUpload', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService, $q, $urlRouter, fileUpload) {
        	    //$rootScope.ssoId = "502450548";
     		//$rootScope.roleId ="1"
-    		//$rootScope.dataId ="12351304648"; //for stage
-    		$rootScope.dataId ="11858048707"; //for Prod
+    		$rootScope.dataId ="12351304648"; //for stage
+    		//$rootScope.notifyStatus ="Yes"
+    		//$rootScope.dataId ="11858048707"; //for Prod
        	    $rootScope.email = $rootScope.ssoId+"@mail.ad.ge.com"
        	    
     	 $scope.getRandomColor = function(id){
@@ -66,14 +67,10 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	 
     	 $scope.getCards= function(){
     		 $scope.spinner = true;
-     		dashboardService.getAkanaToken().then(function (response) {
-     			$rootScope.akanaToken = response.access_token;
-     			console.log('getAkanaToken', response);
       			dashboardService.getGTBToken().then(function (data) {
           			if(data!=null){
           				$rootScope.gtbToken = data.accessToken;
          	    		 console.log('gtb_token', data);
-         	    		 if(response!=""){
          	    			 var dataId = $rootScope.dataId;
          	    			 dashboardService.getBOXFolders(dataId).then(function (info) {
  	     	      				if(info.total_count!="0"){
@@ -115,8 +112,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	     	      				}
  	     	      				
          	    			 })
-         	    			 
-      	      				}
+
           			}
           			else{
           				 $scope.spinner = false;
@@ -132,7 +128,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	 	    		 $scope.serviceSuccess = false;
  	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
   	    		})
-     		})
      		 console.log(JSON.stringify($scope.parentCards));
      	}
     	 $scope.getFolderHitCount= function(dataId, folderName){
@@ -190,14 +185,10 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		 else if(folderName !=undefined){
      	 		sessionStorage.setItem("folderName", folderName);
      		 }
-     		dashboardService.getAkanaToken().then(function (response) {
-     			$rootScope.akanaToken = response.access_token;
-     			console.log('getAkanaToken', response);
       			dashboardService.getGTBToken().then(function (data) {
           			if(data!=null){
           				$rootScope.gtbToken = data.accessToken;
          	    		 console.log('gtb_token', data);
-         	    		 if(response!=""){
          	    			 dashboardService.getBOXFolders(dataId).then(function (info) { 
  	     	      				if(info!=""){
  	     	      				 
@@ -227,7 +218,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 	  			 							      "fileUpdatedBy": "",
 		     	 	     					      "fileUpdatedDate": "",
 		     	 	     					      "fileSize": "",
-		     	 	     					      "fileVersion": "" 
+		     	 	     					      "fileVersion": "",
+		     	 	     					      "comments":""
 	  			 							   }
 		     	 	     					$scope.BoxSubFolders.fileList.push(tempFileData);
 	     	 	     					}
@@ -261,6 +253,14 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			     								value.fileVersion =boxdata.file_version.sha1;
  			     							}
  			 	     					})
+ 			 	     					
+ 			 	     					dashboardService.getFileComments(tempId).then(function (Cdata) {
+ 			     							if(Cdata!="" && Cdata.total_count.length!="0"){
+ 			     								if(Cdata.entries[0].item.id==tempId){
+ 			     									value.comments == Cdata.entries[0].message;
+ 			     								}
+ 			     							}
+ 			 	     					})
  			     					}
  	     	      				})
  	     	      				$rootScope.allFoldersData =$scope.BoxSubFolders.folderList;
@@ -274,7 +274,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 	 	    	    			$state.go('view');
 	 	    	    			$scope.spinner = false;
 	         	    			 })
-	      	      			}
+	      	      			
           			}
           			else{
           				 $scope.spinner = false;
@@ -290,7 +290,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	 	    		 $scope.serviceSuccess = false;
  	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
   	    		})
-     		})
+
      	}
     	 
     	$scope.breadcrumbData = function(){
@@ -314,10 +314,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		 }
     		 else{
     			 folderID =sessionStorage.getItem("folderId");
+    			 var folderName =sessionStorage.getItem("folderName");
     		 }
-     		dashboardService.getAkanaToken().then(function (response) {
-     			$rootScope.akanaToken = response.access_token;
-     			console.log('getAkanaToken', response);
       			dashboardService.getGTBToken().then(function (data) {
           			if(data!=null){
           				$rootScope.gtbToken = data.accessToken;
@@ -328,15 +326,18 @@ define(['angular', '../dashboard'], function (angular, controllers) {
          	    	    		if(response.type!="error"){
          	    	    			if(flag=="home"){
          	    	 	 	    		$scope.getCards();
+         	    	 	 	    	    $scope.sendMail('New folder "'+$scope.FolderNameData+'" created');
          	    	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
          	    	 	 	    		$scope.FolderNameData ="";
          	    	 	 	    		$scope.successMsgdata = "Folder Created successfully";
          	    	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
          	    	 	 	        	$scope.serviceSuccess = true;
          	    	 	 	            $scope.serviceError = false;
+         	    	 	 	           
          	    	    			}
          	    	    			else{
 	         	   	 	 	    		$scope.getFolders();
+	         	   	 	 	    		$scope.sendMail('New folder "'+$scope.FolderNameData+'" created in "'+folderName+'" folder');
 	         	   	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
 	         	   	 	 	    		$scope.FolderNameData ="";
 	         	   	 	 	    		console.log('createFolder', response);
@@ -344,6 +345,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 	         	   	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
 	         	   	 	 	        	$scope.serviceSuccess = true;
 	         	   	 	 	        	$scope.serviceError = false;
+	         	   	 	 	        	
          	    	    			}
          	    	    		}
          	    			 },function(error){
@@ -362,14 +364,11 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	 	    		 $scope.serviceSuccess = false;
  	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
   	    		})
-     		})
      	}
     	 
     	 $scope.fileupload= function(){
     		 $scope.spinner = true;
-     		dashboardService.getAkanaToken().then(function (response) {
-     			$rootScope.akanaToken = response.access_token;
-     			console.log('getAkanaToken', response);
+
       			dashboardService.getGTBToken().then(function (data) {
           			if(data!=null){
           				 $rootScope.gtbToken = data.accessToken;
@@ -381,6 +380,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
          			     var blob = new Blob([fileBody], { type: filetype});
          			     formData.append('file', blob, filename);
          		         var folderDataId = sessionStorage.getItem("folderId");
+         		         var folderName =sessionStorage.getItem("folderName");
          		         formData.set("parent_id",folderDataId);	         		        
 	         		       $.ajax({
 	         		    	     url: Upload_File,
@@ -403,6 +403,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 						 	 	 	        	$scope.serviceError = false;
 						 	 	 	        	$scope.serviceSuccess = true;
 						 	 	 	        	$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+						 	 	 	        	var fileName = res.entries[0].name
+						 	 	 	        	$scope.sendMail('New File "'+fileName+'" is uploaded in "'+folderName+'" folder');
 							             }
 						        	 
 	         		             }).error(function(res) {
@@ -434,7 +436,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	 	    		 $scope.serviceSuccess = false;
  	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
   	    		})
-     		})
+
      	}
 
 
@@ -575,6 +577,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	 $scope.postComment = function(){
     		 $scope.spinner = true;
     		 var folderID =sessionStorage.getItem("folderId");
+    		 var folderName = sessionStorage.getItem("folderName");
     		 var data = {"commentsList":[{
     				                    "folderID":folderID,
     				                     "comment":$scope.commentData,
@@ -593,6 +596,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
  	        	$scope.serviceSuccess = true;
  	            $scope.serviceError = false;
+ 	            $scope.sendMail($rootScope.ssoId+ ' posted a comment for "'+folderName +'" folder');
  	    		},function(error){
  	    		 $scope.spinner = false
  	    		 $scope.serviceError = true;
@@ -651,6 +655,130 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		})
     	}
     	
+    	
+      
+    	
+    	$scope.getGpsContent= function(){
+   		 $scope.spinner = true;
+   		 dashboardService.getGTBToken().then(function (data) {
+ 			if(data!=null){
+ 				$rootScope.gtbToken = data.accessToken;
+	    		 console.log('gtb_token', data);
+	    			 var dataId = $rootScope.dataId;
+	    			 dashboardService.getBOXFolders(dataId).then(function (info) {
+ 	      				if(info.total_count!="0"){
+ 	      				 $scope.spinner = false;
+ 	      				$scope.cardsData = true;
+ 	      					$scope.BoxFoldersData = {
+ 	 	     						  "folderID": "",
+ 	 	     						  "folderName":"GPS",
+ 	 	     						  "parentData": []
+ 	 	     					}
+ 	 	     				for(var i=0; i<info.entries.length; i++){
+ 	 	     					var tempId =info.entries[i].id;
+ 	 	     					var tempFolderData = { 
+			 	     						"folderID": info.entries[i].id,
+			 							      "folderName": info.entries[i].name,
+			 							      "totalCount":"0",
+			 							     "children": []
+			 							   }
+ 	 	     					$scope.BoxFoldersData.parentData.push(tempFolderData);
+ 	 	     				}
+ 	      				angular.forEach($scope.BoxFoldersData.parentData, function(value, index) {
+     	      				 var tempId =value.folderID;
+        	    			 if(tempId!=""){
+	     						dashboardService.getBOXFoldersInfo(tempId).then(function (boxdata) {
+	     							if(boxdata!="" && boxdata.id==tempId){
+	     								value.totalCount = boxdata.item_collection.total_count;
+	     								/*if(boxdata.item_collection.entries.length!="0"){
+	     									$scope.getGpsSubContent(tempId);
+	     								}*/
+	     							}
+	 	     					})
+	     					}
+ 	      				})
+ 	      				$scope.roleList =$scope.BoxFoldersData.parentData;
+ 	      				console.log('roleList', JSON.stringify($scope.roleList));
+ 	      				
+ 	      				}
+ 	      				else{
+ 	      				$scope.spinner = false;
+          				$scope.errorMsgdata = "No Cards";
+          				$scope.serviceSuccessMsg = false;
+     	    			$scope.serviceError = true;
+                        $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+ 	      				}
+ 	      				
+	    			 })
+
+ 			}
+ 			else{
+ 				 $scope.spinner = false;
+ 				$scope.errorMsgdata = "No Cards";
+ 				$scope.serviceSuccessMsg = false;
+    			$scope.serviceError = true;
+               $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+ 			}
+ 		},function(error){
+	    		 $scope.spinner = false
+	    		 $scope.serviceError = true;
+	    		 $scope.errorMsgdata = "Akana GTB token not received";
+	    		 $scope.serviceSuccess = false;
+             $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+ 		})
+    	};
+    	
+    	
+    	
+    	
+       	
+       	$scope.subscribeUpdates= function(){
+     		 $scope.spinner = true;
+     		 var data = {"sso":$rootScope.ssoId}
+     		 dashboardService.subscribeUpdates(data).then(function (data) {
+   			if(data!=null){
+   				if(data.statusFlag=="success"){
+	   					$scope.spinner = false;
+	   					$scope.notifyStatus =false;
+	   					$scope.successMsgdata = "You have subscribed updates";
+	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+	 	 	        	$scope.serviceSuccess = true;
+	 	 	        	$scope.serviceError = false;
+   				}
+   				else{
+   					$scope.spinner = false;
+    				$scope.errorMsgdata = "Failed";
+    				$scope.serviceSuccessMsg = false;
+    				$scope.serviceError = true;
+                    $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+   				}
+   				 
+   			}
+   			else{
+   				 $scope.spinner = false;
+   				$scope.errorMsgdata = "Failed";
+   				$scope.serviceSuccessMsg = false;
+      			$scope.serviceError = true;
+                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+   			}
+   		},function(error){
+  	    		 $scope.spinner = false
+  	    		 $scope.serviceError = true;
+  	    		 $scope.errorMsgdata = "Failed";
+  	    		 $scope.serviceSuccess = false;
+               $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+   		})
+      	};
+      	
+    	
+    	$scope.sendMail= function(content){
+    		var data = {"message": content}
+    		 dashboardService.sendMail(data).then(function (data) {
+  			 console.log('mail updates',data);
+  		 })
+    		 };
+      	
+      	
     	 //$scope.getAkanaToken();
     	 $scope.addFile();
     	 $scope.gotoDashBoard = function(){
@@ -669,9 +797,13 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	  }
     	  if($state.current.name =="dashboard" ){ 
     		  $scope.getCards();
+    		  //$scope.getGpsContent();
+    		  //$scope.getGpsContent1();
     		  sessionStorage.removeItem('parentData');
     		  //$scope.BrowserData();
     		  //$scope.getBOXFoldersData();
     	  }
+    	  
+    	  
     }]);
 });

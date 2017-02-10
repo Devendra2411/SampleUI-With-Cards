@@ -24,7 +24,7 @@
 	<span class="rightIcon" ng-click="gotoDashBoard()"><i class="fa fa-home" aria-hidden="true"></i></span>
 	<h1> GPS Marketing Portal</h1>
 	<div class="pageTitle">{{folderName}}</div>
-	<div class="actionsBlock fright" ng-hide="roleId==2"><button class="dashboardActions actionMenu2"><i class="fa fa-ellipsis-v " aria-hidden="true"></i>
+	<div class="actionsBlock fright" ng-hide="roleId==2"><button class="dashboardActions actionMenu2 view"><i class="fa fa-ellipsis-v " aria-hidden="true"></i>
 	<ul>
 	  <li>
 	    <ul>
@@ -93,10 +93,20 @@
 			              filterable
 			              required
 			              sort-function-name="sortColumn">
-			            
+			             </px-data-table-column>
+			             
+			              <px-data-table-column name="comments"
+			              type="html"
+			              label="COMMENTS"
+			              sortable
+			              searchable
+			              filterable
+			              required
+			              sort-function-name="sortColumn">
+			             </px-data-table-column>
 			              <px-data-table-column name="actions"
 			              type="html"
-			              label="Actions"
+			              label="ACTIONS"
 			              sortable
 			              searchable
 			              filterable

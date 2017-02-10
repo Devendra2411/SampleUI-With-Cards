@@ -55,6 +55,7 @@ define([
 				dashboardService.authorizeUser(data).then(function (response) {
 					if(response.validUser=="Yes"){
 						$rootScope.roleId =response.roleID;
+						$rootScope.notifyStatus =response.notify;
 						window.isAuthorized="Yes";
 						console.log(response)
 					}
