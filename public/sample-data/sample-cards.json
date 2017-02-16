@@ -1,39 +1,1435 @@
 {
-  "fileList": [
-    {
-      "fileID": "818853862",
-      "fileName": "Digital.pdf",
-      "fileUpdatedBy": "John",
-      "fileUpdatedDate": "2012-12-12T10:55:30-08:00"
-    },
-    {
-      "fileID": "818853861",
-      "fileName": "Controls.pdf",
-      "fileUpdatedBy": "Ron",
-      "fileUpdatedDate": "2015-12-12T10:55:30-08:00"
-    }
-  ],
-  "folderList": [
-    {
-      "folderID": "192429928",
-      "folderName": "Collateral",
-      "fileSize": "23",
-      "commentSize": "0",
-      "folderDesc": "External-Brochures,presentations,sales info"
-    },
-    {
-      "folderID": "192429929",
-      "folderName": "Maketing Data",
-      "fileSize": "23",
-      "commentSize": "0",
-      "folderDesc": "Internal only-Reports & Analysis"
-    },
-    {
-      "folderID": "192429938",
-      "folderName": "Education & Reference Materials",
-      "fileSize": "23",
-      "commentSize": "0",
-      "folderDesc": "Internal only"
-    }
-  ]
+  "rootFolderMap": {
+    "Items": [
+      {
+        "filesList": [
+          
+        ],
+        "folderList": [
+          {
+            "folderID": "12351326675",
+            "folderName": "Collateral (For External Use)",
+            "subTreeStructureVO": {
+              "rootFolderMap": {
+                "Items": [
+                  {
+                    "filesList": [
+                      
+                    ],
+                    "folderList": [
+                      {
+                        "folderID": "12469517747",
+                        "folderName": "GPS Overview Materials",
+                        "subTreeStructureVO": {
+                          "rootFolderMap": {
+                            "Items": [
+                              {
+                                "filesList": [
+                                  {
+                                    "fileID": "102900206265",
+                                    "fileName": "Services brochure.pdf"
+                                  }
+                                ],
+                                "folderList": [
+                                  
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "folderID": "12469690007",
+                        "folderName": "Plant Information",
+                        "subTreeStructureVO": {
+                          "rootFolderMap": {
+                            "Items": [
+                              {
+                                "filesList": [
+                                  
+                                ],
+                                "folderList": [
+                                  {
+                                    "folderID": "12469755571",
+                                    "folderName": "Catalogs",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12469803878",
+                                    "folderName": "Constructability Guides",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12469749045",
+                                    "folderName": "Customer Presentations",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              {
+                                                "fileID": "102902384402",
+                                                "fileName": "GE Plant Solutions - 6F01 AdvantEDGE - June2016.pptx"
+                                              },
+                                              {
+                                                "fileID": "102903231417",
+                                                "fileName": "GE Plant Solutions - 7HA AdvantEDGE - June 2016.pptx"
+                                              },
+                                              {
+                                                "fileID": "102904185615",
+                                                "fileName": "GE Plant Solutions - 9HA AdvantEDGE - June 2016.pptx"
+                                              },
+                                              {
+                                                "fileID": "102905223049",
+                                                "fileName": "GE Plant Solutions - HA AdvantEDGE - June 2016.pptx"
+                                              },
+                                              {
+                                                "fileID": "102905599010",
+                                                "fileName": "Intermediate GT Overview Summary (August 2016).pdf"
+                                              },
+                                              {
+                                                "fileID": "102906972477",
+                                                "fileName": "Intermediate GT Overview Summary (August 2016).pptx"
+                                              },
+                                              {
+                                                "fileID": "102908074150",
+                                                "fileName": "Power-Plant-Solutions-Customer Presentation (short)_Nov15.pptx"
+                                              },
+                                              {
+                                                "fileID": "102908298486",
+                                                "fileName": "Utility GT Overview Summary (October 2016).pdf"
+                                              },
+                                              {
+                                                "fileID": "102909272179",
+                                                "fileName": "Utility GT Overview Summary (October 2016).pptx"
+                                              }
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12469749301",
+                                    "folderName": "Digital + Controls",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              
+                                            ],
+                                            "folderList": [
+                                              {
+                                                "folderID": "12471030691",
+                                                "folderName": "Controls",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "folderID": "12471052361",
+                                                "folderName": "Digital Power Plant",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12469745996",
+                                    "folderName": "Fuels",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12469801117",
+                                    "folderName": "Fuels Capability",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              
+                                            ],
+                                            "folderList": [
+                                              {
+                                                "folderID": "12471065685",
+                                                "folderName": "Aeroderivative Fuel Flexibility",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "folderID": "12471009342",
+                                                "folderName": "Customer Presentations",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "folderID": "12471011464",
+                                                "folderName": "Fuels Profiles [GE Confidential]",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "folderID": "12471066049",
+                                                "folderName": "Internal Training Material",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "folderID": "12471031477",
+                                                "folderName": "Videos",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "folderID": "12471056906",
+                                                "folderName": "White Papers",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12469805390",
+                                    "folderName": "Posters",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              {
+                                                "fileID": "102909757493",
+                                                "fileName": "7HA 2x1 Plant Light Version 7-2015.jpg"
+                                              },
+                                              {
+                                                "fileID": "102918094548",
+                                                "fileName": "Test_File2.txt"
+                                              }
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12469748385",
+                                    "folderName": "Power Plant Best Practices",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12469789017",
+                                    "folderName": "Videos",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "folderID": "12463701899",
+            "folderName": "Education \u0026 Reference Materials (Internal Use Only)",
+            "subTreeStructureVO": {
+              "rootFolderMap": {
+                "Items": [
+                  {
+                    "filesList": [
+                      
+                    ],
+                    "folderList": [
+                      {
+                        "folderID": "12727657843",
+                        "folderName": "7E Subject Matter Expert Site",
+                        "subTreeStructureVO": {
+                          "rootFolderMap": {
+                            "Items": [
+                              {
+                                "filesList": [
+                                  
+                                ],
+                                "folderList": [
+                                  {
+                                    "folderID": "12727635241",
+                                    "folderName": "1_Brochures \u0026 Fact Sheets",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              {
+                                                "fileID": "103981208312",
+                                                "fileName": "7E-EA Stage1 Shroud Fact Sheet - GEA18182.pdf"
+                                              },
+                                              {
+                                                "fileID": "103981225818",
+                                                "fileName": "7EA Gas Turbine Heavy Fuel Oil Availability Package  Fact Sheet - GEA18254.pdf"
+                                              },
+                                              {
+                                                "fileID": "103981187462",
+                                                "fileName": "7EA Gas Turbine Open Stage 1 Nozzle Fact Sheet - GEA18171.pdf"
+                                              },
+                                              {
+                                                "fileID": "103981210615",
+                                                "fileName": "GEA30416A_7E.03_ProductBroch_R1.pdf"
+                                              },
+                                              {
+                                                "fileID": "103981295671",
+                                                "fileName": "GEA31055A DLN1+_FS_R2.pdf"
+                                              },
+                                              {
+                                                "fileID": "103981335539",
+                                                "fileName": "ger3808c_r31-Uprate Options for the MS7001.pdf"
+                                              }
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12727656793",
+                                    "folderName": "2_Technical Documents",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              {
+                                                "fileID": "103981340517",
+                                                "fileName": "553H1052-1to12.pdf"
+                                              },
+                                              {
+                                                "fileID": "103981353061",
+                                                "fileName": "7E7EA DLN1+ Improved Quoting Limits - Commercial Splash - Slide Presentation - Sept 2009.pdf"
+                                              },
+                                              {
+                                                "fileID": "103981362533",
+                                                "fileName": "7EA Fast Start.pdf"
+                                              },
+                                              {
+                                                "fileID": "103981384393",
+                                                "fileName": "7EA_MechOutlineDwg_Typical_938299.pdf"
+                                              },
+                                              {
+                                                "fileID": "103981447913",
+                                                "fileName": "7EA_mission_startup_07.ppt"
+                                              },
+                                              {
+                                                "fileID": "103981430918",
+                                                "fileName": "Typical 7A6 GTG Data and Curves.pdf"
+                                              }
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12727629402",
+                                    "folderName": "3_Competitive Information",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              {
+                                                "fileID": "103981434947",
+                                                "fileName": "7EA Competitive Landscape.ppt"
+                                              },
+                                              {
+                                                "fileID": "103981461690",
+                                                "fileName": "Industrial Steam Turbine Product Range.pdf"
+                                              },
+                                              {
+                                                "fileID": "103981479194",
+                                                "fileName": "RussiaPower2012_Moscow_PaperSiemens_SGT5-2000E_Richter-Rev.pdf"
+                                              },
+                                              {
+                                                "fileID": "103981517365",
+                                                "fileName": "SST-overview-CCPP.pdf"
+                                              }
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12727644966",
+                                    "folderName": "5_Customer Presentation",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              {
+                                                "fileID": "103981572182",
+                                                "fileName": "7EA customer presentation part 1.pptx"
+                                              },
+                                              {
+                                                "fileID": "103981587450",
+                                                "fileName": "7EA customer presentation part II.pptx"
+                                              },
+                                              {
+                                                "fileID": "103981663849",
+                                                "fileName": "HFO CCGT KSA.pdf"
+                                              }
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12727642608",
+                                    "folderName": "8_Other Documents",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              {
+                                                "fileID": "103981672354",
+                                                "fileName": "7E-EA Baseloaded NG vs Industry -2012Q4.pdf"
+                                              },
+                                              {
+                                                "fileID": "103981647173",
+                                                "fileName": "GEA31503_PGP_ProdCatlg_2015_DominionStory_R2_ENABLED.PDF"
+                                              },
+                                              {
+                                                "fileID": "103981739460",
+                                                "fileName": "new chiller stagiaire.xlsm"
+                                              },
+                                              {
+                                                "fileID": "103981733731",
+                                                "fileName": "ORAP GT only RAM_Summary 2013Q1.pdf"
+                                              },
+                                              {
+                                                "fileID": "103981683186",
+                                                "fileName": "RAM Notes.pdf"
+                                              }
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "folderID": "12727648144",
+                        "folderName": "ATQs",
+                        "subTreeStructureVO": {
+                          "rootFolderMap": {
+                            "Items": [
+                              {
+                                "filesList": [
+                                  
+                                ],
+                                "folderList": [
+                                  
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "folderID": "12727633275",
+                        "folderName": "Competitive Information",
+                        "subTreeStructureVO": {
+                          "rootFolderMap": {
+                            "Items": [
+                              {
+                                "filesList": [
+                                  
+                                ],
+                                "folderList": [
+                                  
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "folderID": "12728013001",
+                        "folderName": "GT13E2 Subject Matter Expert Site",
+                        "subTreeStructureVO": {
+                          "rootFolderMap": {
+                            "Items": [
+                              {
+                                "filesList": [
+                                  
+                                ],
+                                "folderList": [
+                                  {
+                                    "folderID": "12728063592",
+                                    "folderName": "Brochures and Fact Sheets",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              {
+                                                "fileID": "103981767859",
+                                                "fileName": "GT13E2_Fact Sheet_DEC15.pdf"
+                                              }
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12728028302",
+                                    "folderName": "Customer Presentations",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              {
+                                                "fileID": "103982037646",
+                                                "fileName": "GE Std Presentation GT13E2 Rebrand 2-19-2016.pptx"
+                                              }
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12728035348",
+                                    "folderName": "NPIs and ATQs",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              {
+                                                "fileID": "103982092599",
+                                                "fileName": "GT13E2 2005 - Sales Option List (GE INTERNAL).pdf"
+                                              },
+                                              {
+                                                "fileID": "103982094405",
+                                                "fileName": "GT13E2 2012 - Sales Option List (GE INTERNAL).pdf"
+                                              }
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12728014445",
+                                    "folderName": "Other Documents",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              
+                                            ],
+                                            "folderList": [
+                                              {
+                                                "folderID": "12728106393",
+                                                "folderName": "External papers - Alstom legacy",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          {
+                                                            "fileID": "103982353267",
+                                                            "fileName": "Alstom Paper 2012-03 - Tripod RussiaPower.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982297843",
+                                                            "fileName": "Alstoms Peaker Solution - The SC13E2 Simple Cycle Power Plant.pdf"
+                                                          }
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "folderID": "12728120364",
+                                                "folderName": "Insurability",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          {
+                                                            "fileID": "103982303634",
+                                                            "fileName": "Allianz insurability note GT13 (2012) 20140808.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982300061",
+                                                            "fileName": "AXA GT 13 E2 2012 note may 2014.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982315667",
+                                                            "fileName": "Swiss re GT 13 E2 2012 note 124120.pdf"
+                                                          }
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "folderID": "12728105404",
+                                                "folderName": "Reference letters",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          {
+                                                            "fileID": "103982405925",
+                                                            "fileName": "Reference Letters 1.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982461081",
+                                                            "fileName": "Reference Letters 2.pdf"
+                                                          }
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "folderID": "12728120444",
+                                                "folderName": "Reference List",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          {
+                                                            "fileID": "103982454520",
+                                                            "fileName": "20151218 GE GT13E2 Reference List.pdf"
+                                                          }
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12728069297",
+                                    "folderName": "Technical Documents",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              
+                                            ],
+                                            "folderList": [
+                                              {
+                                                "folderID": "12728119863",
+                                                "folderName": "2005 Specific",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          {
+                                                            "fileID": "103982480063",
+                                                            "fileName": "GENERAL ARRANGEMENT INDOOR TYPICAL.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982471785",
+                                                            "fileName": "GT13E2 SLD TYPICAL.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982472656",
+                                                            "fileName": "GT13E2 Start-up and Shut-down curves on Gas.zip"
+                                                          },
+                                                          {
+                                                            "fileID": "103982493983",
+                                                            "fileName": "HTCT021655_F_GENERAL ARRANGEMENT OUTDOOR TYPICAL.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982565190",
+                                                            "fileName": "HTCT677737_D_ALSTOM Gas Turbine GT13E2 Standard Correction Curves MCL Gas.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982587282",
+                                                            "fileName": "HTCT677757_D_ALSTOM Gas Turbine GT13E2 Standard Correction Curves BL Gas.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982644021",
+                                                            "fileName": "HTCT677767_C_Estimated Reconditioning_Replacement Intervals_GT13E2_FM.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982672836",
+                                                            "fileName": "HTCT71284_H_Fuel Spec for GT13E2 with EV burners - Questionaire Gas.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982595671",
+                                                            "fileName": "HTCT71284_H_Fuel Spec for GT13E2 with EV burners - Questionaire Oil.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982606994",
+                                                            "fileName": "HTCT71284_H_Fuel Spec for GT13E2 with EV burners.pdf"
+                                                          }
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "folderID": "12728107882",
+                                                "folderName": "2012 Specific",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          {
+                                                            "fileID": "103982638356",
+                                                            "fileName": "ALSTOM Gas Turbine GT13E2 Standard Correction Curves BL Gas.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982721955",
+                                                            "fileName": "ALSTOM Gas Turbine GT13E2 Standard Correction Curves MCL Gas.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982802551",
+                                                            "fileName": "ELA11046 CCPP 2on1 POWER ISLAND LAYOUT (Cooling Tower or Direct Cooling).PDF"
+                                                          },
+                                                          {
+                                                            "fileID": "103982621168",
+                                                            "fileName": "ELA11047 CCPP 2on1 POWER ISLAND SECTIONS (Cooling Tower or Direct Cooling).PDF"
+                                                          },
+                                                          {
+                                                            "fileID": "103982748863",
+                                                            "fileName": "Fuel Spec for GT13E2 with AEV burners.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982756159",
+                                                            "fileName": "Fuel Spec GT13E2 with AEV burners - questionaire gas.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982918487",
+                                                            "fileName": "Fuel Spec GT13E2 with AEV burners - questionaire oil.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982886981",
+                                                            "fileName": "GT13E2 GENERAL ARRANGEMENT INDOOR TYPICAL.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982915056",
+                                                            "fileName": "GT13E2 SLD TYPICAL.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103982905468",
+                                                            "fileName": "GT13E2 Start-up and Shut-down curves on Gas.zip"
+                                                          },
+                                                          {
+                                                            "fileID": "103982927337",
+                                                            "fileName": "HTCT022933_L_GT13E2 GENERAL ARRANGEMENT INDOOR TYPICAL - AutoCAD.zip"
+                                                          },
+                                                          {
+                                                            "fileID": "103983039526",
+                                                            "fileName": "HTCT022970_K_GT13E2 GENERAL ARRANGEMENT OUTDOOR TYPICAL - AutoCAD.zip"
+                                                          },
+                                                          {
+                                                            "fileID": "103983267699",
+                                                            "fileName": "HTCT022970_K_GT13E2 GENERAL ARRANGEMENT OUTDOOR TYPICAL.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103983079449",
+                                                            "fileName": "HTCT685503_-_GT13E2 Expected Reco and Repl  Interv Main Components SOE..pdf"
+                                                          }
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "folderID": "12728115515",
+                                                "folderName": "Applicable to both 2005 and 2012",
+                                                "subTreeStructureVO": {
+                                                  "rootFolderMap": {
+                                                    "Items": [
+                                                      {
+                                                        "filesList": [
+                                                          {
+                                                            "fileID": "103983187283",
+                                                            "fileName": "Evap- Oper limits assoc to ambient condition.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103983283107",
+                                                            "fileName": "HF- Oper limits assoc to ambient condition.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103983387079",
+                                                            "fileName": "HTCT678651_A_ Evap + HF- Oper limits assoc to ambient condition.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103983284927",
+                                                            "fileName": "INSTRUCTION FOR LUBE OIL.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103983390794",
+                                                            "fileName": "Limits for Ambient Air Pollutants GT - questionnaire.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103983477116",
+                                                            "fileName": "Limits for Ambient Air Pollutants GT.pdf"
+                                                          },
+                                                          {
+                                                            "fileID": "103983220528",
+                                                            "fileName": "NOx-PurgeAir-InletCoolingWater.pdf"
+                                                          }
+                                                        ],
+                                                        "folderList": [
+                                                          
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12728065433",
+                                    "folderName": "Training Materials",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              {
+                                                "fileID": "103982192776",
+                                                "fileName": "20151217 GT13E2 Overview Training for CAE.pdf"
+                                              },
+                                              {
+                                                "fileID": "103982265299",
+                                                "fileName": "GT13E2 - KA13E2 CAE Introduction 12 02 2016 final.pdf"
+                                              },
+                                              {
+                                                "fileID": "103982278199",
+                                                "fileName": "Typical GT13E2 Installation Sequence SCPP.mp4"
+                                              }
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "folderID": "12727637235",
+                        "folderName": "Innovate Calls",
+                        "subTreeStructureVO": {
+                          "rootFolderMap": {
+                            "Items": [
+                              {
+                                "filesList": [
+                                  
+                                ],
+                                "folderList": [
+                                  
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "folderID": "12727655513",
+                        "folderName": "Plant Models",
+                        "subTreeStructureVO": {
+                          "rootFolderMap": {
+                            "Items": [
+                              {
+                                "filesList": [
+                                  
+                                ],
+                                "folderList": [
+                                  
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "folderID": "12727653503",
+                        "folderName": "Power Plant U",
+                        "subTreeStructureVO": {
+                          "rootFolderMap": {
+                            "Items": [
+                              {
+                                "filesList": [
+                                  
+                                ],
+                                "folderList": [
+                                  
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "folderID": "18770382975",
+            "folderName": "GPS",
+            "subTreeStructureVO": {
+              "rootFolderMap": {
+                "Items": [
+                  {
+                    "filesList": [
+                      
+                    ],
+                    "folderList": [
+                      
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "folderID": "12463725431",
+            "folderName": "Marketing Data (Internal Use Only)",
+            "subTreeStructureVO": {
+              "rootFolderMap": {
+                "Items": [
+                  {
+                    "filesList": [
+                      
+                    ],
+                    "folderList": [
+                      {
+                        "folderID": "12464279203",
+                        "folderName": "Global Insights",
+                        "subTreeStructureVO": {
+                          "rootFolderMap": {
+                            "Items": [
+                              {
+                                "filesList": [
+                                  
+                                ],
+                                "folderList": [
+                                  
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "folderID": "12464292190",
+                        "folderName": "McCoy Data",
+                        "subTreeStructureVO": {
+                          "rootFolderMap": {
+                            "Items": [
+                              {
+                                "filesList": [
+                                  
+                                ],
+                                "folderList": [
+                                  {
+                                    "folderID": "12464263183",
+                                    "folderName": "Internal McCoy GT Summaries",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              {
+                                                "fileID": "102864853350",
+                                                "fileName": "GE Summary of 2013 McCoy 6 month report.pdf"
+                                              },
+                                              {
+                                                "fileID": "102864716500",
+                                                "fileName": "GE Summary of 2013 McCoy 9 month report final.pdf"
+                                              },
+                                              {
+                                                "fileID": "102864984611",
+                                                "fileName": "GE Summary of 2013 McCoy Full Year report.pdf"
+                                              },
+                                              {
+                                                "fileID": "102864664364",
+                                                "fileName": "GE Summary of 2014 McCoy 1st Half Report Final.pdf"
+                                              },
+                                              {
+                                                "fileID": "102864817983",
+                                                "fileName": "GE Summary of 2014 McCoy 3rd Quarter report FINAL.pdf"
+                                              },
+                                              {
+                                                "fileID": "102864992945",
+                                                "fileName": "GE Summary of 2014 McCoy GT Report Final 2-19-15.pdf"
+                                              },
+                                              {
+                                                "fileID": "102864831567",
+                                                "fileName": "GE_Summary_of_1Q15_McCoy_GT_Report_May15.pdf"
+                                              },
+                                              {
+                                                "fileID": "102865013235",
+                                                "fileName": "GE_Summary_of_2015_McCoy_1st_Half_report_Aug15.pdf"
+                                              },
+                                              {
+                                                "fileID": "102865016446",
+                                                "fileName": "GE_Summary_of_3Q15_McCoy_GT_ReportNov15.pdf"
+                                              }
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12464261513",
+                                    "folderName": "Links to McCoy Data",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "folderID": "12464291693",
+                                    "folderName": "McCoy Summary reports",
+                                    "subTreeStructureVO": {
+                                      "rootFolderMap": {
+                                        "Items": [
+                                          {
+                                            "filesList": [
+                                              {
+                                                "fileID": "102864888926",
+                                                "fileName": "GAS TURBINES, 12M’13 REPORT.pdf"
+                                              },
+                                              {
+                                                "fileID": "102865030730",
+                                                "fileName": "GAS TURBINES, 12M’14 REPORT.pdf"
+                                              },
+                                              {
+                                                "fileID": "102865043260",
+                                                "fileName": "GAS TURBINES, 6M’14 REPORT.pdf"
+                                              },
+                                              {
+                                                "fileID": "102865045375",
+                                                "fileName": "GAS TURBINES, 9M14 REPORT.pdf"
+                                              },
+                                              {
+                                                "fileID": "102865052732",
+                                                "fileName": "GT 6M\u002713 REPORT.pdf"
+                                              },
+                                              {
+                                                "fileID": "102865069088",
+                                                "fileName": "GT 9M\u002713 REPORT.pdf"
+                                              },
+                                              {
+                                                "fileID": "102865055971",
+                                                "fileName": "McCoy_CC_6M’15_REPORT_Aug15.pdf"
+                                              },
+                                              {
+                                                "fileID": "102865063910",
+                                                "fileName": "McCoy_COMB_CYCLE_HRSGS,_3M’15_REPORT_May15.pdf"
+                                              },
+                                              {
+                                                "fileID": "102865079050",
+                                                "fileName": "McCoy_GAS_TURBINES,_3M’15_REPORT_May15.pdf"
+                                              },
+                                              {
+                                                "fileID": "102865100194",
+                                                "fileName": "McCoy_GAS_TURBINES,_6M15_REPORT_Aug15.pdf"
+                                              },
+                                              {
+                                                "fileID": "102865087442",
+                                                "fileName": "McCoy_GAS_TURBINES,_9M15_REPORT.pdf"
+                                              },
+                                              {
+                                                "fileID": "102865091028",
+                                                "fileName": "STEAM TURBINES, 12M’14 REPORT.pdf"
+                                              },
+                                              {
+                                                "fileID": "102865102215",
+                                                "fileName": "STEAM TURBINES, 9M’14 REPORT.pdf"
+                                              }
+                                            ],
+                                            "folderList": [
+                                              
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "folderID": "12464358785",
+                        "folderName": "Reports",
+                        "subTreeStructureVO": {
+                          "rootFolderMap": {
+                            "Items": [
+                              {
+                                "filesList": [
+                                  {
+                                    "fileID": "102865241757",
+                                    "fileName": "GE Power and GPS Overview.pptx"
+                                  }
+                                ],
+                                "folderList": [
+                                  
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "folderID": "18701906594",
+            "folderName": "Test",
+            "subTreeStructureVO": {
+              "rootFolderMap": {
+                "Items": [
+                  {
+                    "filesList": [
+                      {
+                        "fileID": "133767859666",
+                        "fileName": "test1 - Copy.txt"
+                      },
+                      {
+                        "fileID": "133750920186",
+                        "fileName": "test1.txt"
+                      }
+                    ],
+                    "folderList": [
+                      
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "folderID": "18702212692",
+            "folderName": "TestNew",
+            "subTreeStructureVO": {
+              "rootFolderMap": {
+                "Items": [
+                  {
+                    "filesList": [
+                      {
+                        "fileID": "133769264703",
+                        "fileName": "test1.txt"
+                      }
+                    ],
+                    "folderList": [
+                      {
+                        "folderID": "18789233033",
+                        "folderName": "GPSOne",
+                        "subTreeStructureVO": {
+                          "rootFolderMap": {
+                            "Items": [
+                              {
+                                "filesList": [
+                                  
+                                ],
+                                "folderList": [
+                                  
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
 }

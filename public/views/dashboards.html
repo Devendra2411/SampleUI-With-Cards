@@ -43,61 +43,48 @@
 		</div> 
 	</div>
 	<div class="clear"></div>
-	
-	
-	<!-- <div>
-				<ul ng-repeat="obj in objs" ng-if=type='folder'"">
-					<li ng-if="obj.type='file'" ng-repeat="childent in obj"> </li>
-					<ul ng-if="obj.type='folder'" ng-repeat="childent in obj"> </ul>
-				</ul>
-			
-			
-			</div> -->
-			
-			
-	
-	<!-- <div class="siteMapContent treeMap">  
-		<h3> GPS Content </h3>
-			
-			
-			
-			
-		<div>
-			<ul ng-repeat="">
-				<li ng-click="getGpsContent12(item.folderID)" id="{{item.folderID}}" ng-if="type='file'" ng-repeat="item in roleList"><i class="fa fa-caret-right" aria-hidden="true"></i> {{item.folderName}}
-				<ul ng-if="type='folder'">
-					<ol ng-click="getGpsContent12(item.folderID)" id="{{item.folderID}}"  ng-repeat="val in item.children"><i class="fa fa-angle-right" aria-hidden="true"></i> {{val.folderName}}</ol>
-					</ul>
-				</li>
-			</ul>
-		</div>	
-			
-			
-		 <div>
-      <input type="button" value="TREE MODEL 1" data-ng-click="roleList = roleList1" /> 
-      <input type="button" value="TREE MODEL 2" data-ng-click="roleList = roleList2" />
-    </div>
-
-
-      <span><b>Selected Node</b> : {{currentNode.folderName}}</span>
-
-
-    
-      [TREE attribute]
-      angular-treeview: the treeview directive
-      tree-model : the tree model on $scope.
-      node-id : each node's id
-      node-label : each node's label
-      node-children: each node's children
-   
-    <div
-      data-angular-treeview="true"
-      data-tree-model="roleList"
-      data-node-label="folderName"
-      data-node-children="children" >
-    </div>
-		
+<!-- 	<div>
+		<ul>
+	    <li ng-repeat="item in treeData">
+	     {{item.folderName}}
+	     <ul>
+	       <li ng-repeat="subElement in item.folderList">
+	         {{subElement}}
+	       </li>
+	     </ul>
+	  </li>
+	</ul>
 	</div> -->
+
+			
+			
+	
+ <div class="siteMapContent treeMap">  
+		<h3> GPS Content </h3> 
+		
+		<div ng-repeat="parent in treeData">
+		<ul> <li>{{parent.folderName}} ============================================================================= <br><hr>
+		   <div ng-repeat="child in parent.subTreeStructureVO.rootFolderMap.Items[0].folderList">
+		  <ul> <ol>{{child.folderName}}<br><hr></ol></ul>
+	
+		       <ul>
+		         <li ng-repeat="grand in child.rootFolderMap.Items[0].folderList"> 
+		           {{grand}} xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+		         </li>
+		       </ul>
+		   </div>
+		   
+		   
+		   <div ng-repeat="child in parent.subTreeStructureVO.rootFolderMap.Items[0].filesList">
+		  <ul> <ol>{{child.fileName}} ***********************************<br><hr></ol></ul>
+	
+		   </div>
+		   
+		   </li></ul> 
+		</div>  
+		
+<!--   <tree family="treeDataView"></tree> -->
+	</div> 
 	
 <div class="saveModel">
 

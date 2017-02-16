@@ -1,6 +1,77 @@
 define(['angular', '../dashboard'], function(angular, dashboardService) {
     'use strict';
     dashboardService.value('version', '0.1');
+    
+    /* 
+     * An Angular service which helps with creating recursive directives.
+     * @author Mark Lagendijk
+     * @license MIT
+     */
+    dashboardService.factory('RecursionHelper', ['$compile', function($compile){
+    	return {
+    		/**
+    		 * Manually compiles the element, fixing the recursion loop.
+    		 * @param element
+    		 * @param [link] A post-link function, or an object with function(s) registered via pre and post properties.
+    		 * @returns An object containing the linking functions.
+    		 */
+    		compile: function(element, link){
+    			// Normalize the link parameter
+    			if(angular.isFunction(link)){
+    				link = { post: link };
+    			}
+
+    			// Break the recursion loop by removing the contents
+    			var contents = element.contents().remove();
+    			var compiledContents;
+    			return {
+    				pre: (link && link.pre) ? link.pre : null,
+    				/**
+    				 * Compiles and re-adds the contents
+    				 */
+    				post: function(scope, element){
+    					// Compile the contents
+    					if(!compiledContents){
+    						compiledContents = $compile(contents);
+    					}
+    					// Re-add the compiled contents to the element
+    					compiledContents(scope, function(clone){
+    						element.append(clone);
+    					});
+
+    					// Call the post-linking function, if any
+    					if(link && link.post){
+    						link.post.apply(null, arguments);
+    					}
+    				}
+    			};
+    		}
+    	};
+    }]);
+    dashboardService.directive("tree", function(RecursionHelper) {
+        return {
+            restrict: "E",
+            scope: {family: '='},
+            template: 
+            '<p>{{ family.name }}{{test }}</p>'+
+                '<ul>' + 
+                    '<li ng-repeat="child in family.children">' + 
+                        '<tree family="child"></tree>' +
+                    '</li>' +
+                '</ul>',
+            compile: function(element) {
+                return RecursionHelper.compile(element, function(scope, iElement, iAttrs, controller, transcludeFn){
+                    // Define your normal link function here.
+                    // Alternative: instead of passing a function,
+                    // you can also pass an object with 
+                    // a 'pre'- and 'post'-link function.
+                });
+            }
+        };
+      })
+      
+      
+    
     dashboardService.directive('fileModel', ['$parse', function ($parse) {
         return {
             restrict: 'A',
@@ -259,6 +330,29 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   				});
   			return deferred.promise;
   		};
+  		
+  		var getAllData =  function(data){
+  			var deferred = $q.defer();
+  			$http.post(API_URL+'/treeStructure', data)
+  				.success(function(data, status, headers) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('Data not found');
+  				});
+  			return deferred.promise;
+  		};
+  		var getAllDatatemp =  function(){
+  			var deferred = $q.defer();
+  			$http.get('sample-data/sample-cards.json')
+  				.success(function(data, status, headers) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('Data not found');
+  				});
+  			return deferred.promise;
+  		};
             return{
             	authorizeUser:authorizeUser,            	
             	getCards:getCards,
@@ -279,7 +373,9 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
             	getHitCount:getHitCount,
             	getFileComments:getFileComments,
             	subscribeUpdates:subscribeUpdates,
-            	sendMail:sendMail
+            	sendMail:sendMail,
+            	getAllData:getAllData,
+            	getAllDatatemp:getAllDatatemp
             	
             }
     }]);

@@ -777,8 +777,58 @@ define(['angular', '../dashboard'], function (angular, controllers) {
   			 console.log('mail updates',data);
   		 })
     		 };
-      	
-      	
+		 $scope.getTreeData= function(){
+			 var data = {'folderID' : $rootScope.dataId};
+			 var tempData = [];
+			 dashboardService.getAllDatatemp().then(function (data) {
+				 $scope.treeData = data.rootFolderMap.Items[0].folderList;
+				/*var temp =  $scope.treeData;
+				 for(var i=0; i<temp.length; i++){
+						 var chidData = temp[i].subTreeStructureVO.rootFolderMap.Items[0].folderList;
+						 for(var j=0; j<chidData.length; j++){
+							 if(chidData[j].subTreeStructureVO.rootFolderMap.Items.length!="0"){
+								 for(var j=0; j<chidData.length; j++){
+									 var tempFormate = {
+										        name : temp[i].folderName,
+										        children: [{
+										            name : chidData[j].folderName,
+										            children: []
+										        }]
+										    };
+								 }
+								 tempData.push(tempFormate);
+							 }
+
+						 }
+				 }
+				 
+				 console.log(tempData)
+					
+		     	 $scope.treeDataView =   {
+							        name: "Parent",
+							        children:  tempData 
+						 }*/
+				 
+				 
+				 
+			/*	 
+				 $.each($scope.treeData, function (i) {
+					    $.each(this, function (key, value) {
+					    {
+					        console.log(key + " : " + value);
+					            $.each(value, function (key1, value1) {
+					                for(k in value1) {
+					                   console.log( key1 + ':' + k + ':' + value1[k]);
+					                }
+					            })
+					    }
+					    });
+					});*/
+				 
+				 
+			 });
+			 
+		 };
     	 //$scope.getAkanaToken();
     	 $scope.addFile();
     	 $scope.gotoDashBoard = function(){
@@ -797,11 +847,9 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	  }
     	  if($state.current.name =="dashboard" ){ 
     		  $scope.getCards();
-    		  //$scope.getGpsContent();
-    		  //$scope.getGpsContent1();
+    		  $scope.getTreeData();
     		  sessionStorage.removeItem('parentData');
-    		  //$scope.BrowserData();
-    		  //$scope.getBOXFoldersData();
+    	
     	  }
     	  
     	  
