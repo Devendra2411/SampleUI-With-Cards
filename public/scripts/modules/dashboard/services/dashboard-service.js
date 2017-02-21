@@ -52,13 +52,22 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
         return {
             restrict: "E",
             scope: {family: '='},
-            template: 
-            '<p>{{ family.name }}{{test }}</p>'+
-                '<ul>' + 
-                    '<li ng-repeat="child in family.children">' + 
-                        '<tree family="child"></tree>' +
-                    '</li>' +
-                '</ul>',
+             	 template: 
+            	        '<p id="{{family.folderID}}" class="ItemName" ><i class="fa fa-folder-o" aria-hidden="true" ng-show="family.folderName"></i> {{ family.folderName }}</p>'+
+            	        '<p id="{{family.fileID}}" class="filesData"><i class="fa fa-file-o" aria-hidden="true" ng-show="family.fileName"></i> {{ family.fileName }} </p>'+
+            	            '<ul class="test">' + 
+            	                '<li ng-repeat="child in family.rootFolderMap.Items[0].folderList" ng-click="toggleFolder()">' + 
+            	                    '<tree family="child"></tree>' +
+            	                '</li>' +
+            	            '</ul>'+
+            	            '<ul class="allData">' + 
+            	                '<li  ng-repeat="test in family.subTreeStructureVO.rootFolderMap.Items[0].folderList">' + 
+            	                    '<tree family="test"></tree>' +
+            	                '</li>' +
+            	                '<li  ng-repeat="test in family.subTreeStructureVO.rootFolderMap.Items[0].filesList">' + 
+            	                    '<tree family="test"></tree>' +
+            	                '</li>' +
+            	            '</ul>',
             compile: function(element) {
                 return RecursionHelper.compile(element, function(scope, iElement, iAttrs, controller, transcludeFn){
                     // Define your normal link function here.
@@ -376,6 +385,7 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
             	sendMail:sendMail,
             	getAllData:getAllData,
             	getAllDatatemp:getAllDatatemp
+            
             	
             }
     }]);

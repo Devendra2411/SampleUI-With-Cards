@@ -778,59 +778,26 @@ define(['angular', '../dashboard'], function (angular, controllers) {
   		 })
     		 };
 		 $scope.getTreeData= function(){
+			 $scope.spinner = true;
 			 var data = {'folderID' : $rootScope.dataId};
-			 var tempData = [];
-			 dashboardService.getAllDatatemp().then(function (data) {
-				 $scope.treeData = data.rootFolderMap.Items[0].folderList;
-				/*var temp =  $scope.treeData;
-				 for(var i=0; i<temp.length; i++){
-						 var chidData = temp[i].subTreeStructureVO.rootFolderMap.Items[0].folderList;
-						 for(var j=0; j<chidData.length; j++){
-							 if(chidData[j].subTreeStructureVO.rootFolderMap.Items.length!="0"){
-								 for(var j=0; j<chidData.length; j++){
-									 var tempFormate = {
-										        name : temp[i].folderName,
-										        children: [{
-										            name : chidData[j].folderName,
-										            children: []
-										        }]
-										    };
-								 }
-								 tempData.push(tempFormate);
-							 }
-
-						 }
-				 }
-				 
-				 console.log(tempData)
-					
-		     	 $scope.treeDataView =   {
-							        name: "Parent",
-							        children:  tempData 
-						 }*/
-				 
-				 
-				 
-			/*	 
-				 $.each($scope.treeData, function (i) {
-					    $.each(this, function (key, value) {
-					    {
-					        console.log(key + " : " + value);
-					            $.each(value, function (key1, value1) {
-					                for(k in value1) {
-					                   console.log( key1 + ':' + k + ':' + value1[k]);
-					                }
-					            })
-					    }
-					    });
-					});*/
-				 
-				 
+			 dashboardService.getAllData(data).then(function (data) {
+				 $scope.spinner = false;
+				 $scope.treeData = data;
 			 });
-			 
 		 };
-    	 //$scope.getAkanaToken();
-    	 $scope.addFile();
+		 $scope.getTreeData2= function(){
+			 $scope.spinner = true
+			 dashboardService.getAllDatatemp().then(function (data) {
+				 $scope.spinner = false
+				 $scope.treeData = data;
+			 });
+		 };
+		 $scope.toggleFolder = function(id){
+			 $('#'+id).next().next().find('li.folderData').toggle('slow')
+			 $('#'+id).next().next().find('li.filesData').toggle('slow')
+			 
+		 }
+    	 
     	 $scope.gotoDashBoard = function(){
     		  $state.go('dashboard');
     	  }
@@ -843,11 +810,18 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		 // $scope.getCardsData();
     		  $scope.userActions();
     		  $scope.getFolders();
+    		  $scope.addFile();
     		  $rootScope.folderID = sessionStorage.getItem("folderId");
     	  }
+    	  if($state.current.name =="sitemap" ){
+    		  $scope.getTreeData();
+    	  }
+    	  
+    	  
     	  if($state.current.name =="dashboard" ){ 
     		  $scope.getCards();
-    		  $scope.getTreeData();
+    		  //$scope.getTreeData();
+    		
     		  sessionStorage.removeItem('parentData');
     	
     	  }

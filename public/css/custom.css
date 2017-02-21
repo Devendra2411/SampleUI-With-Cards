@@ -369,11 +369,7 @@ padding: 0 10px; margin-bottom: 10px}
 .commentContent .title span.deleteMsg{ cursor:  pointer;  font-size: 15px; color:red}
 #logincontainer ul.dropdown-menu{padding: 0; border: 2.5rem;}
 
-.treeMap{ border-top: 1px solid #000; padding-bottom: 1%; margin-top: 1%;     margin-left: -10px;
-    padding: 0 10px;}
-.treeMap ul:not([style-scope]):not(.style-scope), ol:not([style-scope]):not(.style-scope), dd:not([style-scope]):not(.style-scope){ padding: 0; margin: 0}
-.treeMap ul ul { margin-left: 10px !important;} 
-.treeMap ul li{  }
+
 .notifyBtn{border: 0;
     background-color: #169bd5;
     color: #fff;
@@ -383,8 +379,38 @@ padding: 0 10px; margin-bottom: 10px}
     min-width: 135px;
     font-family: inherit;
     position: absolute;
-    top: 10px;
+    top: -5px;
     right:42px;
     font-size: 15px
 }
+.treeMap { margin-top: 20px; height: 435px; overflow: hidden;
+    overflow-y: scroll;}
+    
+.treeMap::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #ccc; 
+    -webkit-box-shadow: inset 0 0 6px #ccc; 
+}
+.treeMap::-webkit-scrollbar-thumb:window-inactive {
+	background: #f1f1f1; 
+}
 
+
+.treeMap::-webkit-scrollbar {
+	width: 7px;
+}
+    
+.treeMap ul { padding: 0; margin: 0 !important; margin-left: 25px !important}
+.treeMap ul li span  li span{ font-weight: normal !important;}
+.treeMap ul li p{padding: 0;     margin: 4px 0 !important;}
+.treeMap ul li p.ItemName{ font-weight: bold; font-size: 15px}
+.treeMap ul li {margin: 3px 0}
+.treeMap ul li {color:#00b5e2; list-style-type:none;  font-weight: bold; font-size: 17px; cursor: pointer;}
+.treeMap ul li li{ color:#000; font-weight: normal !important; font-size: 15px}
+.treeMap ul li li div{ font-weight: bold}
+.treeMap ul li li ul li div{ font-weight: normal !important;}
+
+
+.folderData, .filesData{ display: none;}
+.treeMap .file:hover{ color: #00b5e2 }

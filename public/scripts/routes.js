@@ -26,6 +26,7 @@ define(['angular', 'angular-ui-router'], function(angular) {
                         	$rootScope.ssoId=userInfo.user_name;
                         	console.log('$rootScope.ssoId', $rootScope.ssoId);
                         	$rootScope.emailId=userInfo.email;
+                        	$rootScope.notifyStatus = userInfo.notify;
                              $rootScope.authorizeUser($rootScope.ssoId);
                         }, function(){
                             deferred.reject({code: 'UNAUTHORIZED'});
@@ -50,6 +51,12 @@ define(['angular', 'angular-ui-router'], function(angular) {
                 parent: 'secure',
                 url: '/files',
                 templateUrl: 'views/filesView.html',
+                controller: 'dashboard-controller'
+            })
+             .state('sitemap', {
+                parent: 'secure',
+                url: '/sitemap',
+                templateUrl: 'views/sitemap.html',
                 controller: 'dashboard-controller'
             })
             .state('blankpage', {

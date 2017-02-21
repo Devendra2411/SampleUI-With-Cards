@@ -59,32 +59,7 @@
 			
 			
 	
- <div class="siteMapContent treeMap">  
-		<h3> GPS Content </h3> 
-		
-		<div ng-repeat="parent in treeData">
-		<ul> <li>{{parent.folderName}} ============================================================================= <br><hr>
-		   <div ng-repeat="child in parent.subTreeStructureVO.rootFolderMap.Items[0].folderList">
-		  <ul> <ol>{{child.folderName}}<br><hr></ol></ul>
-	
-		       <ul>
-		         <li ng-repeat="grand in child.rootFolderMap.Items[0].folderList"> 
-		           {{grand}} xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-		         </li>
-		       </ul>
-		   </div>
-		   
-		   
-		   <div ng-repeat="child in parent.subTreeStructureVO.rootFolderMap.Items[0].filesList">
-		  <ul> <ol>{{child.fileName}} ***********************************<br><hr></ol></ul>
-	
-		   </div>
-		   
-		   </li></ul> 
-		</div>  
-		
-<!--   <tree family="treeDataView"></tree> -->
-	</div> 
+
 	
 <div class="saveModel">
 
