@@ -74,6 +74,7 @@ button.dashboardActions {
 	font-size: 21px;
 	font-weight: normal;
 	width: 30px;
+	position: relative;
 }
 .search{ display: inline-block;
     width: 150px;
@@ -256,7 +257,7 @@ text-align: left;
   -o-transition: opacity 0.2s;
   -transition: opacity 0.2s;
 }
-
+.actionMenu2.db ul li ul{ left: 106px}
 .actionMenu2 ul li ul li { 
   background: #f7f7fb; 
   display: block; 
@@ -376,11 +377,11 @@ padding: 0 10px; margin-bottom: 10px}
     border-radius: 3px;
     padding: 7px 5px;
     cursor: pointer;
-    min-width: 135px;
+    min-width: 94px;
     font-family: inherit;
     position: absolute;
     top: -5px;
-    right:42px;
+    right: 262px;
     font-size: 15px
 }
 .treeMap { margin-top: 20px; height: 435px; overflow: hidden;
@@ -414,3 +415,15 @@ padding: 0 10px; margin-bottom: 10px}
 
 .folderData, .filesData{ display: none;}
 .treeMap .file:hover{ color: #00b5e2 }
+.refresh{
+    top: 10px;
+    right: 10px
+}
+.signText{    font-size: 14px;
+    display: block;
+    float: left;
+    margin: 5px 0 0 0;}
+    .role{display: inline-block;}
+@media (min-width: 1367px) {
+  .treeMap{ height: 581px; }
+}

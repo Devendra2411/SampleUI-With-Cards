@@ -18,9 +18,11 @@
 
 <h1> GPS Marketing Portal </h1>
 	<div class="pageTitle" ng-click="getBOXFoldersData()">Dashboard</div>
-	<div class="actionsBlock fright" ng-hide="roleId==2" >
-	<button class="notifyBtn" ng-model="notifyStatus" ng-show="notifyStatus=='Yes'" ng-click="subscribeUpdates()"><i class="fa fa-envelope-o" aria-hidden="true"></i> Notify updates</button>
+	<div class="actionsBlock fright" >
+	<button class="notifyBtn" ng-model="notifyStatus" ng-show="notifyStatus=='Yes'" ng-click="subscribeUpdates()"><i class="fa fa-envelope-o" aria-hidden="true"></i> Sign up !</button>
+	<div ng-hide="roleId==2" class="role" >
 	<button class="dashboardActions actionMenu2" ><i class="fa fa-ellipsis-v " aria-hidden="true"></i>
+	
 	<ul>
 	  <li>
 	    <ul>
@@ -30,6 +32,8 @@
 	  </li>
 	</ul>
 	</button></div>
+	<span class="signText" ng-show="notifyStatus=='Yes'">for future updates on Folders and Files.</span>
+	</div>
 	<!-- <div class="search fright"><input type="text" name="search"> <i class="fa fa-search" aria-hidden="true"></i></div> -->
 </header>
 

@@ -41,13 +41,21 @@ define([
             session: {},
             tabs: [
                 {icon: 'fa-tachometer', state: 'dashboard', label: 'Dashboard'},
-                {icon: 'fa-tachometer', state: 'sitemap', label: 'Sitemap'}
+                {icon: 'fa-sitemap', state: 'sitemap', label: 'Sitemap'}
                 /*{icon: 'fa-file-o', state: 'blankpage', label: 'Blank Page', subitems: [
                     {state: 'blanksubpage', label: 'Blank Sub Page'}
                 ]}*/
             ]
         };
-
+        $scope.getTreeData= function(){
+        	$scope.spinner = true;
+			 var data = {'folderID' : window.dataId};
+			 dashboardService.getAllData(data).then(function (data) {
+				 $scope.spinner = false;
+				 $scope.treeData = data;
+			 });
+		 };
+		 $scope.getTreeData();
         $rootScope.authorizeUser = function(sso){
 			window.isAuthorized="No";
 			var data = {"sso":sso}
@@ -57,11 +65,14 @@ define([
 					if(response.validUser=="Yes"){
 						$rootScope.roleId =response.roleID;
 						$rootScope.notifyStatus =response.notify;
+						console.log('notify', $rootScope.notifyStatus);
 						window.isAuthorized="Yes";
 						console.log(response)
 					}
 					else{
 						$rootScope.roleId ="2";
+						$rootScope.notifyStatus =response.notify;
+						console.log('notify', $rootScope.notifyStatus);
 						//window.isAuthorized="No";
 						//console.log("Unauthorized user");
 						//document.querySelector('px-app-nav').markSelected('/logout');

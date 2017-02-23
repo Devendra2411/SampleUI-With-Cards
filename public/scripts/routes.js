@@ -26,8 +26,7 @@ define(['angular', 'angular-ui-router'], function(angular) {
                         	$rootScope.ssoId=userInfo.user_name;
                         	console.log('$rootScope.ssoId', $rootScope.ssoId);
                         	$rootScope.emailId=userInfo.email;
-                        	$rootScope.notifyStatus = userInfo.notify;
-                             $rootScope.authorizeUser($rootScope.ssoId);
+                            $rootScope.authorizeUser($rootScope.ssoId);
                         }, function(){
                             deferred.reject({code: 'UNAUTHORIZED'});
                         });

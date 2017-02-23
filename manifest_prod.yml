@@ -1,0 +1,13 @@
+---
+applications:
+  - name: GPSMarketingPortal
+    buildpack: predix_openresty_buildpack
+    path: dist
+    memory: 64M
+    stack: cflinuxfs2
+    services:
+           - gpsmarketing_prod_view_service
+           - gpsmarketing_prod_redis_instance
+    env:
+       UAA_SERVER_URL:  https://a99b7fee-a495-4161-89c3-faa83054627d.predix-uaa.run.asv-pr.ice.predix.io
+       REDIS: redis-1

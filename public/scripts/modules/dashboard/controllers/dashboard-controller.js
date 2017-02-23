@@ -4,9 +4,9 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService','$q', '$urlRouter','fileUpload', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService, $q, $urlRouter, fileUpload) {
        	    //$rootScope.ssoId = "502450548";
     		//$rootScope.roleId ="1"
-    		$rootScope.dataId ="12351304648"; //for stage
-    		//$rootScope.notifyStatus ="Yes"
-    		//$rootScope.dataId ="11858048707"; //for Prod
+    		$rootScope.dataId =window.dataId; //for stage
+    		//$rootScope.notifyStatus ="Yes";
+    		console.log('Notify', $rootScope.notifyStatus);
        	    $rootScope.email = $rootScope.ssoId+"@mail.ad.ge.com"
        	    
     	 $scope.getRandomColor = function(id){
@@ -739,11 +739,12 @@ define(['angular', '../dashboard'], function (angular, controllers) {
    			if(data!=null){
    				if(data.statusFlag=="success"){
 	   					$scope.spinner = false;
-	   					$scope.notifyStatus =false;
+	   					$rootScope.notifyStatus ="No";
 	   					$scope.successMsgdata = "You have subscribed updates";
 	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
 	 	 	        	$scope.serviceSuccess = true;
 	 	 	        	$scope.serviceError = false;
+	 	 	        	console.log('notifyStatus2', $rootScope.notifyStatus);
    				}
    				else{
    					$scope.spinner = false;
@@ -777,14 +778,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
   			 console.log('mail updates',data);
   		 })
     		 };
-		 $scope.getTreeData= function(){
-			 $scope.spinner = true;
-			 var data = {'folderID' : $rootScope.dataId};
-			 dashboardService.getAllData(data).then(function (data) {
-				 $scope.spinner = false;
-				 $scope.treeData = data;
-			 });
-		 };
+		 
 		 $scope.getTreeData2= function(){
 			 $scope.spinner = true
 			 dashboardService.getAllDatatemp().then(function (data) {
@@ -797,7 +791,15 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 			 $('#'+id).next().next().find('li.filesData').toggle('slow')
 			 
 		 }
-    	 
+		 $scope.getTreeData= function(){
+			 $scope.treeData= [];
+			 $scope.spinner = true;
+			 var data = {'folderID' : window.dataId};
+			 dashboardService.getAllData(data).then(function (data) {
+				 $scope.spinner = false;
+				 $scope.treeData = data;
+			 });
+		 };
     	 $scope.gotoDashBoard = function(){
     		  $state.go('dashboard');
     	  }
@@ -813,10 +815,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		  $scope.addFile();
     		  $rootScope.folderID = sessionStorage.getItem("folderId");
     	  }
-    	  if($state.current.name =="sitemap" ){
-    		  $scope.getTreeData();
-    	  }
-    	  
     	  
     	  if($state.current.name =="dashboard" ){ 
     		  $scope.getCards();
