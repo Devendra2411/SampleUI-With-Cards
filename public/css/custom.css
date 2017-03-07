@@ -170,7 +170,7 @@ aha-table#dataTable{margin-bottom: 10px}
 .postbtn{ border: 0; background-color: #63666a; color:#fff; border-radius:5px; padding:7px 10px; cursor: pointer; width: 80px }
 
 
-td.aha-table .viewing.aha-table, .td.aha-table .viewing.aha-table{white-space: normal;}
+td.aha-table .viewing.aha-table, .td.aha-table .viewing.aha-table{white-space: normal;     word-break: break-word;}
 
 .total{width: 200px}
 h1.caps.px-context-browser{ font-size: 17px; text-transform: none !important}
@@ -407,11 +407,11 @@ padding: 0 10px; margin-bottom: 10px}
 .treeMap ul li p{padding: 0;     margin: 4px 0 !important;}
 .treeMap ul li p.ItemName{ font-weight: bold; font-size: 15px}
 .treeMap ul li {margin: 3px 0}
-.treeMap ul li {color:#00b5e2; list-style-type:none;  font-weight: bold; font-size: 17px; cursor: pointer;}
+.treeMap ul li {color:#00b5e2; list-style-type:none;  font-weight: bold; font-size: 17px; cursor: default;}
 .treeMap ul li li{ color:#000; font-weight: normal !important; font-size: 15px}
-.treeMap ul li li div{ font-weight: bold}
+.treeMap ul li li div{ font-weight: bold;}
 .treeMap ul li li ul li div{ font-weight: normal !important;}
-
+.treeMap .folder{cursor: pointer;}
 
 .folderData, .filesData{ display: none;}
 .treeMap .file:hover{ color: #00b5e2 }
@@ -424,6 +424,17 @@ padding: 0 10px; margin-bottom: 10px}
     float: left;
     margin: 5px 0 0 0;}
     .role{display: inline-block;}
+.file{color: #005eb8;}    
+.file:hover{color:#169bd5}
+.downloadFile {font-size: 15px; cursor: pointer;}
+.downloadFile:hover{ color:#0c6075}
+.openBtn{font-size: 12px;
+    color: #1d1d31;
+    border: 1px solid #000;
+    background: #fff;
+    padding: 1px 4px;}  
+.openBtn:hover{background: #00bbe9; cursor: pointer;}
+.unsub{min-width: 113px; right: 24px}
 @media (min-width: 1367px) {
   .treeMap{ height: 581px; }
 }

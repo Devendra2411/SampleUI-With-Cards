@@ -28,17 +28,17 @@
   <!-- second solution -->
    <div>
     <script type="text/ng-template" id="node_renderer.html">
-       <div class="folder" id="{{node.folderID}}" ng-click="toggleFolder(node.folderID)" ><i class="fa fa-folder-o" aria-hidden="true" ng-show="node.folderName"></i>  {{node.folderName}} </div>
-	 <div class="file" id="{{node.fileID}}" ng-click="toggleFolder(node.fileID)" style="color: #005eb8;" ><i class="fa fa-file-o" aria-hidden="true" ng-show="node.fileName"></i> {{node.fileName}}</div>
+       <div class="folder" id="{{node.folderID}}"  ng-click="toggleFolder(node.folderID)" ><i ng-show="node.folderName"  class="fa fa-folder-o" aria-hidden="true"></i>  {{node.folderName}} <button ng-show="node.folderName" ng-click="getFolders(node.folderID, node.folderName, 'sitemap')" class='openBtn'>Open</button></div>  
+	 <div ng-show="node.fileName" class="file" id="{{node.fileID}}" ><i class="fa fa-file-o" aria-hidden="true" ></i> {{node.fileName}} <span class="downloadFile"  ng-click="getFileDownload(node.fileID)"><i class="fa fa-download" aria-hidden="true"></i></span></div>
         <ul>
-			<li   class="folderData" data-ng-repeat = "node in node.subTreeStructureVO.rootFolderMap.Items[0].folderList"
+			<li   class="folderData" id="f{{node.folderID}}"  data-ng-repeat = "node in node.subTreeStructureVO.rootFolderMap.Items[0].folderList"
         data-ng-include = "'node_renderer.html'" ></li>
-		<li  class="filesData" data-ng-repeat = "node in node.subTreeStructureVO.rootFolderMap.Items[0].filesList"
+		<li  class="filesData"  data-ng-repeat = "node in node.subTreeStructureVO.rootFolderMap.Items[0].filesList"
         data-ng-include = "'node_renderer.html'" ></li>
     </ul>
     </script>
     <ul>
-        <li  data-ng-repeat="node in treeData.rootFolderMap.Items[0].folderList" data-ng-include="'node_renderer.html'"></li>
+        <li class="parent" id="f{{node.folderID}}"  data-ng-repeat="node in treeData.rootFolderMap.Items[0].folderList" data-ng-include="'node_renderer.html'"></li>
     </ul>
 </div>
 	</div> 

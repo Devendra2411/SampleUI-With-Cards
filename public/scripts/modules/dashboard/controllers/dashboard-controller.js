@@ -157,6 +157,11 @@ define(['angular', '../dashboard'], function (angular, controllers) {
      					var parentData = [{'id':dataId, 'name':folderName}];
      					sessionStorage.setItem("parentData", JSON.stringify(parentData));
      				}
+    			 else if(flag=="sitemap"){
+  					var parentData = [{'id':dataId, 'name':folderName}];
+  					//sessionStorage.setItem("parentData", JSON.stringify(parentData));
+  					$scope.getSitemapBCdata(dataId);
+  				}
  				else{
       				var parentData = JSON.parse(sessionStorage.getItem("parentData"));
       				var testData = 0;
@@ -255,7 +260,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			 	     					})
  			 	     					
  			 	     					dashboardService.getFileComments(tempId).then(function (Cdata) {
- 			     							if(Cdata!="" && Cdata.total_count.length!="0"){
+ 			     							if(Cdata!="" && Cdata.total_count!="0"){
  			     								if(Cdata.entries[0].item.id==tempId){
  			     									value.comments == Cdata.entries[0].message;
  			     								}
@@ -490,22 +495,39 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        })
  	        
     	 }
-    	 $scope.getFileDownload = function(){
+    	 $scope.getFileDownload = function(fileID){
     		 $scope.spinner = true;
-    		 $scope.getAkanaToken();
+    		 if(fileID!=undefined){
+    			 $rootScope.fileID = fileID;
+    		 }
+    		 else{
+    			 var fileID = $rootScope.fileID; 
+    		 }
     		 $('.accessActionMenu').hide();
-    		 var fileID = $rootScope.fileID;
-     		dashboardService.downloadFile(fileID).then(function (response) {
-     			 $scope.spinner = false;
- 	    		 window.open(response.download_url, '_blank');
- 	    		 console.log('downloadFile', response);
- 	    	},function(error){
+    		 
+    		 dashboardService.getGTBToken().then(function (data) {
+       			if(data!=null){
+       				$rootScope.gtbToken = data.accessToken;
+       				dashboardService.downloadFile(fileID).then(function (response) {
+            			 $scope.spinner = false;
+        	    		 window.open(response.download_url, '_blank');
+        	    		 console.log('downloadFile', response);
+        	    	},function(error){
+        	    		 $scope.spinner = false
+        	        	$scope.errorMsgdata = "Download Failed";
+        	        	$('#alert').removeClass('fade-out hidden');
+        	        	$scope.serviceSuccessMsg = false;
+        	        	$scope.serviceError = true;
+        	        })
+       			}
+       			
+    		 }),function(error){
  	    		 $scope.spinner = false
- 	        	$scope.errorMsgdata = "Download Failed";
- 	        	$('#alert').removeClass('fade-out hidden');
- 	        	$scope.serviceSuccessMsg = false;
- 	        	$scope.serviceError = true;
- 	        })
+  	        	$scope.errorMsgdata = "GTB Token not received";
+  	        	$('#alert').removeClass('fade-out hidden');
+  	        	$scope.serviceSuccessMsg = false;
+  	        	$scope.serviceError = true;
+  	        }     		
     	 };
     	 
          
@@ -732,19 +754,36 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	
     	
        	
-       	$scope.subscribeUpdates= function(){
+       	$scope.subscribeUpdates= function(flag){
      		 $scope.spinner = true;
-     		 var data = {"sso":$rootScope.ssoId}
+     		 if(flag =="Yes"){
+     			 var data = {"sso":$rootScope.ssoId, "subscribeFlag" : "Yes"}
+     		 }
+     		 else if(flag =="No"){
+     			var data = {"sso":$rootScope.ssoId, "subscribeFlag" : "No"}
+     		 }
      		 dashboardService.subscribeUpdates(data).then(function (data) {
    			if(data!=null){
    				if(data.statusFlag=="success"){
 	   					$scope.spinner = false;
-	   					$rootScope.notifyStatus ="No";
-	   					$scope.successMsgdata = "You have subscribed updates";
-	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
-	 	 	        	$scope.serviceSuccess = true;
-	 	 	        	$scope.serviceError = false;
-	 	 	        	console.log('notifyStatus2', $rootScope.notifyStatus);
+		   				 if(flag =="Yes"){
+		   					$rootScope.notifyStatus ="No";
+		   					$scope.successMsgdata = "You have subscribed updates";
+		 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+		 	 	        	$scope.serviceSuccess = true;
+		 	 	        	$scope.serviceError = false;
+		 	 	        	console.log('notifyStatus2', $rootScope.notifyStatus);
+		   				 }
+		   				 else if(flag =="No"){
+		   					$rootScope.notifyStatus ="Yes"; 
+		   					$scope.successMsgdata = "You have un subscribed updates";
+		 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+		 	 	        	$scope.serviceSuccess = true;
+		 	 	        	$scope.serviceError = false;
+		 	 	        	console.log('notifyStatus2', $rootScope.notifyStatus);
+		   				 }
+	   					
+	   					
    				}
    				else{
    					$scope.spinner = false;
@@ -779,13 +818,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
   		 })
     		 };
 		 
-		 $scope.getTreeData2= function(){
-			 $scope.spinner = true
-			 dashboardService.getAllDatatemp().then(function (data) {
-				 $scope.spinner = false
-				 $scope.treeData = data;
-			 });
-		 };
+		 
 		 $scope.toggleFolder = function(id){
 			 $('#'+id).next().next().find('li.folderData').toggle('slow')
 			 $('#'+id).next().next().find('li.filesData').toggle('slow')
@@ -799,6 +832,29 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 				 $scope.spinner = false;
 				 $scope.treeData = data;
 			 });
+		 };
+		 
+		 $scope.getSitemapBCdata = function(id){
+			 var bdData = [];
+			 //var temp = $('#'+id).closest('.parent').find('.folder');
+			 var temp = $('#'+id).parents();
+			 var loop = true;
+			 angular.forEach(temp, function(value, key){
+				 if(value.id!=""){
+					 if(value.id==id ){
+						 loop = false;
+					 }
+					 else if(loop==true){
+						 var getFolderText = value.innerText.split('Open')[0]
+						 var fId = value.id.split('f')[1]
+				         var tempData = {"id":fId,"name":getFolderText}
+				         bdData.push(tempData);
+					 }
+				 }
+			 });
+			var tempData = bdData.reverse();
+			sessionStorage.setItem("parentData", JSON.stringify(tempData));
+			console.log('tempsdata1', JSON.stringify(tempData));
 		 };
     	 $scope.gotoDashBoard = function(){
     		  $state.go('dashboard');
