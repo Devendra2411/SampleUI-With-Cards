@@ -845,16 +845,16 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 						 loop = false;
 					 }
 					 else if(loop==true){
-						 var getFolderText = value.innerText.split('Open')[0]
+						 var getFolderText = value.innerText.split('open')[0]
 						 var fId = value.id.split('f')[1]
 				         var tempData = {"id":fId,"name":getFolderText}
 				         bdData.push(tempData);
 					 }
 				 }
 			 });
-			var tempData = bdData.reverse();
-			sessionStorage.setItem("parentData", JSON.stringify(tempData));
-			console.log('tempsdata1', JSON.stringify(tempData));
+			var testBCdata = bdData.reverse();
+			sessionStorage.setItem("parentData", JSON.stringify(testBCdata));
+			console.log('tempsdata1', JSON.stringify(testBCdata));
 		 };
     	 $scope.gotoDashBoard = function(){
     		  $state.go('dashboard');
