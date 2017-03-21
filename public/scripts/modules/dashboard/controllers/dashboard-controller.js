@@ -6,7 +6,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		//$rootScope.roleId ="1"
     		$rootScope.dataId =window.dataId; //for stage
     		//$rootScope.notifyStatus ="Yes";
-    		console.log('Notify', $rootScope.notifyStatus);
+    		console.log('userData',$rootScope.ssoId, $rootScope.roleId, $rootScope.notifyStatus);
        	    $rootScope.email = $rootScope.ssoId+"@mail.ad.ge.com"
        	    
     	 $scope.getRandomColor = function(id){
@@ -39,6 +39,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			$( document ).on( "click", ".actionBtn", function(e) {
  				 $('.accessActionMenu').hide();
 	 			$rootScope.fileID = $(this).attr("value");
+	 			$rootScope.shareurl = $(this).attr("id");
 	 		    $('.accessActionMenu').css({top:0,left:0});
 	 			var pos = $(this).offset();
 	 			pos.top = pos.top;
@@ -85,7 +86,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	     	 	     					var tempFolderData = { 
       			 	     						"folderID": info.entries[i].id,
       			 							      "folderName": info.entries[i].name,
-      			 							      "totalCount":"0" 
+      			 							      "totalCount":"0",
+      			 							      "shared_link":""
       			 							   }
  	     	 	     					$scope.BoxFolders.folderList.push(tempFolderData);
  	     	 	     				}
@@ -97,11 +99,20 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 			     								value.totalCount = boxdata.item_collection.total_count
 			     							}
 			 	     					})
+			 	     					var bodyData = {"shared_link": {"access": "company"}};
+			 	     					dashboardService.getBOXFoldersLink(tempId, bodyData).then(function (dataLinks) {
+			     							if(dataLinks!="" && dataLinks.id==tempId){
+			     								value.shared_link = dataLinks.shared_link.url;
+			     							}
+			 	     					})
 			     					}
 	     	      				})
 	     	      				$rootScope.parentCards =$scope.BoxFolders.folderList;
 	     	      				$scope.getRandomColor();
-	     	      				//$scope.BrowserData();
+	     	      				$timeout(function(){
+	     	      					$scope.rearrangeCards();
+	     	      				}, 100);
+	     	      				
  	     	      				}
  	     	      				else{
  	     	      				$scope.spinner = false;
@@ -111,7 +122,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	                            $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	     	      				}
  	     	      				
-         	    			 })
+         	    			 });
 
           			}
           			else{
@@ -140,7 +151,18 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     					console.log('count is failed');
     				}
     			})
-    	 } 
+    	 }
+    	 $scope.rearrangeCards = function(){
+    		 $scope.spinner = true;
+    		 $("#3").insertBefore("#0");
+    		 $("#1").insertBefore("#0");
+    		 $("#2").insertBefore("#0");
+    		 $( "<div class='clear'></div>" ).insertAfter( "#3" );
+    		 $( "<div class='clear'></div>" ).insertAfter( "#2" );
+    		 $( "<div class='clear'></div>" ).insertAfter( "#0" );
+    		 $scope.spinner = false;
+    		 
+    	 }
     	 $scope.getFolders= function(dataId, folderName, flag){
     		 $scope.spinner = true;
     		 $scope.folderView =true;
@@ -212,7 +234,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
       			 	     						"folderID": info.entries[i].id,
       			 							      "folderName": info.entries[i].name,
       			 							      "totalCount":"0",
-      			 							      "folderSize":""
+      			 							      "folderSize":"",
+      			 							   	  "shared_link":""
       			 							   }
  	     	 	     					$scope.BoxSubFolders.folderList.push(tempFolderData);
  	     	 	     					}
@@ -224,7 +247,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 		     	 	     					      "fileUpdatedDate": "",
 		     	 	     					      "fileSize": "",
 		     	 	     					      "fileVersion": "",
-		     	 	     					      "comments":""
+		     	 	     					      "comments":"",
+		     	 	     					      "shared_link":""
 	  			 							   }
 		     	 	     					$scope.BoxSubFolders.fileList.push(tempFileData);
 	     	 	     					}
@@ -241,7 +265,13 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			     								value.totalCount = boxdata.item_collection.total_count;
  			     								value.folderSize = folderSize+' MB';
  			     							}
- 			 	     					})
+ 			 	     					});
+ 			     						var bodyData = {"shared_link": {"access": "company"}};
+ 			     						dashboardService.getBOXFoldersLink(tempId, bodyData).then(function (links) {
+ 			     							if(links!="" && links.id==tempId){
+ 			     								value.shared_link = links.shared_link.url;
+ 			     							}
+ 			 	     					});
  			     					}
  	     	      				})
  	     	      				angular.forEach($scope.BoxSubFolders.fileList, function(value, index) {
@@ -265,16 +295,24 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			     									value.comments == Cdata.entries[0].message;
  			     								}
  			     							}
- 			 	     					})
+ 			 	     					});
+ 			     						var bodyData = {"shared_link": {"access": "company"}};
+ 			     						dashboardService.getBOXFilesLink(tempId, bodyData).then(function (linksData) {
+ 			     							if(linksData!="" && linksData.id==tempId){
+ 			     								value.shared_link = linksData.shared_link.url;
+ 			     							}
+ 			 	     					});
  			     					}
  	     	      				})
  	     	      				$rootScope.allFoldersData =$scope.BoxSubFolders.folderList;
  	     	      			    $rootScope.allFilesData =$scope.BoxSubFolders.fileList;
 	 	     	      			$rootScope.parentID =dataId;
-	 	    	    			for(var i=0; i<$rootScope.allFilesData.length; i++){
+	 	    	    			$timeout(function(){
+	 	    	    				for(var i=0; i<$rootScope.allFilesData.length; i++){
 	 	    	    				$rootScope.allFilesData[i].actions="";
-	 	    	    				$rootScope.allFilesData[i].actions = '<button style="background: none;border: none" value="'+$rootScope.allFilesData[i].fileID+'"  class="actionBtn flex flex--center flex--middle style-scope aha-table"><i class="fa fa-bars" aria-hidden="true"></i></button>';
+	 	    	    				$rootScope.allFilesData[i].actions = '<button style="background: none;border: none" id="'+$rootScope.allFilesData[i].shared_link+'"  value="'+$rootScope.allFilesData[i].fileID+'"  class="actionBtn flex flex--center flex--middle style-scope aha-table"><i class="fa fa-bars" aria-hidden="true"></i></button>';
 	 	    	    			};
+	 	    	    			}, 1000)
 	 	    	    			$scope.getCommentsData(dataId);
 	 	    	    			$state.go('view');
 	 	    	    			$scope.spinner = false;
@@ -595,6 +633,98 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			});
  			$(window).resize();
  		}
+    	 $scope.openBox = function(id){
+    		 $('.copyTextItem').hide();
+    		 if(id==undefined){
+    			 $('#copyTarget').val($rootScope.shareurl);
+    		 }
+    		 else{
+    			 $('#copyTarget').val(id);
+    		 }
+    		
+  			var appendthis =  ("<div class='modal-overlay js-modal-close'></div>");
+  			//$('button[data-modal-id]').click(function(e) {
+  			    $("body").append(appendthis);
+  			    $(".modal-overlay").fadeTo(500, 0.7);
+  			    var modalBox = "urlpopup";
+  			    $('#'+modalBox).fadeIn($(this).data());
+  			 // });  
+  			  
+  			$("#urlpopup .js-modal-close").click(function() {
+  				$('.copyTextItem').hide();
+  			  $(".modal-box, .modal-overlay").fadeOut(500, function() {
+  			    $(".modal-overlay").remove();
+  				 $('#copyTarget').val();
+  				
+  			    
+  			  });
+  			});
+  			
+  			$(window).resize(function() {
+  			  $(".modal-box").css({
+  			    top: "10%",
+  			    left: "20%"
+  			  });
+  			});
+  			$(window).resize();
+  			
+  			
+  			
+  		}
+    	 $scope.copyUrl = function(){
+    		 $('.copyTextItem').show();
+    		 copyToClipboard(document.getElementById("copyTarget"));
+
+    			function copyToClipboard(elem) {
+    				  // create hidden text element, if it doesn't already exist
+    			    var targetId = "_hiddenCopyText_";
+    			    var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+    			    var origSelectionStart, origSelectionEnd;
+    			    if (isInput) {
+    			        // can just use the original source element for the selection and copy
+    			        target = elem;
+    			        origSelectionStart = elem.selectionStart;
+    			        origSelectionEnd = elem.selectionEnd;
+    			    } else {
+    			        // must use a temporary form element for the selection and copy
+    			        target = document.getElementById(targetId);
+    			        if (!target) {
+    			            var target = document.createElement("textarea");
+    			            target.style.position = "absolute";
+    			            target.style.left = "-9999px";
+    			            target.style.top = "0";
+    			            target.id = targetId;
+    			            document.body.appendChild(target);
+    			        }
+    			        target.textContent = elem.textContent;
+    			    }
+    			    // select the content
+    			    var currentFocus = document.activeElement;
+    			    target.focus();
+    			    target.setSelectionRange(0, target.value.length);
+    			    
+    			    // copy the selection
+    			    var succeed;
+    			    try {
+    			    	  succeed = document.execCommand("copy");
+    			    } catch(e) {
+    			        succeed = false;
+    			    }
+    			    // restore original focus
+    			    if (currentFocus && typeof currentFocus.focus === "function") {
+    			        currentFocus.focus();
+    			    }
+    			    
+    			    if (isInput) {
+    			        // restore prior selection
+    			        elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+    			    } else {
+    			        // clear temporary content
+    			        target.textContent = "";
+    			    }
+    			    return succeed;
+    			}
+    	 }
     	 
     	 $scope.postComment = function(){
     		 $scope.spinner = true;
@@ -836,7 +966,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 		 
 		 $scope.getSitemapBCdata = function(id){
 			 var bdData = [];
-			 //var temp = $('#'+id).closest('.parent').find('.folder');
 			 var temp = $('#'+id).parents();
 			 var loop = true;
 			 angular.forEach(temp, function(value, key){
@@ -856,6 +985,63 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 			sessionStorage.setItem("parentData", JSON.stringify(testBCdata));
 			console.log('tempsdata1', JSON.stringify(testBCdata));
 		 };
+		 $scope.openBMwindow = function(){
+			 $scope.bmurl ="http://"
+			 var appendthis =  ("<div class='modal-overlay js-modal-close'></div>");
+	  			    $("body").append(appendthis);
+	  			    $(".modal-overlay").fadeTo(500, 0.7);
+	  			    var modalBox = "BMwindow";
+	  			    $('#'+modalBox).fadeIn($(this).data());
+	  			  
+	  			$(".closeBtn, .btnClose, .actionbuttons, .js-modal-close").click(function() {
+	  			  $(".modal-box, .modal-overlay").fadeOut(500, function() {
+	  			    $(".modal-overlay").remove();
+	  			    $('#bmurl').val('');
+	  			    $scope.bmurl ="";
+	  			  });
+	  			});
+	  			
+	  			$(window).resize(function() {
+	  			  $(".modal-box").css({
+	  			    top: "10%",
+	  			    left: "20%"
+	  			  });
+	  			});
+	  			$(window).resize();
+	  			 
+		 }
+		 $scope.createBookmark= function(){
+    		 $scope.spinner = true;
+    		 var folderID =sessionStorage.getItem("folderId");
+      			dashboardService.getGTBToken().then(function (data) {
+          			if(data!=null){
+          				$rootScope.gtbToken = data.accessToken;
+         	    			 var data = {"url": $scope.bmurl, "parent": {"id": folderID}};
+         	    			 dashboardService.createBookmark(data).then(function (response) { 
+         	    				$scope.spinner = false;
+         	    	    		if(response!=null){
+	     	   	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+	     	   	 	 	    		$scope.successMsgdata = "Bookmark Created successfully";
+	     	   	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+	     	   	 	 	        	$scope.serviceSuccess = true;
+	     	   	 	 	        	$scope.serviceError = false;
+         	    	    		}
+         	    			 },function(error){
+         	    				 $scope.spinner = false
+        	   	 	    		 $scope.serviceError = true;
+        	   	 	    		 $scope.errorMsgdata = error.message;
+        	   	 	    		 $scope.serviceSuccess = false;
+        	   	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+         	  	    		});
+      	      				}
+  	    		},function(error){
+ 	 	    		 $scope.spinner = false
+ 	 	    		 $scope.serviceError = true;
+ 	 	    		 $scope.errorMsgdata = "Failed";
+ 	 	    		 $scope.serviceSuccess = false;
+ 	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+  	    		})
+     	};
     	 $scope.gotoDashBoard = function(){
     		  $state.go('dashboard');
     	  }
@@ -864,8 +1050,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	  }
     	
     	  if($state.current.name =="view" ){
-    		  //$scope.filesData();
-    		 // $scope.getCardsData();
     		  $scope.userActions();
     		  $scope.getFolders();
     		  $scope.addFile();
@@ -873,9 +1057,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	  }
     	  
     	  if($state.current.name =="dashboard" ){ 
-    		  $scope.getCards();
-    		  //$scope.getTreeData();
-    		
+    		  $scope.getCards();  		
     		  sessionStorage.removeItem('parentData');
     	
     	  }

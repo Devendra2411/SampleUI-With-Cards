@@ -15,7 +15,8 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
                 });
             }
         };
-    }]);   
+    }]); 
+   
     
     dashboardService.service('fileUpload', ['$http','$rootScope','$state', function ($http,$rootScope,$state) {
     	this.uploadFileToUrl = function(file,uploadUrl, fd){
@@ -236,6 +237,42 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   			return deferred.promise;
   		};
   		
+  		var getBOXFoldersLink =  function(data, bodyData){
+  			var deferred = $q.defer();
+  			$http.put(Box_API+'/folders/'+data+'?fields=shared_link', bodyData, { headers: {'Authorization': 'Bearer '+$rootScope.gtbToken}})
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('failed to featch shared link data');
+  				});
+  			return deferred.promise;
+  		};
+  	
+  		var getBOXFilesLink =  function(data, bodyData){
+  			var deferred = $q.defer();
+  			$http.put(Box_API+'/files/'+data+'?fields=shared_link',bodyData, { headers: {'Authorization': 'Bearer '+$rootScope.gtbToken}})
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('failed to featch shared link data');
+  				});
+  			return deferred.promise;
+  		};
+  		
+  		var createBookmark =  function(data){
+  			var deferred = $q.defer();
+  			$http.post(Box_API+'/web_links',data, { headers: {'Authorization': 'Bearer '+$rootScope.gtbToken}})
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('failed to create Bookmark');
+  				});
+  			return deferred.promise;
+  		};
+  		
   		var subscribeUpdates =  function(data){
   			var deferred = $q.defer();
   			$http.post(API_URL+'/notifyUser',data)
@@ -304,7 +341,11 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
             	subscribeUpdates:subscribeUpdates,
             	sendMail:sendMail,
             	getAllData:getAllData,
-            	getAllDatatemp:getAllDatatemp
+            	getAllDatatemp:getAllDatatemp,
+            	getBOXFoldersLink:getBOXFoldersLink,
+            	getBOXFilesLink:getBOXFilesLink,
+            	createBookmark:createBookmark
+            	
             
             	
             }

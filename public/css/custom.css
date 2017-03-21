@@ -63,7 +63,7 @@ h1 {
 }
 a{ text-decoration: none}
 .leftCol{width: 70%;  height: 100%; border-right: 1px solid #ccc;/* padding-right: 10px; */ min-height: 456px}
-.rightCol{width: 30%; height: 100%; padding: 10px 10px;border-left: 1px solid #ccc; }
+.rightCol{width: 30%; height: 100%; padding: 10px 10px;border-left: 1px solid #ccc;  padding-right: 17px;}
 .showMore{ border: 0; background-color: transparent; cursor: pointer; color:#3f9aff}
 .center{text-align: center; width: 100%}
 .breadcrumbs{ border-bottom: 1px solid #ccc; padding: 10px 0 10px 10px; font-size: 14px; }
@@ -88,20 +88,27 @@ button.dashboardActions {
     float: right;
     color: #828181;}
 .viewContent{
-	padding: 0 10px;
+	/* padding: 0 10px; */
+	margin-left:7px;
 	width: 100%;
 }
 .view .foldersData {width: 48.2%}
 .view .foldersData:nth-child(even){margin-right: 0}
 .cardsData{ margin-top: 10px}
 /* .cardsData{border-bottom: 2px solid #ccc; padding-bottom: 0px; margin-bottom: 15px} */
-.cardsData .dataColom{width: 32.1%; float: left; margin: 0 14px 12px 0}
+.cardsData .dataColom{width: 32%; float: left; margin: 0 14px 12px 0}
 .foldersData, .filesBlock{width: 32.2%; float: left; margin: 0 14px 12px 0}
 .cardsData .pxcard{ width: 100%; height: 70px; }
 .cardsData .pxcard{background-color: transparent;}
-.cardsData .dataColom:last-child,.cardsData .dataColom:nth-child(3n){ margin-right: 0}
-.cardContent{color:#fff; padding: 10px; position: relative; height: 70.9%; cursor: pointer; border-bottom:5px solid transparent;
+.cardsData .dataColom:last-child,.cardsData .dataColom:nth-child(3n){ /* margin-right: 0 */}
+.cardContent{color:#fff; padding: 10px; position: relative; height: 70.9%; border-bottom:5px solid transparent;
 }
+.cardContent h3, .cardContent .share{cursor: pointer;}
+.cardContent h3:hover, .cardContent .share:hover {
+    color: #dedede;
+}
+#copyTarget{    width: 68%;   height: 29px;}
+.copyTextItem{font-size: 13px; font-weight: bold;  color: green;}
 .cardItem{     display: inline-block; width: 100%;}
 .cardContent:hover, .cardContent.active{border-bottom:5px solid #525252}
 .cardContent h3{padding: 0; margin: 0; font-size: 17px; line-height: 15px}
@@ -110,17 +117,18 @@ button.dashboardActions {
     position: absolute;
     bottom: 0px;
     right: 10px;}
-.foldersData px-card{background-color: transparent; }
-.folderContent{ height: 70px; cursor:pointer; background-color: #169bd5; padding: 15px; position: relative; margin-bottom: 3px; color:#fff;     border: 1px solid #ccc;}
+.foldersData px-card{background-color: transparent; position: relative; }
+.folderContent{ height: 70px; background-color: #169bd5; padding: 15px; position: relative; margin-bottom: 3px; color:#fff;     border: 1px solid #ccc;}
 .folderContent:hover, .folderContent.active{border-bottom: 1px solid #525252}
-.dataContent{ font-size: 17px;  display: inline-block; width: 87%;}
+.dataContent{ font-size: 17px;  display: inline-block; width: 87%; cursor:pointer; }
 .dataContent { overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; width: 256px}
+.dataContent:hover{ color: #e4e4e4}  
 .dataContent .total{ font-size: 14px; }
 .dataContent.bold{font-weight: bold; }
 .folderIcon{font-size: 32px; display: inline-block; margin-right: 5px; }
-.folderSize{font-size: 14px; position: absolute; right: 13px; bottom: 9px;}
+.folderSize{font-size: 14px; position: absolute; right: 0px; bottom: 2px;}
 .spinner{ position: fixed; left: 53%; top: 25%; z-index: 9999}
 
 
@@ -451,6 +459,14 @@ button.goto:hover{ color: #757171; cursor: pointer;}
     color: #fff;
     height: 0;
     display: inline-block;}
+    
+.shareItem{ right: 91px; cursor: pointer;} 
+.shareItem:hover{ color: #e4e4e4}
+.share{ right: 105px;}
+.greenBtn{background: #117ba9;
+    color: #fff;}
+.urlinput{width: 50%;
+    height: 29px;}       
 @media (min-width: 1367px) {
   .treeMap{ height: 581px; }
 }

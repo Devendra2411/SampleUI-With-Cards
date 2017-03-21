@@ -15,6 +15,7 @@
 <div class="accessActionMenu" style="display:none">
 	<ul>
 		<li><button ng-click="getFileDownload()"><i class="fa fa-download" aria-hidden="true"></i> Download</button></li>
+		<li><button ng-click="openBox()"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</button></li>
 <!-- 		<li><button ng-click=""><i class="fa fa-times" aria-hidden="true"></i> Delete</button></li> -->
 	</ul>
 </div>
@@ -30,6 +31,7 @@
 	    <ul>
 	      <li ng-click="popupWindow()">Add New File</li>
 	      <li ng-click="folderPopup()">Add New Folder</li>
+	      <li ng-click="openBMwindow()">Create Bookmark</li>
 	    </ul>
 	  </li>
 	</ul>
@@ -51,7 +53,7 @@
 	<div class="hrLine"></div>
 	
 	<div class="folders" >
-			<div class="foldersData" ng-repeat="data in allFoldersData" ng-click="getFolders(data.folderID, data.folderName)">
+			<div class="foldersData" ng-repeat="data in allFoldersData" >
 				<div class="folderContent">
 					<sub-folder id="parent-folder" folder-data="{{data}}"> </sub-folder>
 				</div>
@@ -183,4 +185,34 @@
 	  </footer>
 	</div>	
 </div>
+
+
+<div id="urlpopup" class="modal-box"> 
+  <div class="userData">
+    <a href="#" class="js-modal-close close">x</a>
+    <h3> Create Folder</h3>  
+	<input type="text"  id="copyTarget" >    
+    <button name="home" id="copyButton" ng-click="copyUrl(value)" class="btn customBtn"> Copy Url</button>
+     <div class="copyTextItem">url copied</div>
+  </div>
+	<div class="clearfix"></div>
+  <footer>
+    <a href="#" class="btn custom_btn actionbuttons js-modal-close">Close</a>
+  </footer>
+</div>
+<div id="BMwindow" class="modal-box"> 
+  <div class="userData">
+    <a href="#" class="js-modal-close close">x</a>
+    <h3> Create Bookmark</h3> 
+    <div>Address of page</div> 
+	<input class="urlinput" type="text"  ng-model="bmurl" id="bmurl" value="http://" >    
+    <button ng-click="createBookmark()" class="btn customBtn"> Create</button> 
+    <button class="btn customBtn actionbuttons js-modal-close"> Cancel</button>
+  </div>
+	<div class="clearfix"></div>
+  <footer>
+    <a href="#" class="btn custom_btn actionbuttons js-modal-close">Close</a>
+  </footer>
+</div>	
+	
 </div>

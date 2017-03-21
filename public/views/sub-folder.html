@@ -5,8 +5,9 @@
 
 <px-card>
 		<span class="folderIcon fleft"><i class="fa fa-folder" aria-hidden="true"></i></span>
-		<div class="dataContent fleft bold">{{folderData.folderName}}</div>
+		<div id="{{folderData.folderID}}" value="{{folderData.folderName}}" onclick="angular.element(this).scope().getFolders(id, value)" class="dataContent fleft bold">{{folderData.folderName}}</div>
 		<div class="total">Total Folders & Files : <span> {{folderData.totalCount}}</span></div>
+		<div class="folderSize shareItem" onclick="angular.element(this).scope().openBox(id)" alt="{{folderData.shared_link}}" id="{{folderData.shared_link}}"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</div>
 		<div class="folderSize">Size:<span>{{folderData.folderSize}}</span></div>
 	</px-card>
 </template>

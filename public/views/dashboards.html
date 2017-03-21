@@ -46,29 +46,13 @@
 
 <div class="viewContent">
 	<div class="cardsData" ng-show="cardsData">
-		 <div class="dataColom" ng-repeat="data in parentCards"> 
+		 <div id="{{$parent.$index.toString()+$index}}" class="dataColom" ng-repeat="data in parentCards"> 
 			<div class="cardItem" ng-style="{'background-color':data.bgcolor}">
-				<parent-card id="parent-card" card-data="{{data}}" ng-click="getFolders(data.folderID, data.folderName, 'home')" ></parent-card>		
+				<parent-card id="parent-card" card-data="{{data}}"  ></parent-card>		
 			</div>		
 		</div> 
 	</div>
 	<div class="clear"></div>
-<!-- 	<div>
-		<ul>
-	    <li ng-repeat="item in treeData">
-	     {{item.folderName}}
-	     <ul>
-	       <li ng-repeat="subElement in item.folderList">
-	         {{subElement}}
-	       </li>
-	     </ul>
-	  </li>
-	</ul>
-	</div> -->
-
-			
-			
-	
 
 	
 <div class="saveModel">
@@ -114,12 +98,21 @@
 	  </footer>
 	</div>	
 </div>
+
+
+	<div id="urlpopup" class="modal-box"> 
+	  <div class="userData">
+	    <a href="#" class="js-modal-close close">x</a>
+	    <h3> Create Folder</h3>  
+		<input type="text"  id="copyTarget">    
+	    <button id="copyButton" name="home"  ng-click="copyUrl(value)" class="btn customBtn"> Copy Url</button>
+	    <div class="copyTextItem">url copied</div>
+	  </div>
+		<div class="clearfix"></div>
+	  <footer>
+	    <a href="#" class="btn custom_btn actionbuttons js-modal-close">Close</a>
+	  </footer>
+	</div>	
 </div>
 
 
-<script>
-/*
-angular.treeview.js
-*/
-
-</script>
