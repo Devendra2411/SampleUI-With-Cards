@@ -61,6 +61,17 @@
 		</div>
 	</div>
 	<div class="clear"></div>
+	
+	<div class="titleBlock" ng-show="BoxSubFolders.bookmarks.length!=0">
+		<h2 class="filepageTitle"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Bookmarks</h2>
+		<div class="hrLine"></div>
+		<div class="foldersData bmData" ng-repeat="data in BoxSubFolders.bookmarks" >
+			<div id="{{data.url}}" class="bmName" ng-click="openBM({{data.url}})"> {{data.fileName}}</div>
+		</div>
+	</div>
+	
+	
+	<div class="clear"></div>
 	<div class="titleBlock" ng-show="allFilesData.length!=0">
 	<h2 class="filepageTitle"><i class="fa fa-file-text" aria-hidden="true"></i> Files</h2>
 	<div class="hrLine"></div>

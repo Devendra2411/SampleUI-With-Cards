@@ -225,7 +225,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	     	      					$scope.BoxSubFolders = {
  	     	 	     						  "folderID": dataId,
  	     	 	     						  "folderList": [],
- 	     	 	     						  "fileList":[]
+ 	     	 	     						  "fileList":[],
+ 	     	 	     						  "bookmarks":[]
  	     	 	     					}
  	     	 	     				for(var i=0; i<info.entries.length; i++){
  	     	 	     					var tempId =info.entries[i].id;
@@ -252,6 +253,14 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 	  			 							   }
 		     	 	     					$scope.BoxSubFolders.fileList.push(tempFileData);
 	     	 	     					}
+		 	     	 	     			if(info.entries[i].type =="web_link"){
+	     	 	     						var tempBmdata = { 
+					 	     					  "fileID": info.entries[i].id,
+				 							      "fileName": info.entries[i].name,
+				 							     "url": info.entries[i].url
+				 							   }
+	     	 	     						$scope.BoxSubFolders.bookmarks.push(tempBmdata);
+		 	     	 	     			}
  	     	 	     				}
  	     	      				//$scope.addDataItem(id,name);	    	      				
 	    	      				$scope.breadcrumbData();
@@ -1020,6 +1029,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
          	    			 dashboardService.createBookmark(data).then(function (response) { 
          	    				$scope.spinner = false;
          	    	    		if(response!=null){
+         	    	    			$scope.getFolders();
 	     	   	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
 	     	   	 	 	    		$scope.successMsgdata = "Bookmark Created successfully";
 	     	   	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
@@ -1042,6 +1052,9 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
   	    		})
      	};
+     	$scope.openBM = function(id){
+     		 window.open(id, '_blank');
+     	}
     	 $scope.gotoDashBoard = function(){
     		  $state.go('dashboard');
     	  }
