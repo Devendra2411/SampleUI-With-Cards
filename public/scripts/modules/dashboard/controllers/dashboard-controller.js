@@ -580,7 +580,33 @@ define(['angular', '../dashboard'], function (angular, controllers) {
   	        }     		
     	 };
     	 
-         
+    	 $scope.getFilePreview = function(fileID){
+    		 $scope.spinner = true;
+    		 dashboardService.getGTBToken().then(function (data) {
+       			if(data!=null){
+       				$rootScope.gtbToken = data.accessToken;
+       				dashboardService.previewFile(fileID).then(function (response) {
+            			 $scope.spinner = false;
+        	    		 window.open(response.expiring_embed_link.url+'?[query_parameter]=true', '_blank');
+        	    		 console.log('PreviewFile', response);
+        	    	},function(error){
+        	    		 $scope.spinner = false
+        	        	$scope.errorMsgdata = "Preview Not available";
+        	        	$('#alert').removeClass('fade-out hidden');
+        	        	$scope.serviceSuccessMsg = false;
+        	        	$scope.serviceError = true;
+        	        })
+       			}
+       			
+    		 }),function(error){
+ 	    		 $scope.spinner = false
+  	        	$scope.errorMsgdata = "GTB Token not received";
+  	        	$('#alert').removeClass('fade-out hidden');
+  	        	$scope.serviceSuccessMsg = false;
+  	        	$scope.serviceError = true;
+  	        }     		
+    	 };
+    	 
          $scope.addFile= function(){
         	 document.getElementById('uploadBtn').onchange = uploadOnChange;
         	 function uploadOnChange() {

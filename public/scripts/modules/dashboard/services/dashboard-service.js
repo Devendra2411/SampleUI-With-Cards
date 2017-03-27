@@ -112,6 +112,18 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   			return deferred.promise;
   		};
   		
+  		var previewFile =  function(fileID){
+  			var deferred = $q.defer();
+  			$http.get(Box_API+'/files/'+fileID+'?fields=expiring_embed_link', { headers: {'Authorization' : 'Bearer '+$rootScope.gtbToken}})
+  				.success(function(data) {
+  					deferred.resolve(data);
+  					//deferred.resolve(data);
+  				}).error(function(jqXHR, textStatus, errorThrown) {
+  					console.log(jqXHR, textStatus, errorThrown)
+  					//deferred.reject('Download Failed');
+  				});
+  			return deferred.promise;
+  		};
   		
   		var getGTBToken =  function(){
   			var deferred = $q.defer();
@@ -368,7 +380,8 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
             	getBOXFilesLink:getBOXFilesLink,
             	createBookmark:createBookmark,
             	deleteBookmark:deleteBookmark,
-            	updateBookmark:updateBookmark
+            	updateBookmark:updateBookmark,
+            	previewFile:previewFile
             	
             
             	

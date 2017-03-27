@@ -398,7 +398,7 @@ padding: 0 10px; margin-bottom: 10px}
     font-size: 15px
 }
 .treeMap { margin-top: 20px; height: 435px; overflow: hidden;
-    overflow-y: scroll;}
+    overflow-y: scroll; width: 99%}
     
 .treeMap::-webkit-scrollbar-thumb {
     -webkit-border-radius: 10px;
@@ -437,7 +437,8 @@ padding: 0 10px; margin-bottom: 10px}
     float: left;
     margin: 5px 0 0 0;}
     .role{display: inline-block;}
-.file{color: #005eb8;}    
+.file{color: #005eb8; }
+.fileName{cursor: help;}    
 .file:hover{color:#169bd5}
 .downloadFile {font-size: 15px; cursor: pointer;}
 .downloadFile:hover{ color:#0c6075}
