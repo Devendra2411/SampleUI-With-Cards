@@ -15,7 +15,7 @@
 <div class="accessActionMenu" style="display:none">
 	<ul>
 		<li><button ng-click="getFileDownload()"><i class="fa fa-download" aria-hidden="true"></i> Download</button></li>
-		<li><button ng-click="openBox()"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</button></li>
+		<li><button ng-click="openBox()" ng-hide="roleId==2"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</button></li>
 <!-- 		<li><button ng-click=""><i class="fa fa-times" aria-hidden="true"></i> Delete</button></li> -->
 	</ul>
 </div>
@@ -48,6 +48,19 @@
 	<a ng-repeat="data in namesData" href="" ng-click="gotoView(data.id, data.name)">{{data.name}} > </a> 
 	<!-- <a href="" ng-click="gotoDashBoard()">Home</a> > <a href="" ng-click="getFolders(data.folderID, data.folderName)">{{folderName}}</a> -->
 </div>
+
+	<div class="titleBlock" ng-show="BoxSubFolders.bookmarks.length!=0">
+		<h2 class="filepageTitle"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Bookmarks</h2>
+		<div class="hrLine"></div>
+		<div class="foldersData bmData" ng-repeat="data in BoxSubFolders.bookmarks" >
+			<div value="{{data.url}}" class="bmName" ng-click="openBM(data.url)"> {{data.fileName}}</div>
+			<span class='editBM' ng-click="openBMwindow(data.fileID, data.url, data.fileName, data.description)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span> 
+			<span class="deleteBM" ng-click="deleteBookmark(data.fileID)"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+		</div>
+	</div>
+	
+	<div class="clear"></div>
+
 	<div class="titleBlock " ng-show="allFoldersData.length!=0">
 	<h2 class="filepageTitle"><i class="fa fa-folder-open" aria-hidden="true"></i> {{folderName}}</h2>
 	<div class="hrLine"></div>
@@ -62,16 +75,7 @@
 	</div>
 	<div class="clear"></div>
 	
-	<div class="titleBlock" ng-show="BoxSubFolders.bookmarks.length!=0">
-		<h2 class="filepageTitle"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Bookmarks</h2>
-		<div class="hrLine"></div>
-		<div class="foldersData bmData" ng-repeat="data in BoxSubFolders.bookmarks" >
-			<div id="{{data.url}}" class="bmName" ng-click="openBM({{data.url}})"> {{data.fileName}}</div>
-		</div>
-	</div>
 	
-	
-	<div class="clear"></div>
 	<div class="titleBlock" ng-show="allFilesData.length!=0">
 	<h2 class="filepageTitle"><i class="fa fa-file-text" aria-hidden="true"></i> Files</h2>
 	<div class="hrLine"></div>
@@ -199,25 +203,43 @@
 
 
 <div id="urlpopup" class="modal-box"> 
-  <div class="userData">
-    <a href="#" class="js-modal-close close">x</a>
-    <h3> Create Folder</h3>  
-	<input type="text"  id="copyTarget" >    
-    <button name="home" id="copyButton" ng-click="copyUrl(value)" class="btn customBtn"> Copy Url</button>
-     <div class="copyTextItem">url copied</div>
-  </div>
-	<div class="clearfix"></div>
-  <footer>
-    <a href="#" class="btn custom_btn actionbuttons js-modal-close">Close</a>
-  </footer>
-</div>
+	  <div class="userData">
+	    <a href="#" class="js-modal-close close">x</a>
+	    <h3> Shared Link</h3>
+	    
+	     <div class="access"> Acess Type</div> 
+	     <div class='accessType'>
+	     	<select ng-model="accessType" ng-change="getShareLink(accessType)">
+	     		<option value="" selected="selected" disabled>Please select</option>
+	     		<option value="c" selected="selected">People in your company</option>
+	     		<option value="f">People in this folder</option>
+	     	</select>
+	     </div> 
+		<input type="text"  id="copyTarget">    
+	    <button id="copyButton" name="home"  ng-click="copyUrl(value)" class="btn customBtn"> Copy Url</button>
+	    <div class="copyTextItem">url copied</div>
+	  </div>
+		<div class="clearfix"></div>
+	  <footer>
+	    <a href="#" class="btn custom_btn actionbuttons js-modal-close">Close</a>
+	  </footer>
+	</div>
 <div id="BMwindow" class="modal-box"> 
-  <div class="userData">
+  <div class="userData ">
     <a href="#" class="js-modal-close close">x</a>
-    <h3> Create Bookmark</h3> 
+    <h3> Create/Update Bookmark</h3> 
+    
+    <div>Name</div> 
+	<input class="nameinput urlinput" type="text"  ng-model="bmName" >    
+    
+    <div>Description</div> 
+	<input class="descinput urlinput" type="text"  ng-model="bmDesc"  >    
+    
+    
     <div>Address of page</div> 
-	<input class="urlinput" type="text"  ng-model="bmurl" id="bmurl" value="http://" >    
-    <button ng-click="createBookmark()" class="btn customBtn"> Create</button> 
+	<input class="urlinput" type="text"  ng-model="bmurl" id="bmurl" value="http://" > 
+	<div class='clear margin-top'></div>   
+    <button ng-click="createOrUpdateBookmark()" class="btn customBtn"> Submit</button> 
     <button class="btn customBtn actionbuttons js-modal-close"> Cancel</button>
   </div>
 	<div class="clearfix"></div>

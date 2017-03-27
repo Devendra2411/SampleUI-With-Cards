@@ -8,8 +8,7 @@
 				<div>{{cardData.folderDesc}}</div>
 				<div class="defFolderIcon fright"><i class="fa fa-file-text" aria-hidden="true"></i></div>
 				<div class="totalFiles"><i class="fa fa-file-text" aria-hidden="true"></i> Total Files: <span>{{cardData.totalCount}}</span></div>
-				<div class="totalFiles share" onclick="angular.element(this).scope().openBox(id)" alt="{{cardData.shared_link}}" id="{{cardData.shared_link}}"><i class="fa fa-share-alt" aria-hidden="true"></i> Share </div>
-				<!-- <div class="totalFiles comments"><i class="fa fa-comment" aria-hidden="true"></i> Comments: <span>0</span></div> -->
+				<div class="totalFiles share"  ng-hide="roleId==2" onclick="angular.element(this).scope().openBox(id, 'folder')" id="{{cardData.folderID}}"><i class="fa fa-share-alt" aria-hidden="true"></i> Share </div>
 			</div>
 			</px-card> 
 </template>
@@ -24,15 +23,18 @@ Polymer({
            	 value:{},
            	 notify:true,
            	 reflectToAttribute: true
-             },         
+             },
      },
      observers: [
                  
                ],
     ready:function(){
+    
 	},
     attached : function() {
+    	
     },
    
 });
+
 </script>

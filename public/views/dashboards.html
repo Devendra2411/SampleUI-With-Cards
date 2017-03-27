@@ -46,9 +46,9 @@
 
 <div class="viewContent">
 	<div class="cardsData" ng-show="cardsData">
-		 <div id="{{$parent.$index.toString()+$index}}" class="dataColom" ng-repeat="data in parentCards"> 
+		 <div id="{{$parent.$index.toString()+$index}}" class="dataColom" ng-repeat="data in parentCards">
 			<div class="cardItem" ng-style="{'background-color':data.bgcolor}">
-				<parent-card id="parent-card" card-data="{{data}}"  ></parent-card>		
+				<parent-card id="parent-card" card-data="{{data}}" role-Id="{{roleId}}"  ></parent-card>		
 			</div>		
 		</div> 
 	</div>
@@ -103,7 +103,16 @@
 	<div id="urlpopup" class="modal-box"> 
 	  <div class="userData">
 	    <a href="#" class="js-modal-close close">x</a>
-	    <h3> Create Folder</h3>  
+	    <h3> Shared Link</h3>
+	    
+	     <div class="access"> Acess Type</div> 
+	     <div class='accessType'>
+	     	<select ng-model="accessType" ng-change="getShareLink(accessType)">
+	     	<option value="" selected="selected" disabled>Please select</option>
+	     		<option value="c" >People in your company</option>
+	     		<option value="f">People in this folder</option>
+	     	</select>
+	     </div> 
 		<input type="text"  id="copyTarget">    
 	    <button id="copyButton" name="home"  ng-click="copyUrl(value)" class="btn customBtn"> Copy Url</button>
 	    <div class="copyTextItem">url copied</div>

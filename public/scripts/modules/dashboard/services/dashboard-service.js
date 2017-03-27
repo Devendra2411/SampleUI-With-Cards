@@ -272,6 +272,28 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   				});
   			return deferred.promise;
   		};
+  		var updateBookmark =  function(id, data){
+  			var deferred = $q.defer();
+  			$http.put(Box_API+'/web_links/'+id, data, { headers: {'Authorization': 'Bearer '+$rootScope.gtbToken}})
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('failed to create Bookmark');
+  				});
+  			return deferred.promise;
+  		};
+  		var deleteBookmark =  function(id){
+  			var deferred = $q.defer();
+  			$http.delete(Box_API+'/web_links/'+id, { headers: {'Authorization': 'Bearer '+$rootScope.gtbToken}})
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('failed to delete Bookmark');
+  				});
+  			return deferred.promise;
+  		};
   		
   		var subscribeUpdates =  function(data){
   			var deferred = $q.defer();
@@ -344,7 +366,9 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
             	getAllDatatemp:getAllDatatemp,
             	getBOXFoldersLink:getBOXFoldersLink,
             	getBOXFilesLink:getBOXFilesLink,
-            	createBookmark:createBookmark
+            	createBookmark:createBookmark,
+            	deleteBookmark:deleteBookmark,
+            	updateBookmark:updateBookmark
             	
             
             	

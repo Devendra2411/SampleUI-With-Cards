@@ -128,7 +128,7 @@ button.dashboardActions {
 .dataContent .total{ font-size: 14px; }
 .dataContent.bold{font-weight: bold; }
 .folderIcon{font-size: 32px; display: inline-block; margin-right: 5px; }
-.folderSize{font-size: 14px; position: absolute; right: 0px; bottom: 2px;}
+.folderSize{font-size: 14px; position: absolute; right: 54px; bottom: 2px;}
 .spinner{ position: fixed; left: 53%; top: 25%; z-index: 9999}
 
 
@@ -296,6 +296,8 @@ text-align: left;
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(0, 0, 0, 0.1);
   background-clip: padding-box;
+  position: fixed;
+  top: 25% !important;
 }
 
 .modal-box header,
@@ -344,9 +346,12 @@ a.close:hover {
   -moz-transition: color 1s ease;
   transition: color 1s ease;
 }
+#BMwindow.modal-box { width: 35%; left: 35%!important}
+#urlpopup.modal-box{ width: 47%; left: 30%!important}
 @media (min-width: 32em) {
   .modal-box { width: 70%; }
-  
+  #BMwindow.modal-box { width: 35%; left: 35%!important}
+  #urlpopup.modal-box { width: 47%; left: 30%!important}
 }
 
 .userData{
@@ -460,21 +465,43 @@ button.goto:hover{ color: #757171; cursor: pointer;}
     height: 0;
     display: inline-block;}
     
-.shareItem{ right: 91px; cursor: pointer;} 
+.shareItem{ right: -4px; cursor: pointer;} 
 .shareItem:hover{ color: #e4e4e4}
 .share{ right: 105px;}
 .greenBtn{background: #117ba9;
     color: #fff;}
-.urlinput{width: 50%;
+.urlinput{width: 100%;
     height: 29px;}
 .bmData {color: #2f2f2f;
    padding: 2px;
     border: 1px solid #ccc;
     padding-left: 5px;
-    background-color: #f2f2f5; cursor: pointer;}
-.bmData:hover{    color: #2f2f2f;
-    background: #dcdcdc;}
-           
+    background-color: #f2f2f5; position: relative; }
+.bmName{cursor: pointer;}    
+.bmName:hover{    color: #2f2f2f;}
+.deleteBM{    position: absolute;
+    right: -6px;
+    display: inline-block;
+    top: -10px;
+    font-size: 17px;
+    color: #fd3c26; cursor: pointer; cursor: pointer;}
+.deleteBM{ color: red }
+.editBM {
+	position: absolute;
+	right: 14px;
+	display: inline-block;
+	top: -8px;
+	color: #086e87; cursor: pointer;
+}
+.margin-top{ margin-top: 11px;}
+.access{    float: left;
+    display: inline-block;
+    margin-right: 10px;}
+.accessType{height: 28px;
+    margin-bottom: 10px;}
+.accessType select  {  height: 28px;
+    margin-bottom: 10px;}
+              
 @media (min-width: 1367px) {
   .treeMap{ height: 581px; }
 }

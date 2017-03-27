@@ -59,7 +59,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
        	 };
        	 $scope.textOnly = function(){
        		 var text = $scope.FolderNameData
-       		 var transformedInput = text.replace(/[^a-zA-Z]/g, '');
+       		 var transformedInput = text.replace(/[^a-zA-Z]*$/, '');
        		if (transformedInput !== text) {
        			$scope.FolderNameData = transformedInput
        		}
@@ -99,20 +99,23 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 			     								value.totalCount = boxdata.item_collection.total_count
 			     							}
 			 	     					})
-			 	     					var bodyData = {"shared_link": {"access": "company"}};
+			 	     					/*var bodyData = {"shared_link": {"access": "company"}};
 			 	     					dashboardService.getBOXFoldersLink(tempId, bodyData).then(function (dataLinks) {
 			     							if(dataLinks!="" && dataLinks.id==tempId){
 			     								value.shared_link = dataLinks.shared_link.url;
 			     							}
-			 	     					})
+			 	     					})*/
 			     					}
 	     	      				})
 	     	      				$rootScope.parentCards =$scope.BoxFolders.folderList;
 	     	      				$scope.getRandomColor();
 	     	      				$timeout(function(){
 	     	      					$scope.rearrangeCards();
+	     	      					console.log('roleId', $rootScope.roleId)
+	     	      					if($rootScope.roleId=="2"){
+		     	         				  $('.totalFiles.share').hide();
+		     	         			  }
 	     	      				}, 100);
-	     	      				
  	     	      				}
  	     	      				else{
  	     	      				$scope.spinner = false;
@@ -257,6 +260,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 	     	 	     						var tempBmdata = { 
 					 	     					  "fileID": info.entries[i].id,
 				 							      "fileName": info.entries[i].name,
+				 							      "description": info.entries[i].description,
 				 							     "url": info.entries[i].url
 				 							   }
 	     	 	     						$scope.BoxSubFolders.bookmarks.push(tempBmdata);
@@ -275,12 +279,12 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			     								value.folderSize = folderSize+' MB';
  			     							}
  			 	     					});
- 			     						var bodyData = {"shared_link": {"access": "company"}};
+ 			     						/*var bodyData = {"shared_link": {"access": "company"}};
  			     						dashboardService.getBOXFoldersLink(tempId, bodyData).then(function (links) {
  			     							if(links!="" && links.id==tempId){
  			     								value.shared_link = links.shared_link.url;
  			     							}
- 			 	     					});
+ 			 	     					});*/
  			     					}
  	     	      				})
  	     	      				angular.forEach($scope.BoxSubFolders.fileList, function(value, index) {
@@ -305,23 +309,22 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			     								}
  			     							}
  			 	     					});
- 			     						var bodyData = {"shared_link": {"access": "company"}};
+ 			     						/*var bodyData = {"shared_link": {"access": "company"}};
  			     						dashboardService.getBOXFilesLink(tempId, bodyData).then(function (linksData) {
  			     							if(linksData!="" && linksData.id==tempId){
  			     								value.shared_link = linksData.shared_link.url;
  			     							}
- 			 	     					});
+ 			 	     					});*/
  			     					}
  	     	      				})
  	     	      				$rootScope.allFoldersData =$scope.BoxSubFolders.folderList;
- 	     	      			    $rootScope.allFilesData =$scope.BoxSubFolders.fileList;
+ 	     	      			    $rootScope.alltempFilesData =$scope.BoxSubFolders.fileList;
 	 	     	      			$rootScope.parentID =dataId;
-	 	    	    			$timeout(function(){
-	 	    	    				for(var i=0; i<$rootScope.allFilesData.length; i++){
-	 	    	    				$rootScope.allFilesData[i].actions="";
-	 	    	    				$rootScope.allFilesData[i].actions = '<button style="background: none;border: none" id="'+$rootScope.allFilesData[i].shared_link+'"  value="'+$rootScope.allFilesData[i].fileID+'"  class="actionBtn flex flex--center flex--middle style-scope aha-table"><i class="fa fa-bars" aria-hidden="true"></i></button>';
-	 	    	    			};
-	 	    	    			}, 1000)
+ 	    	    			    for(var i=0; i<$rootScope.alltempFilesData.length; i++){
+	 	    	    				$rootScope.alltempFilesData[i].actions="";
+	 	    	    				$rootScope.alltempFilesData[i].actions = '<button style="background: none;border: none" id="'+$rootScope.alltempFilesData[i].shared_link+'"  value="'+$rootScope.alltempFilesData[i].fileID+'"  class="actionBtn flex flex--center flex--middle style-scope aha-table"><i class="fa fa-bars" aria-hidden="true"></i></button>';
+ 	    	    			    };
+	 	    	    			$rootScope.allFilesData = $rootScope.alltempFilesData;
 	 	    	    			$scope.getCommentsData(dataId);
 	 	    	    			$state.go('view');
 	 	    	    			$scope.spinner = false;
@@ -591,7 +594,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
          }
          
          $scope.popupWindow = function(){
-    			var appendthis =  ("<div class='modal-overlay js-modal-close'></div>");
+    			var appendthis =  ("<div class='modal-overlay'></div>");
     			//$('button[data-modal-id]').click(function(e) {
     			    $("body").append(appendthis);
     			    $(".modal-overlay").fadeTo(500, 0.7);
@@ -618,7 +621,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     			//$scope.saveProcesDefaultdata();
     		}
     	 $scope.folderPopup = function(){
- 			var appendthis =  ("<div class='modal-overlay js-modal-close'></div>");
+ 			var appendthis =  ("<div class='modal-overlay'></div>");
  			//$('button[data-modal-id]').click(function(e) {
  			    $("body").append(appendthis);
  			    $(".modal-overlay").fadeTo(500, 0.7);
@@ -642,44 +645,124 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			});
  			$(window).resize();
  		}
-    	 $scope.openBox = function(id){
+    	 $scope.openBox = function(id, flag){
+    		 $('#copyTarget').val("");
     		 $('.copyTextItem').hide();
-    		 if(id==undefined){
-    			 $('#copyTarget').val($rootScope.shareurl);
+    		 if(id==undefined || id==""){
+    			 $scope.tempDataID ="";
+    			 $scope.tempFlag = "";
     		 }
     		 else{
-    			 $('#copyTarget').val(id);
+    			 $scope.tempDataID =id;
+    			 $scope.tempFlag = flag;
     		 }
+    		 
+    		 var appendthis =  ("<div class='modal-overlay'></div>");
+   			//$('button[data-modal-id]').click(function(e) {
+   			    $("body").append(appendthis);
+   			    $(".modal-overlay").fadeTo(500, 0.7);
+   			    var modalBox = "urlpopup";
+   			    $('#'+modalBox).fadeIn($(this).data());
+   			 // });  
+   			  
+   			$("#urlpopup .js-modal-close").click(function() {
+   				$('.copyTextItem').hide();
+   			  $(".modal-box, .modal-overlay").fadeOut(500, function() {
+   			    $(".modal-overlay").remove();
+   				 $('#copyTarget').val();
+   				
+   			    
+   			  });
+   			});
+   			
+   			$(window).resize(function() {
+   			  $(".modal-box").css({
+   			    top: "10%",
+   			    left: "20%"
+   			  });
+   			});
+   			$(window).resize();
+   			
+    	 };
     		
-  			var appendthis =  ("<div class='modal-overlay js-modal-close'></div>");
-  			//$('button[data-modal-id]').click(function(e) {
-  			    $("body").append(appendthis);
-  			    $(".modal-overlay").fadeTo(500, 0.7);
-  			    var modalBox = "urlpopup";
-  			    $('#'+modalBox).fadeIn($(this).data());
-  			 // });  
-  			  
-  			$("#urlpopup .js-modal-close").click(function() {
-  				$('.copyTextItem').hide();
-  			  $(".modal-box, .modal-overlay").fadeOut(500, function() {
-  			    $(".modal-overlay").remove();
-  				 $('#copyTarget').val();
-  				
-  			    
-  			  });
-  			});
-  			
-  			$(window).resize(function() {
-  			  $(".modal-box").css({
-  			    top: "10%",
-  			    left: "20%"
-  			  });
-  			});
-  			$(window).resize();
-  			
-  			
-  			
-  		}
+    		 $scope.getShareLink = function(value){
+    			 if($scope.tempDataID ==""){
+    				 if(value =="c"){
+    					 $scope.spinner=true;
+    	    			 var bodyData = {"shared_link": {"access": "company"}};
+    	    			 dashboardService.getBOXFilesLink($rootScope.fileID, bodyData).then(function (linksData) {
+    							if(linksData!=""){
+    								 $scope.spinner=false;
+    								 $('#copyTarget').val(linksData.shared_link.url);
+    							}
+    						},function(error){
+    	       	    		$scope.spinner = false
+    	     	        	$scope.errorMsgdata = "Download Failed";
+    	     	        	$('#alert').removeClass('fade-out hidden');
+    	     	        	$scope.serviceSuccessMsg = false;
+    	     	        	$scope.serviceError = true;
+    	     	        });
+    	    			  
+    				 }
+    				 else if(value=="f"){
+    					 $scope.spinner=true;
+    	    			 var bodyData = {"shared_link": {"access": "collaborators"}};
+    	    			 dashboardService.getBOXFilesLink($rootScope.fileID, bodyData).then(function (linksData) {
+    							if(linksData!=""){
+    								 $scope.spinner=false;
+    								 $('#copyTarget').val(linksData.shared_link.url);
+    							}
+    						},function(error){
+    	       	    		$scope.spinner = false
+    	     	        	$scope.errorMsgdata = "Download Failed";
+    	     	        	$('#alert').removeClass('fade-out hidden');
+    	     	        	$scope.serviceSuccessMsg = false;
+    	     	        	$scope.serviceError = true;
+    	     	        });
+    	    			 
+    				 }
+    			 }
+    			 else if($scope.tempDataID !="" && $scope.tempFlag!=""){
+    				 if(value =="c"){
+    					 $scope.spinner=true;
+    	    			 var bodyData = {"shared_link": {"access": "company"}};
+    	    			 dashboardService.getBOXFoldersLink($scope.tempDataID, bodyData).then(function (linksData) {
+    							if(linksData!=""){
+    								 $scope.spinner=false;
+    								 $('#copyTarget').val(linksData.shared_link.url);
+    							}
+    						},function(error){
+    	       	    		$scope.spinner = false
+    	     	        	$scope.errorMsgdata = "Failed";
+    	     	        	$('#alert').removeClass('fade-out hidden');
+    	     	        	$scope.serviceSuccessMsg = false;
+    	     	        	$scope.serviceError = true;
+    	     	        });
+    	    			  
+    				 }
+    				 else if(value=="f"){
+    					 $scope.spinner=true;
+    	    			 var bodyData = {"shared_link": {"access": "collaborators"}};
+    	    			 dashboardService.getBOXFoldersLink($scope.tempDataID, bodyData).then(function (linksData) {
+    							if(linksData!=""){
+    								 $scope.spinner=false;
+    								 $('#copyTarget').val(linksData.shared_link.url);
+    							}
+    						},function(error){
+    	       	    		$scope.spinner = false
+    	     	        	$scope.errorMsgdata = "Failed";
+    	     	        	$('#alert').removeClass('fade-out hidden');
+    	     	        	$scope.serviceSuccessMsg = false;
+    	     	        	$scope.serviceError = true;
+    	     	        });
+    	    			 
+    				 }
+    				 
+    			 }
+	    		 
+	    	 };
+
+    	 
     	 $scope.copyUrl = function(){
     		 $('.copyTextItem').show();
     		 copyToClipboard(document.getElementById("copyTarget"));
@@ -994,9 +1077,31 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 			sessionStorage.setItem("parentData", JSON.stringify(testBCdata));
 			console.log('tempsdata1', JSON.stringify(testBCdata));
 		 };
-		 $scope.openBMwindow = function(){
-			 $scope.bmurl ="http://"
-			 var appendthis =  ("<div class='modal-overlay js-modal-close'></div>");
+		 $scope.openBMwindow = function(id, val, name,desc){
+			
+ 			 /*$scope.bmId = "";
+ 			 $scope.bmName = "";
+ 			 $scope.bmDesc = "";
+ 			$('.urlinput ').val('');
+ 			 $scope.bmurl ="http://";
+ 			$('#bmurl').val($scope.bmurl);*/
+ 			 
+			 $scope.editBM =false;
+			 if(val==undefined){
+				 $scope.bmurl ="http://";
+	 			 $scope.bmId = "";
+	 			 $scope.bmName = "";
+	 			 $scope.bmDesc = "";
+			 }
+			 else{
+			 $scope.bmurl =val;
+			 $scope.editBM =true;
+			 $scope.bmId = id;
+			 $scope.bmName = name;
+			 $scope.bmDesc = desc;
+			 $('#bmurl').val($scope.bmurl);
+			 }
+			 var appendthis =  ("<div class='modal-overlay'></div>");
 	  			    $("body").append(appendthis);
 	  			    $(".modal-overlay").fadeTo(500, 0.7);
 	  			    var modalBox = "BMwindow";
@@ -1019,30 +1124,52 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 	  			$(window).resize();
 	  			 
 		 }
-		 $scope.createBookmark= function(){
+		 $scope.createOrUpdateBookmark= function(){
     		 $scope.spinner = true;
     		 var folderID =sessionStorage.getItem("folderId");
       			dashboardService.getGTBToken().then(function (data) {
           			if(data!=null){
           				$rootScope.gtbToken = data.accessToken;
-         	    			 var data = {"url": $scope.bmurl, "parent": {"id": folderID}};
-         	    			 dashboardService.createBookmark(data).then(function (response) { 
-         	    				$scope.spinner = false;
-         	    	    		if(response!=null){
-         	    	    			$scope.getFolders();
-	     	   	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
-	     	   	 	 	    		$scope.successMsgdata = "Bookmark Created successfully";
-	     	   	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
-	     	   	 	 	        	$scope.serviceSuccess = true;
-	     	   	 	 	        	$scope.serviceError = false;
-         	    	    		}
-         	    			 },function(error){
-         	    				 $scope.spinner = false
-        	   	 	    		 $scope.serviceError = true;
-        	   	 	    		 $scope.errorMsgdata = error.message;
-        	   	 	    		 $scope.serviceSuccess = false;
-        	   	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
-         	  	    		});
+         	    			 if($scope.editBM ==false){
+         	    				var data = {"url": $scope.bmurl, "parent": {"id": folderID}, "name":$scope.bmName, "description":$scope.bmDesc};
+            	    			 dashboardService.createBookmark(data).then(function (response) { 
+            	    				$scope.spinner = false;
+            	    	    		if(response!=null){
+            	    	    			$scope.getFolders();
+   	     	   	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+   	     	   	 	 	    		$scope.successMsgdata = "Bookmark Created successfully";
+   	     	   	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+   	     	   	 	 	        	$scope.serviceSuccess = true;
+   	     	   	 	 	        	$scope.serviceError = false;
+            	    	    		}
+            	    			 },function(error){
+            	    				 $scope.spinner = false
+           	   	 	    		 $scope.serviceError = true;
+           	   	 	    		 $scope.errorMsgdata = error.message;
+           	   	 	    		 $scope.serviceSuccess = false;
+           	   	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+            	  	    		});
+         	    			 }
+         	    			 else if($scope.editBM ==true){
+         	    				var data = {"url": $scope.bmurl, "parent": {"id": folderID}, "name":$scope.bmName, "description":$scope.bmDesc};
+         	    				dashboardService.updateBookmark($scope.bmId, data).then(function (response) { 
+           	    				$scope.spinner = false;
+           	    	    		if(response!=null){
+           	    	    			$scope.getFolders();
+  	     	   	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+  	     	   	 	 	    		$scope.successMsgdata = "Bookmark updated successfully";
+  	     	   	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+  	     	   	 	 	        	$scope.serviceSuccess = true;
+  	     	   	 	 	        	$scope.serviceError = false;
+           	    	    		}
+           	    			 },function(error){
+           	    				 $scope.spinner = false
+          	   	 	    		 $scope.serviceError = true;
+          	   	 	    		 $scope.errorMsgdata = error.message;
+          	   	 	    		 $scope.serviceSuccess = false;
+          	   	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+           	  	    		});
+         	    			 }
       	      				}
   	    		},function(error){
  	 	    		 $scope.spinner = false
@@ -1052,8 +1179,43 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
   	    		})
      	};
-     	$scope.openBM = function(id){
-     		 window.open(id, '_blank');
+     	
+     	
+     	$scope.deleteBookmark= function(id){
+   		 $scope.spinner = true;
+     			dashboardService.getGTBToken().then(function (data) {
+         			if(data!=null){
+         				$rootScope.gtbToken = data.accessToken;
+        	    			 dashboardService.deleteBookmark(id).then(function (response) { 
+        	    				$scope.spinner = false;
+        	    	    		if(response!=null){
+        	    	    			$scope.getFolders();
+	     	   	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
+	     	   	 	 	    		$scope.successMsgdata = "Bookmark Deleted";
+	     	   	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+	     	   	 	 	        	$scope.serviceSuccess = true;
+	     	   	 	 	        	$scope.serviceError = false;
+        	    	    		}
+        	    			 },function(error){
+        	    				 $scope.spinner = false
+       	   	 	    		 $scope.serviceError = true;
+       	   	 	    		 $scope.errorMsgdata = error.message;
+       	   	 	    		 $scope.serviceSuccess = false;
+       	   	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+        	  	    		});
+     	      				}
+ 	    		},function(error){
+	 	    		 $scope.spinner = false
+	 	    		 $scope.serviceError = true;
+	 	    		 $scope.errorMsgdata = "Failed";
+	 	    		 $scope.serviceSuccess = false;
+	                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+ 	    		})
+    	};
+    	
+    	
+     	$scope.openBM = function(value){
+     		 window.open(value, '_blank');
      	}
     	 $scope.gotoDashBoard = function(){
     		  $state.go('dashboard');
@@ -1072,7 +1234,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	  if($state.current.name =="dashboard" ){ 
     		  $scope.getCards();  		
     		  sessionStorage.removeItem('parentData');
-    	
     	  }
     	  
     	  
