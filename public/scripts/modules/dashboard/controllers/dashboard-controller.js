@@ -221,7 +221,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
          	    		 console.log('gtb_token', data);
          	    			 dashboardService.getBOXFolders(dataId).then(function (info) { 
  	     	      				if(info!=""){
- 	     	      				 
+ 	     	      				document.querySelector('px-app-nav').markSelected('/dashboard');
  	     	      				 $scope.spinner = false;
  	     	      				$scope.folderView =false;
  	     	      			$scope.getFolderHitCount(dataId, folderName);
@@ -1072,15 +1072,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 			 $('#'+id).next().next().find('li.filesData').toggle('slow')
 			 
 		 }
-		 $scope.getTreeData= function(){
-			 $scope.treeData= [];
-			 $scope.spinner = true;
-			 var data = {'folderID' : window.dataId};
-			 dashboardService.getAllData(data).then(function (data) {
-				 $scope.spinner = false;
-				 $scope.treeData = data;
-			 });
-		 };
+		 
 		 
 		 $scope.getSitemapBCdata = function(id){
 			 var bdData = [];

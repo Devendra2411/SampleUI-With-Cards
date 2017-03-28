@@ -32,7 +32,7 @@ define([
      * This controller is the top most level controller that allows for all
      * child controllers to access properties defined on the $rootScope.
      */
-    predixApp.controller('MainCtrl', ['$scope', '$rootScope', 'PredixUserService','dashboardService','$state', function ($scope, $rootScope, predixUserService, dashboardService, $state) {
+    predixApp.controller('MainCtrl', ['$scope', '$rootScope', 'PredixUserService','dashboardService','$state','$timeout', function ($scope, $rootScope, predixUserService, dashboardService, $state, $timeout) {
 
         //Global application object
         window.App = $rootScope.App = {
@@ -47,15 +47,22 @@ define([
                 ]}*/
             ]
         };
-        $scope.getTreeData= function(){
-        	$scope.spinner = true;
+        $rootScope.getTreeData= function(){
+			 $scope.hasTreeData = false;
+			 $scope.treeData= [];
+			 $scope.spinner = true;
 			 var data = {'folderID' : window.dataId};
 			 dashboardService.getAllData(data).then(function (data) {
+				 $scope.hasTreeData =true;
 				 $scope.spinner = false;
-				 $scope.treeData = data;
+				 $timeout(function(){$scope.treeData = data;
+				 angular.element(document.body).scope().$apply();
+				 },2000);
+				 
+				 
 			 });
 		 };
-		 $scope.getTreeData();
+		 $rootScope.getTreeData();
         $rootScope.authorizeUser = function(sso){
 			window.isAuthorized="No";
 			var data = {"sso":sso}
