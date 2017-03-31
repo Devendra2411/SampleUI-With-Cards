@@ -509,7 +509,8 @@ button.goto:hover{ color: #757171; cursor: pointer;}
     margin-bottom: 10px;}
 .notice{    position: absolute;
     right: 29px;
-    text-align: right;}             
+    text-align: right; color: red;
+    font-weight: bold;}             
 @media (min-width: 1367px) {
   .treeMap{ height: 581px; }
 }
