@@ -21,7 +21,7 @@
 
 </head>
 
-<body unresolved class="app" data-ng-controller="MainCtrl">
+<body unresolved class="app" data-ng-controller="MainCtrl" onload="browserCheck();">
     <header role="banner" class="flex flex--middle">
         <div class="viewport">
             <h1>
@@ -58,7 +58,21 @@
                 <small class="u-ml+">©2016 General Electric</small>
             </nav>
         </div>
+        <div class="notice"> •	Please unblock your browser popup to Download/Preview the files
+•	Please launch this application with Chrome as this is compatible with Chrome.
+        </div>
     </footer>
+    <!-- <div id="onPopup" class="modal-box " ng-hide="showWArng==true"> 
+	  <div class="userData">
+	    <a href="#" class="closePopup close">x</a>
+	    <h3> Warning!</h3>
+	     <div >Please unblock your browser popup to Download/Preview the files</div> 
+	  </div>
+		<div class="clearfix"></div>
+	  <footer>
+	    <a href="#" class="btn closePopup">Ok</a>
+	  </footer>
+	</div> -->
 </body>
 <script>
     // IE11 workaround: We can't rely on IE's load order for scripts that are loaded outside of require.js (might
@@ -88,7 +102,29 @@
     var boxAkana_Url = "https://fssfed.stage.ge.com/fss/as/token.oauth2?grant_type=client_credentials&client_id=GEPower-68lsG8cY1HT3Ksq0yxwiCm54&client_secret=cbafba2db0169dbecc54cd2497742173a54c8a75&scope=GECORP_boxforwarder_dev_API";
 
     
-    
+  //For Browser check
+    function browserCheck() { 
+        if(navigator.userAgent.indexOf("Chrome") != -1 ) 
+       {
+           //alert('Chrome');
+       }
+       else if(navigator.userAgent.indexOf("Opera") != -1 )
+       {
+        alert('Opera is not compatible with GPS Marketing Portal application. Please launch this application with Chrome.');
+       }
+       else if(navigator.userAgent.indexOf("Firefox") != -1 ) 
+       {
+            alert('Firefox is not compatible with GPS Marketing Portal application. Please launch this application with Chrome.');
+       }
+       else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) //IF IE > 10
+       {
+         alert('IE is not compatible with GPS Marketing Portal application. Please launch this application with Chrome.'); 
+       }  
+       else 
+       {
+          alert('unknown is not compatible with GPS Marketing Portal application. Please launch this application with Chrome');
+       }
+     }   
    
 </script>
 

@@ -111,7 +111,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 	     	      				$scope.getRandomColor();
 	     	      				$timeout(function(){
 	     	      					$scope.rearrangeCards();
-	     	      					console.log('roleId', $rootScope.roleId)
 	     	      					if($rootScope.roleId=="2"){
 		     	         				  $('.totalFiles.share').hide();
 		     	         			  }
@@ -1093,17 +1092,9 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 			 });
 			var testBCdata = bdData.reverse();
 			sessionStorage.setItem("parentData", JSON.stringify(testBCdata));
-			console.log('tempsdata1', JSON.stringify(testBCdata));
 		 };
 		 $scope.openBMwindow = function(id, val, name,desc){
 			
- 			 /*$scope.bmId = "";
- 			 $scope.bmName = "";
- 			 $scope.bmDesc = "";
- 			$('.urlinput ').val('');
- 			 $scope.bmurl ="http://";
- 			$('#bmurl').val($scope.bmurl);*/
- 			 
 			 $scope.editBM =false;
 			 if(val==undefined){
 				 $scope.bmurl ="http://";
@@ -1253,7 +1244,26 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		  $scope.getCards();  		
     		  sessionStorage.removeItem('parentData');
     	  }
+    	  if($state.current.name =="sitemap"){
+    		  if($scope.treeData.length!="0"){
+    			  angular.element(document.body).scope().$apply();
+    		  }
+    	  }
     	  
-    	  
+    	 /* 
+    	 if(!$rootScope.showWArng){
+    		 $scope.spinner = false;
+    		 var appendthis =  ("<div class='modal-overlay'></div>");
+ 		    $("body").append(appendthis);
+ 		    $(".modal-overlay").fadeTo(500, 0.7);
+ 		    var modalBox = "onPopup";
+ 		    $('#'+modalBox).fadeIn($(this).data()); 
+    	 } 
+		$(".closePopup").click(function() {
+			$rootScope.showWArng = true;  
+		  $(".modal-box, .modal-overlay").fadeOut(500, function() {
+		    $(".modal-overlay").remove();
+		  });
+		}); */   	  
     }]);
 });

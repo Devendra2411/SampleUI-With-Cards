@@ -348,10 +348,15 @@ a.close:hover {
 }
 #BMwindow.modal-box { width: 35%; left: 35%!important}
 #urlpopup.modal-box{ width: 47%; left: 30%!important}
+#onPopup.modal-box{width: 36%;
+    left: 35%; display: block}
+    
 @media (min-width: 32em) {
   .modal-box { width: 70%; }
   #BMwindow.modal-box { width: 35%; left: 35%!important}
   #urlpopup.modal-box { width: 47%; left: 30%!important}
+  #onPopup.modal-box{width: 36%;
+    left: 35%;}
 }
 
 .userData{
@@ -502,7 +507,9 @@ button.goto:hover{ color: #757171; cursor: pointer;}
     margin-bottom: 10px;}
 .accessType select  {  height: 28px;
     margin-bottom: 10px;}
-              
+.notice{    position: absolute;
+    right: 29px;
+    text-align: right;}             
 @media (min-width: 1367px) {
   .treeMap{ height: 581px; }
 }
