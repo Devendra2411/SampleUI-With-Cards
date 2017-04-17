@@ -7,8 +7,11 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		$rootScope.dataId =window.dataId; //for stage
     		//$rootScope.notifyStatus ="Yes";
     		console.log('userData',$rootScope.ssoId, $rootScope.roleId, $rootScope.notifyStatus);
-       	    $rootScope.email = $rootScope.ssoId+"@mail.ad.ge.com"
+       	    $rootScope.email = $rootScope.ssoId+"@mail.ad.ge.com";
        	    
+       	 $scope.productsiteList=[];
+       	    $scope.canEdit=true;
+       	    $scope.pspinner=false;
     	 $scope.getRandomColor = function(id){
     		 var cardsLength =  $scope.parentCards.length; 
     		 var colors =["#005eb8","#63666a","#00b5e2","#13294b", "#b1b3b4"]
@@ -387,7 +390,10 @@ define(['angular', '../dashboard'], function (angular, controllers) {
          	    	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
          	    	 	 	        	$scope.serviceSuccess = true;
          	    	 	 	            $scope.serviceError = false;
-         	    	 	 	           
+         	    	 	 	           data ={"flag":"I","folderList":[{"folderID":response.id,"folderName":response.name,"type":response.type,"parentFolderID":folderID}]}
+         	    	 	 	         dashboardService.updateDatatoDb(data).then(function(response){
+         	    	 	 	        	 console.log(response.statusMsg);
+         	    	 	 	         })
          	    	    			}
          	    	    			else{
 	         	   	 	 	    		$scope.getFolders();
@@ -459,6 +465,12 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 						 	 	 	        	$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
 						 	 	 	        	var fileName = res.entries[0].name
 						 	 	 	        	$scope.sendMail('New File "'+fileName+'" is uploaded in "'+folderName+'" folder');
+						 	 	 	        	var insertdata ={"flag":"I","folderList":[{"folderID":res.entries[0].id,"folderName":fileName,"type":res.entries[0].type,"parentFolderID":folderDataId}]}
+			         	    	 	 	        console.log("insertdata :" + insertdata); 
+						 	 	 	        	dashboardService.updateDatatoDb(insertdata).then(function(response){
+			         	    	 	 	        	 console.log("inserted::"+response.statusMsg);
+			         	    	 	 	         })
+						 	 	 	         
 							             }
 						        	 
 	         		             }).error(function(res) {
@@ -504,8 +516,10 @@ define(['angular', '../dashboard'], function (angular, controllers) {
      				$scope.MoreCommentsData();
 
   	    		},function(error){
-  	    		 $scope.spinner = false
+  	    		 $scope.spinner = false;
+  	    		$scope.errorMsgdata="Failed to load Comments";
   	    		 $scope.serviceError = true;
+  	    		$('#serviceErroMsg #alert').removeClass('fade-out hidden');
   	    		})
     	 }
 
@@ -581,6 +595,14 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	 
     	 $scope.getFilePreview = function(fileID){
     		 $scope.spinner = true;
+    		 if(fileID!=undefined){
+    			 $rootScope.fileID = fileID;
+    		 }
+    		 else{
+    			 var fileID = $rootScope.fileID; 
+    		 }
+    		 $('.accessActionMenu').hide();
+
     		 dashboardService.getGTBToken().then(function (data) {
        			if(data!=null){
        				$rootScope.gtbToken = data.accessToken;
@@ -867,7 +889,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	            $scope.serviceError = false;
  	            $scope.sendMail($rootScope.ssoId+ ' posted a comment for "'+folderName +'" folder');
  	    		},function(error){
- 	    		 $scope.spinner = false
+ 	    		 $scope.spinner = false;
+ 	    		 $scope.errorMsgdata="Failed to send mail";
  	    		 $scope.serviceError = true;
                  $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  	        })
@@ -1150,6 +1173,12 @@ define(['angular', '../dashboard'], function (angular, controllers) {
    	     	   	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
    	     	   	 	 	        	$scope.serviceSuccess = true;
    	     	   	 	 	        	$scope.serviceError = false;
+   	     	   	 	 	        	
+//   	     	   	 	 	    console.log("insert bookmark");    	
+//   	     	   	 	 	 var   bMdata ={"flag":"I","folderList":[{"folderID":response.id,"folderName":response.name,"type":response.type,"parentFolderID":folderId}]}
+//	    	 	 	         dashboardService.updateDatatoDb(bMdata).then(function(response){
+//	    	 	 	        	 console.log("insert bookmark"+response.statusMsg);
+//	    	 	 	         })
             	    	    		}
             	    			 },function(error){
             	    				 $scope.spinner = false
@@ -1170,6 +1199,12 @@ define(['angular', '../dashboard'], function (angular, controllers) {
   	     	   	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
   	     	   	 	 	        	$scope.serviceSuccess = true;
   	     	   	 	 	        	$scope.serviceError = false;
+  	     	   	 	 	        	
+//  	     	   	 	 	        	console.log("update bookmark");    	
+//  	     	   	 	 	        	var   bMdata ={"flag":"I","folderList":[{"folderID":response.id,"folderName":response.name,"type":response.type,"parentFolderID":folderId}]}
+//  		    	 	 	         dashboardService.updateDatatoDb(bMdata).then(function(response){
+//  		    	 	 	        	 console.log("insert bookmark"+response.statusMsg);
+//  		    	 	 	         })
            	    	    		}
            	    			 },function(error){
            	    				 $scope.spinner = false
@@ -1245,11 +1280,70 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		  sessionStorage.removeItem('parentData');
     	  }
     	  if($state.current.name =="sitemap"){
-    		  if($scope.treeData.length!="0"){
-    			  angular.element(document.body).scope().$apply();
-    		  }
+    		  $scope.hasTreeData = false;
+ 			 $scope.treeData= [];
+ 			 $scope.spinner = true;
+ 			 var data = {'folderID' : window.dataId};
+ 			 dashboardService.getAllData(data).then(function (data) {
+ 				 $scope.hasTreeData =true;
+ 				 $scope.spinner = false;
+ 				$scope.treeData = data;
+ 				$timeout(function(){$scope.treeData = data;
+				 angular.element(document.body).scope().$apply();
+				 },2000);
+ 			 });
+    		  
     	  }
-    	  
+    	  $scope.getTreeData=function(){
+    		  $scope.hasTreeData = false;
+  			 $scope.treeData= [];
+  			 $scope.spinner = true;
+  			 var data = {'folderID' : window.dataId};
+  			 dashboardService.getAllData(data).then(function (data) {
+  				 $scope.hasTreeData =true;
+  				 $scope.spinner = false;
+  				$scope.treeData = data;
+  				$timeout(function(){$scope.treeData = data;
+ 				 angular.element(document.body).scope().$apply();
+ 				 },2000);
+  			 });
+    	  }
+    	 
+ 		 $scope.insProductSiteDtls=function(list){
+ 			$scope.pspinner=true;
+ 			 if(list!=undefined){
+ 				$scope.productsiteList = productsiteList;
+ 			 }
+ 			 else{
+ 				 var list = $scope.productsiteList; 
+ 			 }
+ 			dashboardService.insProductSiteDtls(list).then(function(response){
+ 				console.log(response);
+ 				dashboardService.getProductSiteDtls().then(function(data){
+ 		 			
+ 		 			$scope.productsiteList=data.productsiteList;
+ 		 		});
+ 				$scope.pspinner=false;
+ 				$scope.canEdit=true;
+ 				$scope.successMsgdata="updated successfully";
+ 				$scope.serviceSuccess=true;
+ 				$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+ 			});
+ 			
+ 		 };
+ 		
+ 		 if($state.current.name =="productsite"){
+ 		
+ 		dashboardService.getProductSiteDtls().then(function(data){
+ 			
+ 			$scope.productsiteList=data.productsiteList;
+ 		});
+ 		
+ 		 }
+ 		 
+ 		 
+ 		 
+ 		
     	 /* 
     	 if(!$rootScope.showWArng){
     		 $scope.spinner = false;

@@ -353,6 +353,50 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   				});
   			return deferred.promise;
   		};
+  		
+  		
+  		var updateDatatoDb =  function(data){
+  			var deferred = $q.defer();
+  			
+  			$http.post(API_URL+'/folderUpdation',data)
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function(data) {
+  					deferred.reject(data);
+  				});
+  			return deferred.promise;
+  		};
+  		
+  		
+  		var getProductSiteDtls=function(){
+  			var deferred=$q.defer();
+  			$http.get(API_URL+'/getProductSite')
+  			   .success(function(data){
+  				   deferred.resolve(data);
+  			   })
+  			 .error(function(data) {
+					deferred.reject(data);
+				});
+			return deferred.promise;
+  			
+  		};
+  		var insProductSiteDtls=function(list){
+  			
+  			var deferred=$q.defer();
+  			var data ={"productsiteList":list};
+  			$http.post(API_URL+'/insertProductSite',data)
+  			 .success(function(response){
+  				deferred.resolve(response);
+  			 })
+  			 .error(function(response){
+  				 deferred.reject(response);
+  			 })
+  			 console.log(deferred.promise);
+  		
+  			 return deferred.promise;
+  		};
+  		
             return{
             	authorizeUser:authorizeUser,            	
             	getCards:getCards,
@@ -381,9 +425,11 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
             	createBookmark:createBookmark,
             	deleteBookmark:deleteBookmark,
             	updateBookmark:updateBookmark,
-            	previewFile:previewFile
+            	previewFile:previewFile,
             	
-            
+            	updateDatatoDb:updateDatatoDb,
+            	getProductSiteDtls:getProductSiteDtls,
+               	insProductSiteDtls:insProductSiteDtls
             	
             }
     }]);

@@ -8,7 +8,7 @@
 		<div id="{{folderData.folderID}}" value="{{folderData.folderName}}" onclick="angular.element(this).scope().getFolders(id, value)" class="dataContent fleft bold">{{folderData.folderName}}</div>
 		<div class="total">Total Folders & Files : <span> {{folderData.totalCount}}</span></div>
 		<div class="folderSize">Size:<span>{{folderData.folderSize}}</span></div>
-		<div class="folderSize shareItem" ng-hide="roleId==2" onclick="angular.element(this).scope().openBox(id)" alt="{{folderData.shared_link}}" id="{{folderData.folderID}}"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</div>
+		<div class="folderSize shareItem" onclick="angular.element(this).scope().openBox(id)" alt="{{folderData.shared_link}}" id="{{folderData.folderID}}"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</div>
 	</px-card>
 </template>
 </dom-module>

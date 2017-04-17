@@ -41,28 +41,18 @@ define([
             session: {},
             tabs: [
                 {icon: 'fa-tachometer', state: 'dashboard', label: 'Dashboard'},
-                {icon: 'fa-sitemap', state: 'sitemap', label: 'Sitemap'}
+                {icon: 'fa-sitemap', state: 'sitemap', label: 'Sitemap'},
+                {icon:'fa-user',state:'productsite',label:'Product Site'}
                 /*{icon: 'fa-file-o', state: 'blankpage', label: 'Blank Page', subitems: [
                     {state: 'blanksubpage', label: 'Blank Sub Page'}
                 ]}*/
             ]
         };
-        $rootScope.getTreeData= function(){
-			 $scope.hasTreeData = false;
-			 $scope.treeData= [];
-			 $scope.spinner = true;
-			 var data = {'folderID' : window.dataId};
-			 dashboardService.getAllData(data).then(function (data) {
-				 $scope.hasTreeData =true;
-				 $scope.spinner = false;
-				 $timeout(function(){$scope.treeData = data;
-				 angular.element(document.body).scope().$apply();
-				 },2000);
-				 
-				 
-			 });
-		 };
-		 $rootScope.getTreeData();
+        
+	
+		 
+		 
+		 
         $rootScope.authorizeUser = function(sso){
 			window.isAuthorized="No";
 			var data = {"sso":sso}

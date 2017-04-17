@@ -28,7 +28,7 @@
   <!-- second solution -->
    <div ng-if='hasTreeData==true'>
     <script type="text/ng-template" id="node_renderer.html">
-       <div class="folder" id="{{node.folderID}}"  ng-click="toggleFolder(node.folderID)" ><i ng-show="node.folderName"  class="fa fa-folder-o" aria-hidden="true"></i>{{node.folderName}} <button ng-show="node.folderName" ng-click="getFolders(node.folderID, node.folderName, 'sitemap')" class='goto'><i class='hideData'>open</i><i class="fa fa-folder-open-o" aria-hidden="true"></i></button></div>  
+       <div class="folder" id="{{node.folderID}}" ng-click="toggleFolder(node.folderID)" ><i ng-show="node.folderName"  class="fa fa-folder-o" aria-hidden="true"></i>{{node.folderName}} <button ng-show="node.folderName" ng-click="getFolders(node.folderID, node.folderName, 'sitemap')" class='goto'><i class='hideData'>open</i><i class="fa fa-folder-open-o" aria-hidden="true"></i></button></div>  
 	 <div ng-show="node.fileName" class="file" id="{{node.fileID}}"><span class='fileName' ng-click="getFilePreview(node.fileID)"><i class="fa fa-file-o" aria-hidden="true" ></i> {{node.fileName}}</span> <span class="downloadFile"  ng-click="getFileDownload(node.fileID)"><i class="fa fa-download" aria-hidden="true"></i></span></div>
         <ul>
 			<li   class="folderData" id="f{{node.folderID}}"  data-ng-repeat = "node in node.subTreeStructureVO.rootFolderMap.Items[0].folderList"

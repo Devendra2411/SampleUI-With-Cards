@@ -72,6 +72,12 @@ define(['angular', 'angular-ui-router'], function(angular) {
                 parent: 'secure',
                 url: '/logout',
                 templateUrl: 'views/logout.html'
+            })
+            .state('productsite',{
+            	parent: 'secure',
+            	url:'/productsite',
+            	templateUrl:'views/productsite.html',
+            	controller:'dashboard-controller'
             });
 
 

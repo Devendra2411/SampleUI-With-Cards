@@ -34,6 +34,13 @@ h1 {
     font-size: 20px;
     color: #101010;
 }
+.pageTitle2 {
+    position: relative;
+    left: 25%;
+    display: inline-block;
+    font-size: 20px;
+    color: #101010;
+}
 .fileView .pageTitle {
    position: relative; */
     left: 30%;
@@ -177,6 +184,7 @@ aha-table#dataTable{margin-bottom: 10px}
 .msgForm h3{ font-size: 15px; color: #6d6d6d}
 .postbtn{ border: 0; background-color: #63666a; color:#fff; border-radius:5px; padding:7px 10px; cursor: pointer; width: 80px }
 
+th.aha-table .viewing.aha-table, .th.aha-table .viewing.aha-table{white-space: normal;     word-break: break-word;}
 
 td.aha-table .viewing.aha-table, .td.aha-table .viewing.aha-table{white-space: normal;     word-break: break-word;}
 
@@ -431,7 +439,7 @@ padding: 0 10px; margin-bottom: 10px}
 .treeMap ul li li ul li div{ font-weight: normal !important;}
 .treeMap .folder{cursor: pointer;}
 
-.folderData, .filesData{ display: none;}
+
 .treeMap .file:hover{ color: #00b5e2 }
 .refresh{
     top: 10px;
@@ -508,9 +516,20 @@ button.goto:hover{ color: #757171; cursor: pointer;}
 .accessType select  {  height: 28px;
     margin-bottom: 10px;}
 .notice{    position: absolute;
-    right: 29px;
-    text-align: right; color: red;
-    font-weight: bold;}             
+    right: 77px;
+    text-align: right; color: orange;
+   }             
 @media (min-width: 1367px) {
   .treeMap{ height: 581px; }
 }
+.column-head.aha-table {
+  white-space: normal;
+font-style: normal;
+font-size: 12px; 
+font-weight: bold;
+
+}
+
+.folderData, .filesData{display: none; }
+
+

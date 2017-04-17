@@ -12,10 +12,11 @@
 </div>
 
 
-<div class="accessActionMenu" style="display:none">
+<div id="accessActionMenu" class="accessActionMenu" style="display:none">
 	<ul>
 		<li><button ng-click="getFileDownload()"><i class="fa fa-download" aria-hidden="true"></i> Download</button></li>
-		<li><button ng-click="openBox()" ng-hide="roleId==2"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</button></li>
+		<li><button ng-click="openBox()" ><i class="fa fa-share-alt" aria-hidden="true"></i> Share</button></li>
+		<li ><button ng-click="getFilePreview()" ><i class="fa fa-eye" aria-hidden="false"></i> Preview</button></li>
 <!-- 		<li><button ng-click=""><i class="fa fa-times" aria-hidden="true"></i> Delete</button></li> -->
 	</ul>
 </div>
