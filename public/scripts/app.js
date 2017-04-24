@@ -42,7 +42,7 @@ define([
             tabs: [
                 {icon: 'fa-tachometer', state: 'dashboard', label: 'Dashboard'},
                 {icon: 'fa-sitemap', state: 'sitemap', label: 'Sitemap'},
-                {icon:'fa-user',state:'productsite',label:'Product Site'}
+                {icon:'fa-user',state:'productowners',label:'Product Owners'}
                 /*{icon: 'fa-file-o', state: 'blankpage', label: 'Blank Page', subitems: [
                     {state: 'blanksubpage', label: 'Blank Sub Page'}
                 ]}*/

@@ -11,8 +11,8 @@
 	  font-size:13px;
 	  white-space: normal;
 	}
-	.rTableCell input[type="text"]{ max-width:127px !important;width:auto;min-width:10px; text-align:left;padding:3px; white-space: nowrap; font-weight:200;font-size:11px;font-family: "GE Inspira Sans", sans-serif;}
-	
+	.rTableCell input[type="text"]{ max-width:127px !important;width:auto;min-width:10px; text-align:left;padding:6px; white-space: nowrap; font-weight:200;font-size:11px;font-family: "GE Inspira Sans", sans-serif;}
+	.ext input[type="text"]{max-width:300px !important;width:200px !important;min-width:10px; text-align:left;padding:6px; white-space: nowrap; font-weight:200;font-size:11px;font-family: "GE Inspira Sans", sans-serif;}
 	.rTableRow {
 	  display: table-row;
 	  padding: 5px;
@@ -32,7 +32,7 @@
     border: 1px solid #999;
     width: 15%;
     font-family: "GE Inspira Sans", sans-serif;
-    font-size: 12px !important;
+    font-size: 13px !important;
     text-align: left;
     height: 36px;
     background: #ccc;
@@ -48,23 +48,21 @@
 	  display: table-row-group;
 	  padding: 5px;
 	}
-	.rTableAlgn{
-		
-		    width: 98%;
-		    left: 1%;
-		    position: relative;
-	top:-19px;
-		
+	.rTableAlgn {
+	    width: 86%;
+	    left: 7%;
+	    position: relative;
+	    top: -19px;
 	}
 .pspinner{ top: 50%;}
 
 .editBtn{
-	right:113px;
+	right:171px;
     top:55px;
    padding:3px;
 }
 .saveBtn{
-	right:17px;
+	right:76px;
 	top:55px;
 	padding:3px;
 }

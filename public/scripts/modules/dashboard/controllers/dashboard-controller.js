@@ -1088,13 +1088,22 @@ define(['angular', '../dashboard'], function (angular, controllers) {
   		 })
     		 };
 		 
-		 
+		 var c=0;
 		 $scope.toggleFolder = function(id){
+			 debugger;
 			 $('#'+id).next().next().find('li.folderData').toggle('slow')
-			 $('#'+id).next().next().find('li.filesData').toggle('slow')
-			 
+			  $('#'+id).next().next().find('li li.folderData').css("display","none")
+			 c=1;
 		 }
 		 
+		 $scope.toggleFile = function(id){
+			 debugger;
+			 if(c==1){
+			 $('#'+id).next().next().find('li.filesData').toggle('slow')
+			  $('#'+id).next().next().find('li li.filesData').css("display","none")
+			 c++;
+			 }
+		}
 		 
 		 $scope.getSitemapBCdata = function(id){
 			 var bdData = [];
@@ -1332,7 +1341,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			
  		 };
  		
- 		 if($state.current.name =="productsite"){
+ 		 if($state.current.name =="productowners"){
  		
  		dashboardService.getProductSiteDtls().then(function(data){
  			

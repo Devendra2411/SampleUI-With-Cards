@@ -530,6 +530,6 @@ font-weight: bold;
 
 }
 
-.folderData, .filesData{display: none; }
-
+.folderData{display: none; }
+.filesData{display: none; }
 
