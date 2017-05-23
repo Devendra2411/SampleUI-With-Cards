@@ -397,6 +397,19 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   			 return deferred.promise;
   		};
   		
+  		var downloadStatistics=function(){
+  			
+  			var deferred=$q.defer();
+  			$http.get(API_URL+'/downloadStatistics')
+  			 .success(function(response){
+  				 deferred.resolve(response);
+  			 })
+  			 .error(function(response){
+  				 deferred.reject(response);
+  			 })
+  			 
+  			 return deferred.promise;
+  		};
             return{
             	authorizeUser:authorizeUser,            	
             	getCards:getCards,
@@ -429,8 +442,8 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
             	
             	updateDatatoDb:updateDatatoDb,
             	getProductSiteDtls:getProductSiteDtls,
-               	insProductSiteDtls:insProductSiteDtls
-            	
+               	insProductSiteDtls:insProductSiteDtls,
+               	downloadStatistics:downloadStatistics
             }
     }]);
 

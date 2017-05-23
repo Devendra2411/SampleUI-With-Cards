@@ -50,8 +50,7 @@ define([
         };
         
 	
-		 
-		 
+        //$rootScope.ssoId=502450548;//for local
 		 
         $rootScope.authorizeUser = function(sso){
 			window.isAuthorized="No";

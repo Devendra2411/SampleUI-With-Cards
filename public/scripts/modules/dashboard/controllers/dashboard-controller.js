@@ -1,7 +1,7 @@
 define(['angular', '../dashboard'], function (angular, controllers) {
     'use strict';
     // Controller definition
-    controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService','$q', '$urlRouter','fileUpload', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService, $q, $urlRouter, fileUpload) {
+    controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService','$q', '$urlRouter','fileUpload','$document', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService, $q, $urlRouter, fileUpload,$document) {
        	    //$rootScope.ssoId = "502450548";
     		//$rootScope.roleId ="1"
     		$rootScope.dataId =window.dataId; //for stage
@@ -887,7 +887,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
  	        	$scope.serviceSuccess = true;
  	            $scope.serviceError = false;
- 	            $scope.sendMail($rootScope.ssoId+ ' posted a comment for "'+folderName +'" folder');
+ 	            //$scope.sendMail($rootScope.ssoId+ ' posted a comment for "'+folderName +'" folder');
  	    		},function(error){
  	    		 $scope.spinner = false;
  	    		 $scope.errorMsgdata="Failed to send mail";
@@ -1350,7 +1350,16 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  		
  		 }
  		 
- 		 
+ 		 $scope.downloadStatistics=function(){
+ 			 debugger;
+ 			dashboardService.downloadStatistics().then(function(data){
+ 				download("data:application/excel;base64,"+data.statistics,"Statistics.xlsx","application/excel");			//download("data:application/excel;base64,"+response.ouput, "DataSpan.xls", "application/excel");
+ 			},function(error){
+ 	    		 $scope.errorMsgdata = "Failed";
+ 	    		$scope.serviceError = true;
+                 $('#serviceErroMsg #alert').removeClass('fade-out hidden');
+ 			});
+ 		 }
  		 
  		
     	 /* 
