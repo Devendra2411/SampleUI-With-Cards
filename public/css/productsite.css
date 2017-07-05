@@ -55,14 +55,28 @@
 	    top: -19px;
 	}
 .pspinner{ top: 50%;}
+.editBtn {
+    right: 280px;
+    top: 55px;
+    padding: 3px;
+}
 
-.editBtn{
-	right:171px;
-    top:55px;
-   padding:3px;
+.saveBtn {
+    right: 178px;
+    top: 55px;
+    padding: 3px;
 }
-.saveBtn{
-	right:76px;
-	top:55px;
-	padding:3px;
+.addBtn {
+    right: 50px;
+    top: 93px;
+    padding: 9px;
+    position: absolute;
+    cursor:pointer;
 }
+.delBtn {
+    right: 76px;
+    top: 55px;
+    padding: 3px;
+}
+
+

@@ -1326,7 +1326,20 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			 else{
  				 var list = $scope.productsiteList; 
  			 }
- 			dashboardService.insProductSiteDtls(list).then(function(response){
+ 			var productOwnerList=[];
+ 			var refObj={"siteName": "site name", "siteOwner": "owner name","siteInitialReview": "","siteSmeCleanup": "", "siteFilesCompleted": "","siteFollowUps": "","siteNextReview": "" };
+ 			for(var i=0;i<$scope.productsiteList.length;i++){
+ 				refObj={"siteName": "site name", "siteOwner": "owner name","siteInitialReview": "","siteSmeCleanup": "", "siteFilesCompleted": "","siteFollowUps": "","siteNextReview": "" };
+ 				refObj.siteName=$scope.productsiteList[i].siteName;
+ 				refObj.siteOwner=$scope.productsiteList[i].siteOwner;
+ 				refObj.siteInitialReview=$scope.productsiteList[i].siteInitialReview;
+ 				refObj.siteSmeCleanup=$scope.productsiteList[i].siteSmeCleanup;
+ 				refObj.siteFilesCompleted=$scope.productsiteList[i].siteFilesCompleted;
+ 				refObj.siteFollowUps=$scope.productsiteList[i].siteFollowUps;
+ 				refObj.siteNextReview=$scope.productsiteList[i].siteNextReview;
+ 				productOwnerList.push(refObj);	
+ 			}
+ 			dashboardService.insProductSiteDtls(productOwnerList).then(function(response){
  				console.log(response);
  				dashboardService.getProductSiteDtls().then(function(data){
  		 			
@@ -1342,26 +1355,78 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  		 };
  		
  		 if($state.current.name =="productowners"){
- 		
+ 			$scope.pspinner=true;
  		dashboardService.getProductSiteDtls().then(function(data){
+ 			var tempData=data.productsiteList;
+ 			$scope.pspinner=false;
+ 			for(var i=0;i<tempData.length;i++){
+ 				 $scope.id=i+1;
+ 				_.extend(tempData[i],{isChecked:false,id:$scope.id});
+ 			}
  			
- 			$scope.productsiteList=data.productsiteList;
+ 			console.log(tempData);
+ 			$scope.productsiteList=tempData;
  		});
  		
  		 }
  		 
- 		 $scope.downloadStatistics=function(){
+ 		$scope.downloadStatistics=function(){
  			 debugger;
  			dashboardService.downloadStatistics().then(function(data){
- 				download("data:application/excel;base64,"+data.statistics,"Statistics.xlsx","application/excel");			//download("data:application/excel;base64,"+response.ouput, "DataSpan.xls", "application/excel");
+ 				download("data:application/excel;base64,"+data.statistics,"Statistics.xlsx","application/excel");			
  			},function(error){
  	    		 $scope.errorMsgdata = "Failed";
  	    		$scope.serviceError = true;
                  $('#serviceErroMsg #alert').removeClass('fade-out hidden');
  			});
  		 }
- 		 
  		
+ 		$scope.addR=function(){
+ 			$scope.canEdit=false;
+ 			var refObj={ "id":"0","isChecked":"true","siteName": "", "siteOwner": "","siteInitialReview": "","siteSmeCleanup": "", "siteFilesCompleted": "","siteFollowUps": "","siteNextReview": "" };
+ 			$scope.id=$scope.id+1;
+ 			refObj.id=$scope.id;
+ 			refObj.isChecked=true;
+ 			$scope.productsiteList.push(refObj);
+ 			$('body').animate({scrollTop: 1500});
+ 		}
+ 		
+ 		$scope.delR=function(){
+ 			$scope.canDel=[];
+ 			var tempData=$scope.productsiteList;
+ 			for(var i=0;i<tempData.length;i++){
+ 				if($scope.productsiteList[i].isChecked==true){
+ 					$scope.canDel.push($scope.productsiteList[i]);
+ 				}
+ 			}
+ 			if($scope.canDel.length>0){
+ 				for(var i=0;i<$scope.canDel.length;i++){
+ 					var index=$scope.productsiteList.indexOf($scope.canDel[i]);
+ 					$scope.productsiteList.splice(index,1);
+ 				}
+ 				$scope.insProductSiteDtls();
+ 			}
+ 			else{
+ 				 $scope.errorMsgdata = "Please Select Row to Delete";
+  	    		 $scope.serviceError = true;
+                 $timeout(function(){
+                	 $scope.serviceError=false;
+                 },1000);
+ 			}
+ 		}
+ 		
+ 		$scope.checkAll=function(){
+ 			debugger;
+ 			if($scope.pcheckbox.isChecked==true){
+ 			for(var i=0;i<$scope.productsiteList.length;i++){
+ 				$scope.productsiteList[i].isChecked=true;
+ 			}}
+ 			else{
+ 				for(var i=0;i<$scope.productsiteList.length;i++){
+ 	 				$scope.productsiteList[i].isChecked=false;
+ 	 			}
+ 			}
+ 		}
     	 /* 
     	 if(!$rootScope.showWArng){
     		 $scope.spinner = false;

@@ -1,6 +1,19 @@
 <link rel="stylesheet" href="/css/custom.css" />
 <link rel="stylesheet" href="/css/productsite.css">
-
+<style>
+.small{
+		  position: relative;
+		  display: table-cell;
+		  padding: 0px;
+		  border: 1px solid #ccc;
+		  width: 1%;
+border: 1px solid #999;
+}
+.card-selected{
+    background-color: rgba(199, 224, 243, 1) !important;
+	ng-disabled:false;
+}
+</style>
 <header class="pageheader dashboard">
 <h1> GPS Marketing Portal </h1>
 <div class="pageTitle2" >Product Owners</div>
@@ -9,6 +22,11 @@
 
 <button class="notifyBtn editBtn"  ng-click="canEdit=!canEdit">Edit</button>
 <button class="notifyBtn saveBtn"  ng-click="insProductSiteDtls()">Update</button>
+<!--<button class="notifyBtn addBtn"  ng-click="addR()">Add</button>-->
+<button class="notifyBtn delBtn"  ng-click="delR()">Delete</button>
+
+<i class="fa fa-plus-circle addBtn " aria-hidden="true" ng-click="addR()"></i>
+
 </div >
 <div class="spinner pspinner" ng-show="pspinner"><px-spinner size="75"></px-spinner></div>
 <div id="serviceErroMsg" class="alert-message-container" ng-show="serviceError">
@@ -29,7 +47,9 @@
 <div class="rTable rTableAlgn">
 
 <div class="rTableHeading">
-
+<div class="rTableHead small">
+<input type="checkbox" id="pcheckbox" ng-click="checkAll()" ng-model="pcheckbox.isChecked"> 
+</div>
    <div class="rTableHead">
    Product Site 
    </div>
@@ -56,16 +76,19 @@
 </div>
 <div class="rTableBody" >
 <div class="rTableRow"  ng-repeat="productsite in productsiteList">
-	 <div class="rTableCell " >
-	  <input type="text" name="site_name" ng-model="productsite.siteName" ng-disabled="canEdit">
+<div class="rTableCell small" ng-class="{ 'card-selected': productsite.isChecked }" >
+	<input type="checkbox" id="checkbox" ng-model="productsite.isChecked" >
+</div>
+	 <div class="rTableCell " ng-class="{ 'card-selected': productsite.isChecked }" ">
+	  <input type="text" name="site_name" ng-model="productsite.siteName" ng-disabled="canEdit" placeholder="site name">
 	</div>
-	<div class="rTableCell ext" >
-	  <input type="text" name="site_owner" ng-model="productsite.siteOwner" ng-disabled="canEdit">
+	<div class="rTableCell ext" ng-class="{ 'card-selected': productsite.isChecked }">
+	  <input type="text" name="site_owner" ng-model="productsite.siteOwner" ng-disabled="canEdit" placeholder="owner name">
 	</div>
-	<div class="rTableCell ">
+	<div class="rTableCell " ng-class="{ 'card-selected': productsite.isChecked }">
 	 <input type="text" name="sme_cleanup" ng-model="productsite.siteSmeCleanup" ng-disabled="canEdit" placeholder="MM/DD/YYYY">
 	</div >
-	<div class="rTableCell ">
+	<div class="rTableCell " ng-class="{ 'card-selected': productsite.isChecked }">
 	  <input type="text" name="next_review" ng-model="productsite.siteNextReview" ng-disabled="canEdit" placeholder="MM/DD/YYYY">
 	</div>
 	
