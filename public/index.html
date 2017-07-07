@@ -1,5 +1,22 @@
 <!DOCTYPE html>
 <html>
+<style>
+
+.popupImg {
+    position: absolute;
+    right: 39px;
+    }
+.notice{    position: absolute;
+    right: 26px !important;
+    text-align: right; color: #b1b1bc;
+    font-weight: bold;
+    color:orange;
+    margin-top: 20px;
+    }
+    [role=banner]:not([style-scope]):not(.style-scope), [role=contentinfo]:not([style-scope]):not(.style-scope) {
+    height: 6rem;
+}
+    </style>
 <head>
     <title>GPS Marketing Portal</title>
     <base href="/">
@@ -21,13 +38,21 @@
 
 </head>
 
-<body unresolved class="app" data-ng-controller="MainCtrl" onload="browserCheck();">
-
-    <header role="banner" class="flex flex--middle">
-        <div class="viewport">
-        <div class="notice"><h4> •	Please unblock your browser popup to Download/Preview the files
-        •	Please launch this application with Chrome .</h4>
-               </div>
+	<body unresolved class="app" data-ng-controller="MainCtrl" onload="browserCheck()">
+		<header role="banner" class="flex flex--middle">
+		<div class="viewport">
+			<div class="notice"><h4 style="display:inline"> •	Please unblock your browser popup to Download/Preview the files
+			•	Please launch this application with Chrome .</h4>
+			<px-modal id="helpModel"
+				 btn-modal-negative="Close" class="fright">
+				<a class="cd-upload-button modal-trigger" href="#" style="text-decoration: none;color: white;cursor: default; position: static;">Help
+				<button style="background: none;border: none;cursor: pointer;"><i class="fa fa-question-circle fa-lg" aria-hidden="true" style="color:white"></i></button></a> 
+				<div class="fileUploadDiv"> 
+					<span style="color: black;float: left;margin-bottom: 10px;">Please unblock popups as below</span>
+					<img src="images/rtaImage.png" style="clear: both; display: block;">
+				</div>
+			</px-modal>
+           </div>
             <h1>
                 <svg class="u-mr--" xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="24" height="24"
                      viewBox="-280 372 50 50">
@@ -62,7 +87,7 @@
                         <a href="http://www.ge.com/terms" target="_blank">Terms</a>
                     </li>
                 </ul>
-                <small class="u-ml+">©2016 General Electric</small>
+                <small class="u-ml+">Â©2016 General Electric</small>
             </nav>
         </div>
        
@@ -91,13 +116,13 @@
     });
     
     /*stage API*/
-     var API_URL ="https://gpsmarketingportalservices-stage.run.asv-pr.ice.predix.io/GPSMarketing/Services";
+    var API_URL ="https://gpsmarketingportalservices-stage.run.asv-pr.ice.predix.io/GPSMarketing/Services";
     var Akana_Url = "https://gpsmarketingportalservices-stage.run.asv-pr.ice.predix.io/GPSMarketing/Services/getAkanaToken";
     var Gtb_Url = "https://gpsmarketingportalservices-stage.run.asv-pr.ice.predix.io/GPSMarketing/Services/getGtbToken"; 
     window.dataId = '12351304648';
     
     /*Prod API*/
-  /* var API_URL ="https://marketingportalservices.run.asv-pr.ice.predix.io/GPSMarketing/Services"
+   /* var API_URL ="https://marketingportalservices.run.asv-pr.ice.predix.io/GPSMarketing/Services"
     var Akana_Url="https://marketingportalservices.run.asv-pr.ice.predix.io/GPSMarketing/Services/getAkanaToken";
     var Gtb_Url="https://marketingportalservices.run.asv-pr.ice.predix.io/GPSMarketing/Services/getGtbToken"; 
     window.dataId = '11858048707';*/

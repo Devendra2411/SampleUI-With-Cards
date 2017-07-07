@@ -14,7 +14,7 @@
 
 <div id="accessActionMenu" class="accessActionMenu" style="display:none">
 	<ul>
-		<li><button ng-click="getFileDownload()"><i class="fa fa-download" aria-hidden="true"></i> Download</button></li>
+		<li><button class="downloadBtn" ng-click="getFileDownload()" ><i class="fa fa-download" aria-hidden="true"></i> Download</button></li>
 		<li><button ng-click="openBox()" ><i class="fa fa-share-alt" aria-hidden="true"></i> Share</button></li>
 		<li ><button ng-click="getFilePreview()" ><i class="fa fa-eye" aria-hidden="false"></i> Preview</button></li>
 <!-- 		<li><button ng-click=""><i class="fa fa-times" aria-hidden="true"></i> Delete</button></li> -->
@@ -171,6 +171,9 @@
 		</div>	    
 	    <button ng-click="fileupload()" class="btn customBtn"> Upload </button>
 	    </from>
+	    
+	    <span class="sensitive" style="position:relative;right:-55px;">Senisitive File <input type="radio" name="sensitive" value="Y" ng-model="sensitive_flag">Yes
+	    <input type="radio" name="sensitive" value="N" ng-model="sensitive_flag" checked>No </span>
 	  <!--   <input type="file" class="customInputBox" id="saveProcessName" accept="*" file-model = "uploads" ng-model="processName" /> 
 	    <button name="{{parentID}}"ng-click="fileupload(name)" class="btn customBtn"> Upload </button> -->
 	  </div>

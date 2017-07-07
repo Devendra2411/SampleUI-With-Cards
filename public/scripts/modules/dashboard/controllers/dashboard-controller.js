@@ -2,13 +2,13 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     'use strict';
     // Controller definition
     controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService','$q', '$urlRouter','fileUpload','$document', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService, $q, $urlRouter, fileUpload,$document) {
-       	    //$rootScope.ssoId = "502450548";
-    		//$rootScope.roleId ="1"
+       	   // $rootScope.ssoId = "502450548";//for local
+    		//$rootScope.roleId ="2"//for local
     		$rootScope.dataId =window.dataId; //for stage
     		//$rootScope.notifyStatus ="Yes";
     		console.log('userData',$rootScope.ssoId, $rootScope.roleId, $rootScope.notifyStatus);
        	    $rootScope.email = $rootScope.ssoId+"@mail.ad.ge.com";
-       	    
+       	    $scope.sensitive_flag='N';
        	 $scope.productsiteList=[];
        	    $scope.canEdit=true;
        	    $scope.pspinner=false;
@@ -38,10 +38,27 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     				 
     			}
     	 }
+    	 
        	 $scope.userActions = function(){
+       		 debugger;
  			$( document ).on( "click", ".actionBtn", function(e) {
  				 $('.accessActionMenu').hide();
-	 			$rootScope.fileID = $(this).attr("value");
+ 				var buttonVal = $(this).attr("value").split(',');
+	 			$rootScope.fileID =buttonVal[0];
+	 			$scope.fileSensitive=buttonVal[1];
+	 			if($scope.fileSensitive=='Y' && $rootScope.roleId==2){
+	 				//$('button .downloadBtn').prop('disabled', true);
+	 				$('button.downloadBtn').attr('disabled','disabled');
+	 				console.log("in if ")
+	 			}
+	 			else{
+	 				//$('button.downloadBtn').attr('disabled','enabled');
+	 				$('button.downloadBtn').removeAttr('disabled');
+	 				console.log("in else");
+	 			}
+	 			console.log("$scope.fileSensitive",$scope.fileSensitive);
+	 			//$rootScope.fileSensitive='Y';
+	 			
 	 			$rootScope.shareurl = $(this).attr("id");
 	 		    $('.accessActionMenu').css({top:0,left:0});
 	 			var pos = $(this).offset();
@@ -209,6 +226,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  				}
     			 
     	 		sessionStorage.setItem("folderId", dataId);
+    	 		
+    	 		
     		 }
     		 if(folderName ==undefined){
     			 folderName = sessionStorage.getItem("folderName");
@@ -217,6 +236,18 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		 else if(folderName !=undefined){
      	 		sessionStorage.setItem("folderName", folderName);
      		 }
+    		 var data = {"folderID":sessionStorage.getItem("folderId")}
+       		 dashboardService.getComments(data).then(function (response) {
+         				//$scope.spinner = false;
+        				$rootScope.commentsData = response;
+        				$scope.MoreCommentsData();
+
+     	    		},function(error){
+     	    		 $scope.spinner = false;
+     	    		$scope.errorMsgdata="Failed to load Comments";
+     	    		 $scope.serviceError = true;
+     	    		$('#serviceErroMsg #alert').removeClass('fade-out hidden');
+     	    		})
       			dashboardService.getGTBToken().then(function (data) {
           			if(data!=null){
           				$rootScope.gtbToken = data.accessToken;
@@ -226,6 +257,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	     	      				document.querySelector('px-app-nav').markSelected('/dashboard');
  	     	      				 $scope.spinner = false;
  	     	      				$scope.folderView =false;
+ 	     	      			$rootScope.parentID =dataId;
+ 	    	    			
  	     	      			$scope.getFolderHitCount(dataId, folderName);
  	     	      					$scope.BoxSubFolders = {
  	     	 	     						  "folderID": dataId,
@@ -321,13 +354,26 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	     	      				})
  	     	      				$rootScope.allFoldersData =$scope.BoxSubFolders.folderList;
  	     	      			    $rootScope.alltempFilesData =$scope.BoxSubFolders.fileList;
-	 	     	      			$rootScope.parentID =dataId;
  	    	    			    for(var i=0; i<$rootScope.alltempFilesData.length; i++){
+ 	    	    			    	var tempObj={};
+ 	    	    			    	$rootScope.alltempFilesData[i].sensitiveFlag="N";
+ 	    	    			    	var tempObj=_.findWhere($rootScope.commentsData[0].fileDetails,function(element){
+ 	    	     		 				if(element.folderID==$rootScope.alltempFilesData[i].fileID){
+ 	    	     		 					return element.sensitiveFlag;
+ 	    	     		 				}
+ 	    	    			    	})
+ 	    	     		 				if(tempObj==undefined)
+ 	    	     		 					$rootScope.alltempFilesData[i].sensitiveFlag='N';
+ 	    	     		 				else if(tempObj.sensitiveFlag=='Y' || tempObj.sensitiveFlag=='N')
+ 	    	     		 					$rootScope.alltempFilesData[i].sensitiveFlag=tempObj.sensitiveFlag;
+ 	    	     		 				else
+ 	    	     		 					$rootScope.alltempFilesData[i].sensitiveFlag='N';
 	 	    	    				$rootScope.alltempFilesData[i].actions="";
-	 	    	    				$rootScope.alltempFilesData[i].actions = '<button style="background: none;border: none" id="'+$rootScope.alltempFilesData[i].shared_link+'"  value="'+$rootScope.alltempFilesData[i].fileID+'"  class="actionBtn flex flex--center flex--middle style-scope aha-table"><i class="fa fa-bars" aria-hidden="true"></i></button>';
+	 	    	    				$rootScope.alltempFilesData[i].actions = '<button style="background: none;border: none" id="'+$rootScope.alltempFilesData[i].shared_link+'"  value="'+$rootScope.alltempFilesData[i].fileID+','+$rootScope.alltempFilesData[i].sensitiveFlag+'"  class="actionBtn flex flex--center flex--middle style-scope aha-table"><i class="fa fa-bars" aria-hidden="true"></i></button>';
+	 	    	    				//console.log($rootScope.alltempFilesData[i].actions);
  	    	    			    };
 	 	    	    			$rootScope.allFilesData = $rootScope.alltempFilesData;
-	 	    	    			$scope.getCommentsData(dataId);
+	 	    	    			
 	 	    	    			$state.go('view');
 	 	    	    			$scope.spinner = false;
 	         	    			 })
@@ -428,7 +474,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	 
     	 $scope.fileupload= function(){
     		 $scope.spinner = true;
-
+    		 
       			dashboardService.getGTBToken().then(function (data) {
           			if(data!=null){
           				 $rootScope.gtbToken = data.accessToken;
@@ -441,7 +487,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
          			     formData.append('file', blob, filename);
          		         var folderDataId = sessionStorage.getItem("folderId");
          		         var folderName =sessionStorage.getItem("folderName");
-         		         formData.set("parent_id",folderDataId);	         		        
+         		         formData.set("parent_id",folderDataId);	 
+         		        console.log("$scope.sensitive_flag by value",$scope.sensitive_flag)
 	         		       $.ajax({
 	         		    	     url: Upload_File,
 						         headers: {"Authorization": "Bearer "+$rootScope.gtbToken},
@@ -465,12 +512,13 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 						 	 	 	        	$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
 						 	 	 	        	var fileName = res.entries[0].name
 						 	 	 	        	$scope.sendMail('New File "'+fileName+'" is uploaded in "'+folderName+'" folder');
-						 	 	 	        	var insertdata ={"flag":"I","folderList":[{"folderID":res.entries[0].id,"folderName":fileName,"type":res.entries[0].type,"parentFolderID":folderDataId}]}
+						 	 	 	        	//$scope.sensitive_flag=document.getElementsByName("sensitive").value;
+						 	 	 	        	console.log("$scope.sensitive_flag by value",$scope.sensitive_flag)
+						 	 	 	        	var insertdata ={"flag":"I","folderList":[{"folderID":res.entries[0].id,"folderName":fileName,"type":res.entries[0].type,"parentFolderID":folderDataId,"sensitiveFlag":$scope.sensitive_flag}]}
 			         	    	 	 	        console.log("insertdata :" + insertdata); 
 						 	 	 	        	dashboardService.updateDatatoDb(insertdata).then(function(response){
 			         	    	 	 	        	 console.log("inserted::"+response.statusMsg);
 			         	    	 	 	         })
-						 	 	 	         
 							             }
 						        	 
 	         		             }).error(function(res) {
@@ -559,6 +607,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        
     	 }
     	 $scope.getFileDownload = function(fileID){
+    		 debugger;
     		 $scope.spinner = true;
     		 if(fileID!=undefined){
     			 $rootScope.fileID = fileID;
@@ -567,7 +616,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     			 var fileID = $rootScope.fileID; 
     		 }
     		 $('.accessActionMenu').hide();
-    		 
+    	
     		 dashboardService.getGTBToken().then(function (data) {
        			if(data!=null){
        				$rootScope.gtbToken = data.accessToken;
@@ -590,7 +639,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
   	        	$('#alert').removeClass('fade-out hidden');
   	        	$scope.serviceSuccessMsg = false;
   	        	$scope.serviceError = true;
-  	        }     		
+  	        }  
+    	
     	 };
     	 
     	 $scope.getFilePreview = function(fileID){
@@ -608,7 +658,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
        				$rootScope.gtbToken = data.accessToken;
        				dashboardService.previewFile(fileID).then(function (response) {
             			 $scope.spinner = false;
-        	    		 window.open(response.expiring_embed_link.url+'?[query_parameter]=true', '_blank');
+        	    		 window.open(response.expiring_embed_link.url, '_blank');
         	    		 console.log('PreviewFile', response);
         	    	},function(error){
         	    		 $scope.spinner = false
@@ -641,6 +691,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
          }
          
          $scope.popupWindow = function(){
+        	 $('.sensitive').show();
     			var appendthis =  ("<div class='modal-overlay'></div>");
     			//$('button[data-modal-id]').click(function(e) {
     			    $("body").append(appendthis);
@@ -1092,7 +1143,10 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 		 $scope.toggleFolder = function(id){
 			 debugger;
 			 $('#'+id).next().next().find('li.folderData').toggle('slow')
+			 //console.log("jaDHgajd",$('#'+id).next().next().find('li.folderData'))
+			 $('#'+id).next().next().find('li.filesData').toggle('slow')
 			  $('#'+id).next().next().find('li li.folderData').css("display","none")
+			  $('#'+id).next().next().find('li li.filesData').css("display","none")
 			 c=1;
 		 }
 		 
@@ -1427,6 +1481,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	 			}
  			}
  		}
+ 		
     	 /* 
     	 if(!$rootScope.showWArng){
     		 $scope.spinner = false;

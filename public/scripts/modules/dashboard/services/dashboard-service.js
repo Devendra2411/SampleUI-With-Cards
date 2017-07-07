@@ -444,6 +444,7 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
             	getProductSiteDtls:getProductSiteDtls,
                	insProductSiteDtls:insProductSiteDtls,
                	downloadStatistics:downloadStatistics
+             
             }
     }]);
 
