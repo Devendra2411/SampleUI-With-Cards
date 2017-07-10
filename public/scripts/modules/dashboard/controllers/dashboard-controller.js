@@ -3,7 +3,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     // Controller definition
     controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService','$q', '$urlRouter','fileUpload','$document', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService, $q, $urlRouter, fileUpload,$document) {
        	   // $rootScope.ssoId = "502450548";//for local
-    		//$rootScope.roleId ="2"//for local
+       	    //$rootScope.roleId ="1"//for local
     		$rootScope.dataId =window.dataId; //for stage
     		//$rootScope.notifyStatus ="Yes";
     		console.log('userData',$rootScope.ssoId, $rootScope.roleId, $rootScope.notifyStatus);
@@ -357,11 +357,14 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    	    			    for(var i=0; i<$rootScope.alltempFilesData.length; i++){
  	    	    			    	var tempObj={};
  	    	    			    	$rootScope.alltempFilesData[i].sensitiveFlag="N";
- 	    	    			    	var tempObj=_.findWhere($rootScope.commentsData[0].fileDetails,function(element){
+ 	    	    			    	debugger;
+ 	    	    			    	var tempObj=undefined;
+ 	    	    			    	if($rootScope.commentsData.length!=0){
+ 	    	    			    	 tempObj=_.findWhere($rootScope.commentsData[0].fileDetails,function(element){
  	    	     		 				if(element.folderID==$rootScope.alltempFilesData[i].fileID){
  	    	     		 					return element.sensitiveFlag;
  	    	     		 				}
- 	    	    			    	})
+ 	    	    			    	})}
  	    	     		 				if(tempObj==undefined)
  	    	     		 					$rootScope.alltempFilesData[i].sensitiveFlag='N';
  	    	     		 				else if(tempObj.sensitiveFlag=='Y' || tempObj.sensitiveFlag=='N')
@@ -1140,14 +1143,18 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		 };
 		 
 		 var c=0;
-		 $scope.toggleFolder = function(id){
+		 $scope.toggleFolder = function(id,node){
 			 debugger;
+			 
 			 $('#'+id).next().next().find('li.folderData').toggle('slow')
-			 //console.log("jaDHgajd",$('#'+id).next().next().find('li.folderData'))
-			 $('#'+id).next().next().find('li.filesData').toggle('slow')
+			 console.log("jaDHgajd",$('#'+id).next().next().find('li.folderData'))
 			  $('#'+id).next().next().find('li li.folderData').css("display","none")
 			  $('#'+id).next().next().find('li li.filesData').css("display","none")
+			  
 			 c=1;
+			 if(node.subTreeStructureVO.rootFolderMap.Items[0].filesList.length !=0){
+				 $scope.toggleFile(id); 
+			 }
 		 }
 		 
 		 $scope.toggleFile = function(id){
