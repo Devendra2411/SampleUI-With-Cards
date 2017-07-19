@@ -359,7 +359,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    	    			    	$rootScope.alltempFilesData[i].sensitiveFlag="N";
  	    	    			    	debugger;
  	    	    			    	var tempObj=undefined;
- 	    	    			    	if($rootScope.commentsData.length!=0){
+ 	    	    			    	if($rootScope.commentsData.length!=0 && $rootScope.commentsData !=null &&$rootScope.commentsData[0]!=null){
  	    	    			    	 tempObj=_.findWhere($rootScope.commentsData[0].fileDetails,function(element){
  	    	     		 				if(element.folderID==$rootScope.alltempFilesData[i].fileID){
  	    	     		 					return element.sensitiveFlag;
