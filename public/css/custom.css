@@ -164,7 +164,7 @@ aha-table#dataTable{margin-bottom: 10px}
  
 /* .titleBlock{ position: relative;}  */
 .filepageTitle{ font-size: 18px; font-weight: normal; background-color: #fff; display: inline-block; z-index: 1; position: relative; padding-right: 5px}
-.hrLine{ border-bottom: 1px solid #ccc; position: relative;top:-27px; z-index: 0}
+.hrLine{ border-bottom: 1px solid #ccc; position: relative;top:-27px; z-index: 0;width: 99%;}
 .filesBlock:nth-child(3n){margin-right: 0}
 .comments{ left: 180px }
 .view .foldersData:nth-child(2n){ margin-right: 0}
@@ -533,3 +533,22 @@ font-weight: bold;
 .folderData{display: none; }
 .filesData{display: none; }
 
+
+#copyTargetS{width: 68%;   height: 29px;}
+#urlpopupsearch.modal-box{ width: 47%; left: 30%!important}
+px-data-table.searchTb .table.aha-table,.scroll-body,.pager{
+	 width: 98% !important;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+px-data-table.searchTb px-pagination {
+    display: block;
+    overflow-x: hidden;
+    width: 96%;
+}
+
+#shareS.shareItem {
+    right: 6px;
+    cursor: pointer;
+    top:57%;
+}

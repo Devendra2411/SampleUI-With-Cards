@@ -1,8 +1,24 @@
 <link rel="stylesheet" href="/css/custom.css" />
+
 <link rel="import" href="/views/parent-card.html"/>
 <link rel="import" href="/views/sub-folder.html"/>
 <link rel="import" href="/views/files-data.html"/>
-<div class="spinner" ng-show="spinner"><px-spinner size="75"></px-spinner></div>
+<style>
+
+.closeW{top:40% !important;right:2% !important;position:relative;}
+.fright{float:right;}
+
+ @media (min-width: 1367px) {
+.table.aha-table {
+    width: 98% !important;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+[input]#copyTargetS{width: 68%;   height: 29px;}
+#urlpopupsearch.modal-box{ width: 47%; left: 30%!important}
+</style>
+
+<div class="spinner" ng-show="spinner || spinner1 || spinner2 || spinner3"><px-spinner size="75"></px-spinner></div>
 <div id="serviceErroMsg" class="alert-message-container" ng-show="serviceError">
 	<px-alert-message type="custom" message-title="" message="{{errorMsgdata}}"	action="acknowledge"> 
 	<img src="../../images/alert-icon-red-150x150.png" width="15px"	height="25px"/> </px-alert-message>
@@ -14,7 +30,7 @@
 </div>
 
 <!-- <px-context-browser label-field="name" id-field="identifier" browser-context="{{browserContext}}" opened-item-name="GPS Marketing Portal" class="gps"> </px-context-browser> -->  
-<header class="pageheader dashboard">
+<header class="pageheader dashboard" ng-show="!searchData">
 
 <h1> GPS Marketing Portal </h1>
 	<div class="pageTitle" ng-click="getBOXFoldersData()">Dashboard</div>
@@ -26,8 +42,8 @@
 	<!-- <span class="signText" ng-show="notifyStatus=='Yes'">for future updates on Folders and Files.</span> -->
 	
 	
-	<div ng-hide="roleId==2" class="role" >
-	<button class="dashboardActions actionMenu2" ><i class="fa fa-ellipsis-v " aria-hidden="true"></i>
+	<div ng-hide="(roleId==2)  || (roleId==1 &&searchData) " class="role" >
+	<button class="dashboardActions actionMenu2" ><i class="fa fa-ellipsis-v " aria-hidden="true" ></i>
 	
 	<ul>
 	  <li>
@@ -44,8 +60,14 @@
 	<!-- <div class="search fright"><input type="text" name="search"> <i class="fa fa-search" aria-hidden="true"></i></div> -->
 </header>
 
+<header class="pageheader dashboard" ng-show="searchData">
 
-<div class="viewContent">
+<h1> GPS Marketing Portal </h1>
+	<div class="pageTitle" ng-click="getBOXFoldersData()">Search Result</div>
+</header>
+
+
+<div class="viewContent" ng-show="!searchData">
 	<div class="cardsData" ng-show="cardsData">
 		 <div id="{{$parent.$index.toString()+$index}}" class="dataColom" ng-repeat="data in parentCards">
 			<div class="cardItem" ng-style="{'background-color':data.bgcolor}">
@@ -128,5 +150,146 @@
 		
 	
 </div>
+<div class="viewContent" ng-show="searchData">
+<span class="closeW fright"> <i class="fa fa-times" aria-hidden="true" ng-click="closeSearchWindow()"></i> </span>
+<div class="titleBlock" ng-show="searchResultList.bookmarkList.length!=0">
+		<h2 class="filepageTitle"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Bookmarks</h2>
+		<div class="hrLine"></div>
+		<div class="foldersData bmData" ng-repeat="data in searchResultList.bookmarkList" >
+			<div value="{{data.url}}" class="bmName" ng-click="openBM(data.url)"> {{data.name}}</div>
+			<span ng-show=" roleId==1" class='editBM' ng-click="openBMwindow(data.id, data.url, data.name, data.description)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span> 
+			<span ng-show=" roleId==1" class="deleteBM" ng-click="deleteBookmark(data.id,searchInput)"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+		</div>
+	</div>
+<div class="clear"></div>
 
+	<div class="titleBlock " ng-show="searchResultList.folderList.length!=0">
+	<h2 class="filepageTitle"><i class="fa fa-folder-open" aria-hidden="true"></i> Folders</h2>
+	<div class="hrLine"></div>
+	
+	<div class="folders" >
+			<div class="foldersData" ng-repeat="data in searchResultList.folderList" >
+				<div class="folderContent">
+						
+		<span class="folderIcon fleft"><i class="fa fa-folder" aria-hidden="true"></i></span>
+		<div id="{{data.folderID}}" value="{{data.folderName}}" ng-click="getFolders(data.folderID,data.folderName,'sitemap')" class="dataContent fleft bold">{{data.folderName}}</div>
+		<div class="total">Total Folders & Files : <span> {{data.totalCount}}</span></div>
+		<!-- <div class="folderSize">Size:<span>{{data.folderSize}}</span></div> -->
+		<div class="folderSize shareItem" id="shareS" ng-click="openSBox(data.folderID)" alt="{{data.shared_link}}" id="{{data.folderID}}"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</div>
+	
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="titleBlock" ng-show="searchResultList.fileList.length!=0">
+	<h2 class="filepageTitle"><i class="fa fa-file-text" aria-hidden="true"></i> Files</h2>
+	<div class="hrLine"></div>
+	
+	<!-- <div ng-show="allFilesData.length==0" class="nodata">No Files</div> -->
+	
+	<px-data-table id="resultTable" class="searchTb" hide-pagination-control="true" sortable searchable striped filterable table-data="{{searchResultList.fileList}}" pagesize="{{searchResultList.fileList.length}}">      		
+			              <px-data-table-column name="fileName"
+			              type="string"
+			              label="FILE NAME"
+			              sortable
+			              searchable
+			              filterable
+			              required
+			              sort-function-name="sortColumn">
+			              </px-data-table-column>
+			              <px-data-table-column name="comments"
+			              type="html"
+			              label="COMMENTS"
+			              sortable
+			              searchable
+			              filterable
+			              required
+			              sort-function-name="sortColumn">
+			             </px-data-table-column>
+			              <px-data-table-column name="fileUpdatedDate"
+			              type="string"
+			              label="UPLOAD DATE"
+			              sortable
+			              searchable
+			              filterable
+			              required
+			              sort-function-name="sortColumn">
+			              </px-data-table-column>
+			               <px-data-table-column name="fileSize"
+			              type="html"
+			              label="SIZE"
+			              sortable
+			              searchable
+			              filterable
+			              required
+			              sort-function-name="sortColumn">
+			             </px-data-table-column>
+			             
+			             
+			              <px-data-table-column name="actions"
+			              type="html"
+			              label="ACTIONS"
+			              sortable
+			              searchable
+			              filterable
+			              required
+			              sort-function-name="sortColumn">
+			              </px-data-table-column>
+						</px-data-table>
+	</div>
+	<div id="accessActionMenu" class="accessActionMenu" style="display:none">
+	<ul>
+		<li><button class="downloadBtn" ng-click="getFileDownload()" ><i class="fa fa-download" aria-hidden="true"></i> Download</button></li>
+		<li><button ng-click="openSBox('','searchPage')" ><i class="fa fa-share-alt" aria-hidden="true"></i> Share</button></li>
+		<li ><button ng-click="getFilePreview()" ><i class="fa fa-eye" aria-hidden="false"></i> Preview</button></li>
+<!-- 		<li><button ng-click=""><i class="fa fa-times" aria-hidden="true"></i> Delete</button></li> -->
+	</ul>
+</div>
+<div id="urlpopupsearch" class="modal-box"> 
+	  <div class="userData">
+	    <a href="#" class="js-modal-close close">x</a>
+	    <h3> Shared Link</h3>
+	    
+	     <div class="access"> Acess Type</div> 
+	     <div class='accessType'>
+	     	<select ng-model="accessType" ng-change="getShareLink(accessType,'searchPg')">
+	     		<option value="" selected="selected" disabled>Please select</option>
+	     		<option value="c" selected="selected">People in your company</option>
+	     		<option value="f">People in this folder</option>
+	     	</select>
+	     </div> 
+		<input type="text"  id="copyTargetS">    
+	    <button id="copyButtonS" name="home"  ng-click="copyUrl('searchPg')" class="btn customBtn"> Copy Url</button>
+	    <div class="copyTextItem">url copied</div>
+	  </div>
+		<div class="clearfix"></div>
+	  <footer>
+	    <a href="#" class="btn custom_btn actionbuttons js-modal-close">Close</a>
+	  </footer>
+	</div>
+	<div id="BMwindow" class="modal-box"> 
+  <div class="userData ">
+    <a href="#" class="js-modal-close close">x</a>
+    <h3> Create/Update Bookmark</h3> 
+    
+    <div>Name</div> 
+	<input class="nameinput urlinput" type="text"  ng-model="bmName" >    
+    
+    <div>Description</div> 
+	<input class="descinput urlinput" type="text"  ng-model="bmDesc"  >    
+    
+    
+    <div>Address of page</div> 
+	<input class="urlinput" type="text"  ng-model="bmurl" id="bmurl" value="http://" > 
+	<div class='clear margin-top'></div>   
+    <button ng-click="createOrUpdateBookmark('searchPg')" class="btn customBtn"> Submit</button> 
+    <button class="btn customBtn actionbuttons js-modal-close"> Cancel</button>
+  </div>
+	<div class="clearfix"></div>
+  <footer>
+    <a href="#" class="btn custom_btn actionbuttons js-modal-close">Close</a>
+  </footer>
+</div>
+</div>
 

@@ -16,6 +16,30 @@
     [role=banner]:not([style-scope]):not(.style-scope), [role=contentinfo]:not([style-scope]):not(.style-scope) {
     height: 6rem;
 }
+.noticeSearch {
+    position: static;
+    right: 66px !important;
+    text-align: right;
+    color: #b1b1bc;
+    font-weight: bold;
+    color: orange;
+    margin-top: -17px;
+    top: -72%;
+}
+.search{ display: inline-block;
+    width: 150px;
+    position: relative;
+    top: -7px;
+    right: 1px;}
+.search input{ background-color: #eee; border: 1px solid #ccc;  height: 22px; width:100%}
+.search i.fa-search{ position: relative;
+    top: -19px;
+    right: 7px;
+    float: right;
+    color: #828181;}
+
+.searchBox{    border: 0;height: 23px}
+.search-bar-border{margin-right: 1px;border:1px solid rgba(228, 228, 228, 1) !important;background-color: rgba(242, 242, 242, 1);margin-bottom: 5px;}
     </style>
 <head>
     <title>GPS Marketing Portal</title>
@@ -63,10 +87,13 @@
               
             </h1>
         </div>
-        
-    </header>
+            </header>
     
     <div class="viewport">
+    <div class="noticeSearch ">
+   			<input class="searchBox clear-bground h-29 search-bar-border" type="text" id="searchInput" value="" placeholder="Search files,folders,bookmarks">
+    <button  id="searchBtn" class="mt-5" ng-click="search(searchInput)"><img src="/images/search.png"></button></div>
+    
         <div class="content-wrapper">
             <px-app-nav class="navbar" nav-items="{{App.tabs}}" path-prefix="/" path-key="state">
                 <px-login class="sticky"></px-login>
@@ -116,16 +143,16 @@
     });
     
     /*stage API*/
-    var API_URL ="https://gpsmarketingportalservices-stage.run.asv-pr.ice.predix.io/GPSMarketing/Services";
+    /* var API_URL ="https://gpsmarketingportalservices-stage.run.asv-pr.ice.predix.io/GPSMarketing/Services";
     var Akana_Url = "https://gpsmarketingportalservices-stage.run.asv-pr.ice.predix.io/GPSMarketing/Services/getAkanaToken";
     var Gtb_Url = "https://gpsmarketingportalservices-stage.run.asv-pr.ice.predix.io/GPSMarketing/Services/getGtbToken"; 
-    window.dataId = '12351304648';
+    window.dataId = '12351304648';  */ 
     
     /*Prod API*/
-   /* var API_URL ="https://marketingportalservices.run.asv-pr.ice.predix.io/GPSMarketing/Services"
+    var API_URL ="https://marketingportalservices.run.asv-pr.ice.predix.io/GPSMarketing/Services"
     var Akana_Url="https://marketingportalservices.run.asv-pr.ice.predix.io/GPSMarketing/Services/getAkanaToken";
     var Gtb_Url="https://marketingportalservices.run.asv-pr.ice.predix.io/GPSMarketing/Services/getGtbToken"; 
-    window.dataId = '11858048707';*/
+    window.dataId = '11858048707'; 
     
     var Box_API = "https://api.box.com/2.0";
     var Upload_File = "https://upload.box.com/api/2.0/files/content"

@@ -55,8 +55,8 @@
 		<div class="hrLine"></div>
 		<div class="foldersData bmData" ng-repeat="data in BoxSubFolders.bookmarks" >
 			<div value="{{data.url}}" class="bmName" ng-click="openBM(data.url)"> {{data.fileName}}</div>
-			<span class='editBM' ng-click="openBMwindow(data.fileID, data.url, data.fileName, data.description)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span> 
-			<span class="deleteBM" ng-click="deleteBookmark(data.fileID)"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
+			<span ng-show=" roleId==1" class='editBM' ng-click="openBMwindow(data.fileID, data.url, data.fileName, data.description)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span> 
+			<span ng-show=" roleId==1" class="deleteBM" ng-click="deleteBookmark(data.fileID)"><i class="fa fa-times-circle" aria-hidden="true"></i></span>
 		</div>
 	</div>
 	

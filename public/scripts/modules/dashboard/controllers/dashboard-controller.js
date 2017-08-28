@@ -2,17 +2,18 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     'use strict';
     // Controller definition
     controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService','$q', '$urlRouter','fileUpload','$document', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService, $q, $urlRouter, fileUpload,$document) {
-       	   // $rootScope.ssoId = "502450548";//for local
-       	    //$rootScope.roleId ="1"//for local
-    		$rootScope.dataId =window.dataId; //for stage
-    		//$rootScope.notifyStatus ="Yes";
+       	    //$rootScope.ssoId = "502450548";// for local
+       	    //$rootScope.roleId ="1"// for local
+    		$rootScope.dataId =window.dataId; // for stage
+    		// $rootScope.notifyStatus ="Yes";
     		console.log('userData',$rootScope.ssoId, $rootScope.roleId, $rootScope.notifyStatus);
        	    $rootScope.email = $rootScope.ssoId+"@mail.ad.ge.com";
        	    $scope.sensitive_flag='N';
        	 $scope.productsiteList=[];
        	    $scope.canEdit=true;
        	    $scope.pspinner=false;
-    	 $scope.getRandomColor = function(id){
+       	    
+       	    $scope.getRandomColor = function(id){
     		 var cardsLength =  $scope.parentCards.length; 
     		 var colors =["#005eb8","#63666a","#00b5e2","#13294b", "#b1b3b4"]
     			for(var i=0; i<cardsLength;i++){
@@ -38,26 +39,26 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     				 
     			}
     	 }
-    	 
+    	
        	 $scope.userActions = function(){
-       		 debugger;
+       		
  			$( document ).on( "click", ".actionBtn", function(e) {
  				 $('.accessActionMenu').hide();
  				var buttonVal = $(this).attr("value").split(',');
 	 			$rootScope.fileID =buttonVal[0];
 	 			$scope.fileSensitive=buttonVal[1];
 	 			if($scope.fileSensitive=='Y' && $rootScope.roleId==2){
-	 				//$('button .downloadBtn').prop('disabled', true);
+	 				// $('button .downloadBtn').prop('disabled', true);
 	 				$('button.downloadBtn').attr('disabled','disabled');
 	 				console.log("in if ")
 	 			}
 	 			else{
-	 				//$('button.downloadBtn').attr('disabled','enabled');
+	 				// $('button.downloadBtn').attr('disabled','enabled');
 	 				$('button.downloadBtn').removeAttr('disabled');
 	 				console.log("in else");
 	 			}
 	 			console.log("$scope.fileSensitive",$scope.fileSensitive);
-	 			//$rootScope.fileSensitive='Y';
+	 			// $rootScope.fileSensitive='Y';
 	 			
 	 			$rootScope.shareurl = $(this).attr("id");
 	 		    $('.accessActionMenu').css({top:0,left:0});
@@ -70,8 +71,11 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			});
  			$(document).mouseup(function (e) {
                 var container = $(".accessActionMenu");
-                if (!container.is(e.target) // if the target of the click isn't the container...
-                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                if (!container.is(e.target) // if the target of the click isn't
+											// the container...
+                    && container.has(e.target).length === 0) // ... nor a
+																// descendant of
+																// the container
                 {
                     container.hide();
                 }
@@ -119,12 +123,16 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 			     								value.totalCount = boxdata.item_collection.total_count
 			     							}
 			 	     					})
-			 	     					/*var bodyData = {"shared_link": {"access": "company"}};
-			 	     					dashboardService.getBOXFoldersLink(tempId, bodyData).then(function (dataLinks) {
-			     							if(dataLinks!="" && dataLinks.id==tempId){
-			     								value.shared_link = dataLinks.shared_link.url;
-			     							}
-			 	     					})*/
+			 	     					/*
+										 * var bodyData = {"shared_link":
+										 * {"access": "company"}};
+										 * dashboardService.getBOXFoldersLink(tempId,
+										 * bodyData).then(function (dataLinks) {
+										 * if(dataLinks!="" &&
+										 * dataLinks.id==tempId){
+										 * value.shared_link =
+										 * dataLinks.shared_link.url; } })
+										 */
 			     					}
 	     	      				})
 	     	      				$rootScope.parentCards =$scope.BoxFolders.folderList;
@@ -186,11 +194,13 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		 
     	 }
     	 $scope.getFolders= function(dataId, folderName, flag){
+    		 
+    		 console.log("dataId, folderName, flag",dataId)
     		 $scope.spinner = true;
     		 $scope.folderView =true;
     		 $rootScope.folderName = folderName;
     		 $rootScope.folderID = dataId;
-    		 //sessionStorage.setItem("ParentfolderID", dataId);
+    		 // sessionStorage.setItem("ParentfolderID", dataId);
     		 $rootScope.ParentfolderID = sessionStorage.getItem("folderId");
 			 $rootScope.ParentfolderName = sessionStorage.getItem("folderName");
     		 if(dataId ==undefined){
@@ -203,7 +213,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
      				}
     			 else if(flag=="sitemap"){
   					var parentData = [{'id':dataId, 'name':folderName}];
-  					//sessionStorage.setItem("parentData", JSON.stringify(parentData));
+  					// sessionStorage.setItem("parentData",
+					// JSON.stringify(parentData));
   					$scope.getSitemapBCdata(dataId);
   				}
  				else{
@@ -238,7 +249,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
      		 }
     		 var data = {"folderID":sessionStorage.getItem("folderId")}
        		 dashboardService.getComments(data).then(function (response) {
-         				//$scope.spinner = false;
+         				// $scope.spinner = false;
         				$rootScope.commentsData = response;
         				$scope.MoreCommentsData();
 
@@ -301,7 +312,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 	     	 	     						$scope.BoxSubFolders.bookmarks.push(tempBmdata);
 		 	     	 	     			}
  	     	 	     				}
- 	     	      				//$scope.addDataItem(id,name);	    	      				
+ 	     	      				// $scope.addDataItem(id,name);
 	    	      				$scope.breadcrumbData();
  	     	      				}
  	     	      				angular.forEach($scope.BoxSubFolders.folderList, function(value, index) {
@@ -314,12 +325,15 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			     								value.folderSize = folderSize+' MB';
  			     							}
  			 	     					});
- 			     						/*var bodyData = {"shared_link": {"access": "company"}};
- 			     						dashboardService.getBOXFoldersLink(tempId, bodyData).then(function (links) {
- 			     							if(links!="" && links.id==tempId){
- 			     								value.shared_link = links.shared_link.url;
- 			     							}
- 			 	     					});*/
+ 			     						/*
+										 * var bodyData = {"shared_link":
+										 * {"access": "company"}};
+										 * dashboardService.getBOXFoldersLink(tempId,
+										 * bodyData).then(function (links) {
+										 * if(links!="" && links.id==tempId){
+										 * value.shared_link =
+										 * links.shared_link.url; } });
+										 */
  			     					}
  	     	      				})
  	     	      				angular.forEach($scope.BoxSubFolders.fileList, function(value, index) {
@@ -344,12 +358,16 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			     								}
  			     							}
  			 	     					});
- 			     						/*var bodyData = {"shared_link": {"access": "company"}};
- 			     						dashboardService.getBOXFilesLink(tempId, bodyData).then(function (linksData) {
- 			     							if(linksData!="" && linksData.id==tempId){
- 			     								value.shared_link = linksData.shared_link.url;
- 			     							}
- 			 	     					});*/
+ 			     						/*
+										 * var bodyData = {"shared_link":
+										 * {"access": "company"}};
+										 * dashboardService.getBOXFilesLink(tempId,
+										 * bodyData).then(function (linksData) {
+										 * if(linksData!="" &&
+										 * linksData.id==tempId){
+										 * value.shared_link =
+										 * linksData.shared_link.url; } });
+										 */
  			     					}
  	     	      				})
  	     	      				$rootScope.allFoldersData =$scope.BoxSubFolders.folderList;
@@ -357,7 +375,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    	    			    for(var i=0; i<$rootScope.alltempFilesData.length; i++){
  	    	    			    	var tempObj={};
  	    	    			    	$rootScope.alltempFilesData[i].sensitiveFlag="N";
- 	    	    			    	debugger;
+ 	    	    			    	
  	    	    			    	var tempObj=undefined;
  	    	    			    	if($rootScope.commentsData.length!=0 && $rootScope.commentsData !=null &&$rootScope.commentsData[0]!=null){
  	    	    			    	 tempObj=_.findWhere($rootScope.commentsData[0].fileDetails,function(element){
@@ -373,7 +391,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	    	     		 					$rootScope.alltempFilesData[i].sensitiveFlag='N';
 	 	    	    				$rootScope.alltempFilesData[i].actions="";
 	 	    	    				$rootScope.alltempFilesData[i].actions = '<button style="background: none;border: none" id="'+$rootScope.alltempFilesData[i].shared_link+'"  value="'+$rootScope.alltempFilesData[i].fileID+','+$rootScope.alltempFilesData[i].sensitiveFlag+'"  class="actionBtn flex flex--center flex--middle style-scope aha-table"><i class="fa fa-bars" aria-hidden="true"></i></button>';
-	 	    	    				//console.log($rootScope.alltempFilesData[i].actions);
+	 	    	    				// console.log($rootScope.alltempFilesData[i].actions);
  	    	    			    };
 	 	    	    			$rootScope.allFilesData = $rootScope.alltempFilesData;
 	 	    	    			
@@ -515,7 +533,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 						 	 	 	        	$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
 						 	 	 	        	var fileName = res.entries[0].name
 						 	 	 	        	$scope.sendMail('New File "'+fileName+'" is uploaded in "'+folderName+'" folder');
-						 	 	 	        	//$scope.sensitive_flag=document.getElementsByName("sensitive").value;
+						 	 	 	        	// $scope.sensitive_flag=document.getElementsByName("sensitive").value;
 						 	 	 	        	console.log("$scope.sensitive_flag by value",$scope.sensitive_flag)
 						 	 	 	        	var insertdata ={"flag":"I","folderList":[{"folderID":res.entries[0].id,"folderName":fileName,"type":res.entries[0].type,"parentFolderID":folderDataId,"sensitiveFlag":$scope.sensitive_flag}]}
 			         	    	 	 	        console.log("insertdata :" + insertdata); 
@@ -610,7 +628,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        
     	 }
     	 $scope.getFileDownload = function(fileID){
-    		 debugger;
+    		
     		 $scope.spinner = true;
     		 if(fileID!=undefined){
     			 $rootScope.fileID = fileID;
@@ -696,12 +714,12 @@ define(['angular', '../dashboard'], function (angular, controllers) {
          $scope.popupWindow = function(){
         	 $('.sensitive').show();
     			var appendthis =  ("<div class='modal-overlay'></div>");
-    			//$('button[data-modal-id]').click(function(e) {
+    			// $('button[data-modal-id]').click(function(e) {
     			    $("body").append(appendthis);
     			    $(".modal-overlay").fadeTo(500, 0.7);
     			    var modalBox = "popup";
     			    $('#'+modalBox).fadeIn($(this).data());
-    			 // });  
+    			 // });
     			  
     			$(".closeBtn, .btnClose, .actionbuttons, .js-modal-close").click(function() {
     			  $(".modal-box, .modal-overlay").fadeOut(500, function() {
@@ -719,16 +737,16 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     			  });
     			});
     			$(window).resize();
-    			//$scope.saveProcesDefaultdata();
+    			// $scope.saveProcesDefaultdata();
     		}
     	 $scope.folderPopup = function(){
  			var appendthis =  ("<div class='modal-overlay'></div>");
- 			//$('button[data-modal-id]').click(function(e) {
+ 			// $('button[data-modal-id]').click(function(e) {
  			    $("body").append(appendthis);
  			    $(".modal-overlay").fadeTo(500, 0.7);
  			    var modalBox = "folderPopup";
  			    $('#'+modalBox).fadeIn($(this).data());
- 			 // });  
+ 			 // });
  			  
  			$(".closeBtn, .btnClose, .actionbuttons, .js-modal-close").click(function() {
  			  $(".modal-box, .modal-overlay").fadeOut(500, function() {
@@ -759,12 +777,12 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     		 }
     		 
     		 var appendthis =  ("<div class='modal-overlay'></div>");
-   			//$('button[data-modal-id]').click(function(e) {
+   			// $('button[data-modal-id]').click(function(e) {
    			    $("body").append(appendthis);
    			    $(".modal-overlay").fadeTo(500, 0.7);
    			    var modalBox = "urlpopup";
    			    $('#'+modalBox).fadeIn($(this).data());
-   			 // });  
+   			 // });
    			  
    			$("#urlpopup .js-modal-close").click(function() {
    				$('.copyTextItem').hide();
@@ -786,7 +804,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
    			
     	 };
     		
-    		 $scope.getShareLink = function(value){
+    		 $scope.getShareLink = function(value,flag){
+    			 debugger;
     			 if($scope.tempDataID ==""){
     				 if(value =="c"){
     					 $scope.spinner=true;
@@ -794,7 +813,12 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	    			 dashboardService.getBOXFilesLink($rootScope.fileID, bodyData).then(function (linksData) {
     							if(linksData!=""){
     								 $scope.spinner=false;
-    								 $('#copyTarget').val(linksData.shared_link.url);
+    								 if(flag=="searchPg")
+    									 $('#copyTargetS').val(linksData.shared_link.url);
+    								 else
+    									 $('#copyTarget').val(linksData.shared_link.url);
+    								 
+    								 
     							}
     						},function(error){
     	       	    		$scope.spinner = false
@@ -830,7 +854,10 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	    			 dashboardService.getBOXFoldersLink($scope.tempDataID, bodyData).then(function (linksData) {
     							if(linksData!=""){
     								 $scope.spinner=false;
-    								 $('#copyTarget').val(linksData.shared_link.url);
+    								 if(flag=="searchPg")
+    									 $('#copyTargetS').val(linksData.shared_link.url);
+    								 else
+    									 $('#copyTarget').val(linksData.shared_link.url);
     							}
     						},function(error){
     	       	    		$scope.spinner = false
@@ -847,7 +874,10 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	    			 dashboardService.getBOXFoldersLink($scope.tempDataID, bodyData).then(function (linksData) {
     							if(linksData!=""){
     								 $scope.spinner=false;
-    								 $('#copyTarget').val(linksData.shared_link.url);
+    								 if(flag=="searchPg")
+    									 $('#copyTargetS').val(linksData.shared_link.url);
+    								 else
+    									 $('#copyTarget').val(linksData.shared_link.url);
     							}
     						},function(error){
     	       	    		$scope.spinner = false
@@ -864,22 +894,28 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 	    	 };
 
     	 
-    	 $scope.copyUrl = function(){
+    	 $scope.copyUrl = function(flag){
     		 $('.copyTextItem').show();
-    		 copyToClipboard(document.getElementById("copyTarget"));
+    		 if(flag=="searchPg")
+    		 copyToClipboard(document.getElementById("copyTargetS"));
+    		 else
+    			 copyToClipboard(document.getElementById("copyTarget"));
 
     			function copyToClipboard(elem) {
-    				  // create hidden text element, if it doesn't already exist
+    				  // create hidden text element, if it doesn't already
+						// exist
     			    var targetId = "_hiddenCopyText_";
     			    var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
     			    var origSelectionStart, origSelectionEnd;
     			    if (isInput) {
-    			        // can just use the original source element for the selection and copy
+    			        // can just use the original source element for the
+						// selection and copy
     			        target = elem;
     			        origSelectionStart = elem.selectionStart;
     			        origSelectionEnd = elem.selectionEnd;
     			    } else {
-    			        // must use a temporary form element for the selection and copy
+    			        // must use a temporary form element for the selection
+						// and copy
     			        target = document.getElementById(targetId);
     			        if (!target) {
     			            var target = document.createElement("textarea");
@@ -941,7 +977,8 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
  	        	$scope.serviceSuccess = true;
  	            $scope.serviceError = false;
- 	            //$scope.sendMail($rootScope.ssoId+ ' posted a comment for "'+folderName +'" folder');
+ 	            // $scope.sendMail($rootScope.ssoId+ ' posted a comment for
+				// "'+folderName +'" folder');
  	    		},function(error){
  	    		 $scope.spinner = false;
  	    		 $scope.errorMsgdata="Failed to send mail";
@@ -987,7 +1024,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     	
     	
     	$scope.getBOXAkanaToken = function(){
-    		//$scope.spinner = true;
+    		// $scope.spinner = true;
     		dashboardService.getBoxAkanaToken().then(function (response) {
     			$rootScope.akanaToken = response.access_token;
      			dashboardService.getGTBToken().then(function (response) {
@@ -996,7 +1033,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
         	    		 console.log('gtb_token', response);
          			}
  	    		},function(error){
- 	    		 //$scope.spinner = false
+ 	    		 // $scope.spinner = false
  	    		})
     		})
     	}
@@ -1036,9 +1073,10 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 	     						dashboardService.getBOXFoldersInfo(tempId).then(function (boxdata) {
 	     							if(boxdata!="" && boxdata.id==tempId){
 	     								value.totalCount = boxdata.item_collection.total_count;
-	     								/*if(boxdata.item_collection.entries.length!="0"){
-	     									$scope.getGpsSubContent(tempId);
-	     								}*/
+	     								/*
+										 * if(boxdata.item_collection.entries.length!="0"){
+										 * $scope.getGpsSubContent(tempId); }
+										 */
 	     							}
 	 	     					})
 	     					}
@@ -1144,7 +1182,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 		 
 		 var c=0;
 		 $scope.toggleFolder = function(id,node){
-			 debugger;
+			
 			 
 			 $('#'+id).next().next().find('li.folderData').toggle('slow')
 			 console.log("jaDHgajd",$('#'+id).next().next().find('li.folderData'))
@@ -1158,7 +1196,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 		 }
 		 
 		 $scope.toggleFile = function(id){
-			 debugger;
+			 
 			 if(c==1){
 			 $('#'+id).next().next().find('li.filesData').toggle('slow')
 			  $('#'+id).next().next().find('li li.filesData').css("display","none")
@@ -1226,7 +1264,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 	  			$(window).resize();
 	  			 
 		 }
-		 $scope.createOrUpdateBookmark= function(){
+		 $scope.createOrUpdateBookmark= function(flag){
     		 $scope.spinner = true;
     		 var folderID =sessionStorage.getItem("folderId");
       			dashboardService.getGTBToken().then(function (data) {
@@ -1237,18 +1275,24 @@ define(['angular', '../dashboard'], function (angular, controllers) {
             	    			 dashboardService.createBookmark(data).then(function (response) { 
             	    				$scope.spinner = false;
             	    	    		if(response!=null){
-            	    	    			$scope.getFolders();
+            	    	    			debugger;
+            	    	    			if(flag=="searchPg"){
+            	    	    				$scope.search($scope.searchInput);
+            	    	    			}
+            	    	    			else{	
+            	    	    			   $scope.getFolders();
+            	    	    			}
    	     	   	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
    	     	   	 	 	    		$scope.successMsgdata = "Bookmark Created successfully";
    	     	   	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
    	     	   	 	 	        	$scope.serviceSuccess = true;
    	     	   	 	 	        	$scope.serviceError = false;
    	     	   	 	 	        	
-//   	     	   	 	 	    console.log("insert bookmark");    	
-//   	     	   	 	 	 var   bMdata ={"flag":"I","folderList":[{"folderID":response.id,"folderName":response.name,"type":response.type,"parentFolderID":folderId}]}
-//	    	 	 	         dashboardService.updateDatatoDb(bMdata).then(function(response){
-//	    	 	 	        	 console.log("insert bookmark"+response.statusMsg);
-//	    	 	 	         })
+  	     	   	 	 	    console.log("insert bookmark");    	
+  	     	   	 	 	    var   bMdata ={"flag":"I","folderList":[{"folderID":response.id,"folderName":response.name,"type":"Bookmark","parentFolderID":folderID}]}
+	    	 	 	         dashboardService.updateDatatoDb(bMdata).then(function(response){
+	    	 	 	        	 console.log("insert bookmark"+response.statusMsg);
+	    	 	 	         })
             	    	    		}
             	    			 },function(error){
             	    				 $scope.spinner = false
@@ -1263,18 +1307,23 @@ define(['angular', '../dashboard'], function (angular, controllers) {
          	    				dashboardService.updateBookmark($scope.bmId, data).then(function (response) { 
            	    				$scope.spinner = false;
            	    	    		if(response!=null){
-           	    	    			$scope.getFolders();
+           	    	    			if(flag=="searchPg"){
+        	    	    				$scope.search($scope.searchInput);
+        	    	    			}
+        	    	    			else{	
+        	    	    			   $scope.getFolders();
+        	    	    			}
   	     	   	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
   	     	   	 	 	    		$scope.successMsgdata = "Bookmark updated successfully";
   	     	   	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
   	     	   	 	 	        	$scope.serviceSuccess = true;
   	     	   	 	 	        	$scope.serviceError = false;
   	     	   	 	 	        	
-//  	     	   	 	 	        	console.log("update bookmark");    	
-//  	     	   	 	 	        	var   bMdata ={"flag":"I","folderList":[{"folderID":response.id,"folderName":response.name,"type":response.type,"parentFolderID":folderId}]}
-//  		    	 	 	         dashboardService.updateDatatoDb(bMdata).then(function(response){
-//  		    	 	 	        	 console.log("insert bookmark"+response.statusMsg);
-//  		    	 	 	         })
+  	     	   	 	 	        	console.log("update bookmark");    	
+ 	     	   	 	 	        	var   bMdata ={"flag":"I","folderList":[{"folderID":response.id,"folderName":response.name,"type":"Bookmark","parentFolderID":folderID}]}
+  		    	 	 	         dashboardService.updateDatatoDb(bMdata).then(function(response){
+  		    	 	 	        	 console.log("insert bookmark"+response.statusMsg);
+  		    	 	 	         })
            	    	    		}
            	    			 },function(error){
            	    				 $scope.spinner = false
@@ -1295,20 +1344,34 @@ define(['angular', '../dashboard'], function (angular, controllers) {
      	};
      	
      	
-     	$scope.deleteBookmark= function(id){
+     	$scope.deleteBookmark= function(id,flag){
    		 $scope.spinner = true;
+   		 var folderID=sessionStorage.getItem("folderId");
      			dashboardService.getGTBToken().then(function (data) {
          			if(data!=null){
          				$rootScope.gtbToken = data.accessToken;
         	    			 dashboardService.deleteBookmark(id).then(function (response) { 
         	    				$scope.spinner = false;
         	    	    		if(response!=null){
-        	    	    			$scope.getFolders();
+        	    	    			var   bMdata ={"flag":"D","folderList":[{"folderID":id,"folderName":"","type":"Bookmark","parentFolderID":folderID}]}
+       	    	 	 	         dashboardService.updateDatatoDb(bMdata).then(function(response){
+       	    	 	 	        	 console.log("insert bookmark"+response.statusMsg);
+       	    	 	 	         })
+        	    	    			if(flag==$scope.searchInput){
+        	    	    				$scope.search($scope.searchInput);
+        	    	    			}
+        	    	    			else{
+        	    	    				$scope.getFolders();	
+        	    	    			}
+        	    	    			
 	     	   	 	 	    		$(".modal-box, .modal-overlay").fadeOut(500, function() {$(".modal-overlay").remove()});
 	     	   	 	 	    		$scope.successMsgdata = "Bookmark Deleted";
 	     	   	 	 	        	$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
 	     	   	 	 	        	$scope.serviceSuccess = true;
 	     	   	 	 	        	$scope.serviceError = false;
+	     	   	 	 	      console.log("delete bookmark");    	
+    	   	 	 	        
+	     	   	 	 	        	
         	    	    		}
         	    			 },function(error){
         	    				 $scope.spinner = false
@@ -1432,7 +1495,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  		 }
  		 
  		$scope.downloadStatistics=function(){
- 			 debugger;
+ 			
  			dashboardService.downloadStatistics().then(function(data){
  				download("data:application/excel;base64,"+data.statistics,"Statistics.xlsx","application/excel");			
  			},function(error){
@@ -1477,7 +1540,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  		}
  		
  		$scope.checkAll=function(){
- 			debugger;
+ 			
  			if($scope.pcheckbox.isChecked==true){
  			for(var i=0;i<$scope.productsiteList.length;i++){
  				$scope.productsiteList[i].isChecked=true;
@@ -1489,20 +1552,280 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  			}
  		}
  		
-    	 /* 
-    	 if(!$rootScope.showWArng){
-    		 $scope.spinner = false;
-    		 var appendthis =  ("<div class='modal-overlay'></div>");
- 		    $("body").append(appendthis);
- 		    $(".modal-overlay").fadeTo(500, 0.7);
- 		    var modalBox = "onPopup";
- 		    $('#'+modalBox).fadeIn($(this).data()); 
-    	 } 
-		$(".closePopup").click(function() {
-			$rootScope.showWArng = true;  
-		  $(".modal-box, .modal-overlay").fadeOut(500, function() {
-		    $(".modal-overlay").remove();
-		  });
-		}); */   	  
+ 		$scope.openBMfromSiteMap=function(bmID){
+ 			$scope.spinner = true;
+ 			dashboardService.getGTBToken().then(function (data) {
+      			if(data!=null){
+      				$rootScope.gtbToken = data.accessToken;
+     	    		 console.log('gtb_token', data);
+     	    			 dashboardService.getBMDataforSiteMap(bmID).then(function (info) { 
+     	    				$scope.spinner = false;
+	     	      				if(info!=""){
+	     	      					console.log(info)
+	     	      					$scope.openBM(info.url);
+	     	      				}
+     	    			 })
+ 		
+      			}
+ 			})
+ 		}
+ 		$scope.searchResultList= {};
+ 		/* search Functionality */
+ 		$rootScope.searchData=false;
+ 		$scope.search=function(inputText){
+ 			
+ 			$rootScope.searchData=true;
+ 			$scope.spinner=true;
+ 			$scope.spinner1=true;
+ 			$scope.spinner2=true;
+ 			$scope.spinner3=true;
+ 			var data={"searchTxt":inputText}
+ 			dashboardService.getSearchResult(data).then(function(response){
+ 				$scope.searchResultList= {};
+ 				$scope.searchResultList.fileList=[];
+ 				$scope.searchResultList.folderList=[];
+ 				$scope.searchResultList.bookmarkList=[];
+ 				if(response.bookmarkList.length!=0){
+ 					dashboardService.getGTBToken().then(function (data) {
+ 		      			if(data!=null){
+ 		      				$rootScope.gtbToken = data.accessToken;
+ 		     	    		 console.log('gtb_token', data);
+ 					for(var i=0;i<response.bookmarkList.length;i++){
+ 							var bmID=response.bookmarkList[i].bookmarkID;
+     	    			 dashboardService.getBMDataforSiteMap(bmID).then(function (info) { 
+     	    				
+	     	      				if(info!=""){
+	     	      					$scope.searchResultList.bookmarkList.push(info);
+	     	      					
+	     	      				}
+     	    			 })
+     	    			 if(i==response.bookmarkList.length-1)
+     	    				$scope.spinner1=false;
+      			}
+ 					
+ 		      			}
+ 			})
+ 					}
+ 				else{
+ 					$scope.spinner1=false;
+ 				}
+ 				if(response.folderList.length!=0){
+ 					dashboardService.getGTBToken().then(function (data) {
+ 		      			if(data!=null){
+ 		      				$rootScope.gtbToken = data.accessToken;
+ 		     	    		 console.log('gtb_token', data);
+ 					angular.forEach(response.folderList, function(value, index) {
+	      				 var tempId =value.folderID;
+   	    			 if(tempId!=""){
+    						dashboardService.getBOXFoldersInfo(tempId).then(function (boxdata) {
+    							if(boxdata!="" && boxdata.id==tempId){
+    								value.totalCount = boxdata.item_collection.total_count
+    								$scope.spinner2=false;
+    							}
+	     					})
+	     					
+    					}
+   	    			if(index==response.bookmarkList.length-1)
+ 	    				$scope.spinner2=false;
+      				})
+ 					
+ 					$scope.searchResultList.folderList=response.folderList;
+ 				}
+ 					})
+ 				}
+ 				else{
+ 					$scope.spinner2=false;
+ 				}
+ 				if(response.fileList.length!=0){
+ 					$scope.userActions();
+ 					dashboardService.getGTBToken().then(function (data) {
+ 		      			if(data!=null){
+ 		      				$rootScope.gtbToken = data.accessToken;
+ 		     	    		 console.log('gtb_token', data);
+ 					angular.forEach(response.fileList, function(value, index) {
+ 	      				 var tempId =value.fileID;
+    	    			 if(tempId!=""){
+     						dashboardService.getBOXFileInfo(tempId).then(function (boxdata) {
+     							if(boxdata!="" && boxdata.id==tempId){
+     								var size = (boxdata.size / (1024*1024)).toFixed(2);
+     								var tempDate = boxdata.created_at;
+     								var cDate = tempDate.split('T')[0] +' '+tempDate.split('T')[1].split('-')[0];
+     								value.fileUpdatedBy =boxdata.created_by.name;
+     								value.fileUpdatedDate =cDate;
+     								value.fileSize =size+' MB';
+     								value.fileVersion =boxdata.file_version.sha1;
+     								if(value.sensitiveFlag==undefined)
+     									value.sensitiveFlag='N';
+     								value.actions='<button style="background: none;border: none" id="'+boxdata.shared_link+'"  value="'+boxdata.id+','+value.sensitiveFlag+'"  class="actionBtn flex flex--center flex--middle style-scope aha-table"><i class="fa fa-bars" aria-hidden="true"></i></button>';
+     								$scope.spinner3=false;
+     							}
+     							
+ 	     					})
+ 	     						
+ 	     					dashboardService.getFileComments(tempId).then(function (Cdata) {
+     							if(Cdata!="" && Cdata.total_count!="0"){
+     								if(Cdata.entries[0].item.id==tempId){
+     									value.comments == Cdata.entries[0].message;
+     									
+     								}
+     							}
+ 	     					});
+     					}
+    	    			 $scope.searchResultList.fileList.push(value);
+    	    			 
+    	    			 if(index%10==0){
+    	    				 console.log(index);
+    	    				 dashboardService.getGTBToken().then(function (data) {
+    	  		      			if(data!=null){
+    	  		      				$rootScope.gtbToken = data.accessToken;
+    	  		     	    		 console.log('index gtb_token', data);
+    	  		      			}
+    	    				 })
+    	    			 }
+    	    			if(index==response.fileList.length-1)
+    	    				$scope.spinner3=false;
+	      				})
+ 				}
+ 		      			
+ 					})
+ 				}
+ 				else{
+ 					$scope.spinner3=false;
+ 				}
+ 				if(response.fileList.length>15 || response.folderList.length>15 )
+ 				{
+ 					$timeout(function(){
+ 	 					$scope.spinner=false;
+ 	 				},10000);
+ 				}
+ 				else if(response.fileList.length>30 )
+ 				{
+ 					$timeout(function(){
+ 	 					$scope.spinner=false;
+ 	 				},15000);
+ 				}
+ 				else{
+ 				$timeout(function(){
+ 					$scope.spinner=false;
+ 				},4000);
+ 				}
+ 				if(response.fileList.length==0 &&response.folderList.length==0 &&response.bookmarkList==0){
+ 					$scope.spinner=false;
+ 					$scope.spinner1=false;
+ 					$scope.spinner2=false;
+ 					$scope.spinner3=false;
+ 					$scope.successMsgdata="No data related to your search";
+ 	 				$scope.serviceSuccess=true;
+ 	 				$rootScope.searchData=false;
+ 	 				$timeout(function(){
+ 	 					$scope.serviceSuccess=false;
+ 	 				},1000);
+ 	 				//$('#serviceSuccessMsg #alert').removeClass('fade-out hidden');
+ 				}
+ 				// $scope.spinner=false;
+ 				console.log(response);
+ 				}),function(error){
+ 				$scope.spinner=false;
+ 				
+ 			}
+ 				// $scope.searchResultList=response;
+ 				
+ 			
+ 			
+ 		}
+ 		
+ 		
+ 		
+ 		$scope.closeSearchWindow=function(){
+ 			$rootScope.searchData=false;
+ 			$scope.spinner=false;
+ 			$scope.spinner1=false;
+ 			$scope.spinner2=false;
+ 			$scope.spinner3=false;
+ 			
+ 			
+ 		}
+   	 $scope.openSBox = function(id, flag){
+		 $('#copyTargetS').val("");
+		 $('.copyTextItem').hide();
+		 if(id==undefined || id==""){
+			 $scope.tempDataID ="";
+			 $scope.tempFlag = "";
+		 }
+		 else{
+			 $scope.tempDataID =id;
+			 $scope.tempFlag = flag;
+		 }
+		 
+		 var appendthis =  ("<div class='modal-overlay'></div>");
+			// $('button[data-modal-id]').click(function(e) {
+			    $("body").append(appendthis);
+			    $(".modal-overlay").fadeTo(500, 0.7);
+			    var modalBox = "urlpopupsearch";
+			    $('#'+modalBox).fadeIn($(this).data());
+			 // });
+			  
+			$("#urlpopupsearch .js-modal-close").click(function() {
+				$('.copyTextItem').hide();
+			  $(".modal-box, .modal-overlay").fadeOut(500, function() {
+			    $(".modal-overlay").remove();
+				// $('#copyTargetS').val();
+				
+			    
+			  });
+			});
+			
+			$(window).resize(function() {
+			  $(".modal-box").css({
+			    top: "10%",
+			    left: "20%"
+			  });
+			});
+			$(window).resize();
+			
+	 };
+ 		$(document).on("click","#searchBtn",function(){
+  			var searchInput=$('#searchInput').val();
+  			dashboardService.getGTBToken().then(function (data) {
+	      			if(data!=null){
+	      				$rootScope.gtbToken = data.accessToken;
+	     	    		 console.log('gtb_token', data);
+	      			}})
+  			
+  			console.log("searchInput",searchInput)
+  			if($state.current.name=='dashboard')
+  				$scope.search(searchInput);
+  			else{
+  				$rootScope.comingFromOtherStateSearch = true;
+  				$state.go('dashboard');
+  				document.querySelector('px-app-nav').markSelected('/dashboard');
+  			}
+  				
+  				
+ 		})
+ 		
+ 		if($rootScope.comingFromOtherStateSearch==true){
+  			var searchInput=$('#searchInput').val();
+  			$rootScope.comingFromOtherStateSearch=false;
+   	    	$scope.search(searchInput);
+   	    	
+   	    }
+ 		/*$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
+ 			console.log("kajha",toState.name == 'dashboard' && (fromState.name=='sitemap' || fromState.name=='productowners') &&$rootScope.searchData==true)
+ 		    if(toState.name == 'dashboard' && (fromState.name=='sitemap' || fromState.name=='productowners') &&$rootScope.searchData==true) {
+ 		    	var searchInput=$('#searchInput').val();
+ 		    	$scope.search(searchInput);
+ 		    }
+ 		})
+*/
+    	 /*
+			 * if(!$rootScope.showWArng){ $scope.spinner = false; var appendthis = ("<div
+			 * class='modal-overlay'></div>"); $("body").append(appendthis);
+			 * $(".modal-overlay").fadeTo(500, 0.7); var modalBox = "onPopup";
+			 * $('#'+modalBox).fadeIn($(this).data()); }
+			 * $(".closePopup").click(function() { $rootScope.showWArng = true;
+			 * $(".modal-box, .modal-overlay").fadeOut(500, function() {
+			 * $(".modal-overlay").remove(); }); });
+			 */   	  
     }]);
 });

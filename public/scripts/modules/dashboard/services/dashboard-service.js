@@ -410,6 +410,30 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
   			 
   			 return deferred.promise;
   		};
+  		var getBMDataforSiteMap =  function(dataId){
+  			var deferred = $q.defer();
+  			$http.get(Box_API+'/web_links/'+dataId, { headers: {'Authorization': 'Bearer '+$rootScope.gtbToken}})
+  				.success(function(data) {
+  					deferred.resolve(data);
+  				})
+  				.error(function() {
+  					deferred.reject('Failed');
+  				});
+  			return deferred.promise;
+  		};
+  		
+  		var getSearchResult= function(data){
+  			var deferred = $q.defer();
+  			$http.post(API_URL+'/getSearchResult',data)
+ 			 .success(function(response){
+ 				deferred.resolve(response);
+ 			 })
+ 			 .error(function(response){
+ 				 deferred.reject(response);
+ 			 });
+  			return deferred.promise;
+  		};
+  		
             return{
             	authorizeUser:authorizeUser,            	
             	getCards:getCards,
@@ -443,7 +467,9 @@ define(['angular', '../dashboard'], function(angular, dashboardService) {
             	updateDatatoDb:updateDatatoDb,
             	getProductSiteDtls:getProductSiteDtls,
                	insProductSiteDtls:insProductSiteDtls,
-               	downloadStatistics:downloadStatistics
+               	downloadStatistics:downloadStatistics,
+               	getBMDataforSiteMap:getBMDataforSiteMap,
+               	getSearchResult :getSearchResult
              
             }
     }]);
