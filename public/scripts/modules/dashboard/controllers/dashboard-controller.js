@@ -2,9 +2,9 @@ define(['angular', '../dashboard'], function (angular, controllers) {
     'use strict';
     // Controller definition
     controllers.controller('dashboard-controller', ['$scope', '$state', '$log', '$rootScope', 'PredixAssetService', '$http', '$timeout', '$compile', '$location', '$anchorScroll', 'dashboardService','$q', '$urlRouter','fileUpload','$document', function ($scope, $state, $log, $rootScope, PredixAssetService, $http, $timeout, $compile, $location, $anchorScroll,dashboardService, $q, $urlRouter, fileUpload,$document) {
-       	    //$rootScope.ssoId = "502450548";// for local
-       	    //$rootScope.roleId ="1"// for local
-    		$rootScope.dataId =window.dataId; // for stage
+       	   // $rootScope.ssoId = "502450548";// for local
+       	   // $rootScope.roleId ="1"// for local
+    		$rootScope.dataId =window.dataId; 
     		// $rootScope.notifyStatus ="Yes";
     		console.log('userData',$rootScope.ssoId, $rootScope.roleId, $rootScope.notifyStatus);
        	    $rootScope.email = $rootScope.ssoId+"@mail.ad.ge.com";
@@ -57,6 +57,16 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 	 				$('button.downloadBtn').removeAttr('disabled');
 	 				console.log("in else");
 	 			}
+	 			$rootScope.tempFolderId=sessionStorage.getItem("folderId");
+	 			if(sessionStorage.getItem("folderId")=='36498273188'){
+	 				$('button.downloadBtn').attr('disabled','disabled');
+	 				$('button.shareBtn').attr('disabled','disabled');
+	 			}
+	 			else{
+	 				$('button.downloadBtn').removeAttr('disabled');
+	 				$('button.shareBtn').removeAttr('disabled');
+	 			}
+	 				
 	 			console.log("$scope.fileSensitive",$scope.fileSensitive);
 	 			// $rootScope.fileSensitive='Y';
 	 			
@@ -627,8 +637,10 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  	        })
  	        
     	 }
-    	 $scope.getFileDownload = function(fileID){
-    		
+    	 $scope.getFileDownload = function(fileID,flag){
+    		if(flag==true){
+    			console.log("not allowed to download")
+    		}else{
     		 $scope.spinner = true;
     		 if(fileID!=undefined){
     			 $rootScope.fileID = fileID;
@@ -661,7 +673,7 @@ define(['angular', '../dashboard'], function (angular, controllers) {
   	        	$scope.serviceSuccessMsg = false;
   	        	$scope.serviceError = true;
   	        }  
-    	
+    		}
     	 };
     	 
     	 $scope.getFilePreview = function(fileID){
@@ -1182,8 +1194,6 @@ define(['angular', '../dashboard'], function (angular, controllers) {
 		 
 		 var c=0;
 		 $scope.toggleFolder = function(id,node){
-			
-			 
 			 $('#'+id).next().next().find('li.folderData').toggle('slow')
 			 console.log("jaDHgajd",$('#'+id).next().next().find('li.folderData'))
 			  $('#'+id).next().next().find('li li.folderData').css("display","none")
@@ -1421,9 +1431,27 @@ define(['angular', '../dashboard'], function (angular, controllers) {
  				 $scope.hasTreeData =true;
  				 $scope.spinner = false;
  				$scope.treeData = data;
+ 				console.log("before ")
+ 				angular.forEach($scope.treeData.rootFolderMap.Items[0].folderList,function(obj){
+ 					if(obj.folderID=='11857127643'){
+ 						angular.forEach(obj.subTreeStructureVO.rootFolderMap.Items[0].folderList,function(obj2){
+ 							if(obj2.folderID=='36498273188'){
+ 								angular.forEach(obj2.subTreeStructureVO.rootFolderMap.Items[0].filesList,function(obj3){
+ 									obj3.disabledownload=true;
+ 									console.log("added flag")
+ 								})
+ 								}
+ 									
+ 								
+ 						})
+ 					}
+ 						
+ 				})
  				$timeout(function(){$scope.treeData = data;
 				 angular.element(document.body).scope().$apply();
 				 },2000);
+ 				
+ 			
  			 });
     		  
     	  }
